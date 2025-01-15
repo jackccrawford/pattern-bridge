@@ -73,19 +73,19 @@
    - [ ] Haptic feedback
 
 ## Completed Milestones
-1. Cross-platform support established (Web, iOS, Android)
-2. Material Design 3 theming system with dark mode
-3. Bottom tab navigation with platform-specific styling
-4. Toast system with undo functionality
-5. Basic responsive design foundation
-6. Haptic feedback system with platform fallbacks
+1. [x] Cross-platform support established (Web, iOS, Android)
+2. [x] Material Design 3 theming system with dark mode
+3. [x] Bottom tab navigation with platform-specific styling
+4. [x] Toast system with undo functionality
+5. [x] Basic responsive design foundation
+6. [x] Haptic feedback system with platform fallbacks
 
 ## Next Steps (In Progress)
 1. Card gesture system
-   - Swipe left/right/up gestures
-   - Animations
-   - Card dismissal
-   - Progress tracking
+   - [ ] Swipe left/right/up gestures
+   - [ ] Animations
+   - [ ] Card dismissal
+   - [ ] Progress tracking
 
 ## Temporary Troubleshooting Flow
 
@@ -149,4 +149,3 @@ Note: This flow will be removed after troubleshooting is complete.
    + Rarely.
    - Should there be a way to compare items?
    + Not in the main view. We don't want to complicate it. We want to keep it simple at the main view. But there are drill-downs to compare items, such as offsetting items (like debits and credits in an account).
-   
