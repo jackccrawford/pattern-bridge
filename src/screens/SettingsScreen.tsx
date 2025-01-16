@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Switch, Platform } from 'react-native';
+import { ScrollView, StyleSheet, View, Platform } from 'react-native';
 import { Text } from '../components/Text';
 import { useTheme } from '../contexts/ThemeContext';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,45 +21,9 @@ export const SettingsScreen = () => {
           { paddingBottom: bottomPadding }
         ]}
       >
-        <Text style={styles.title}>Settings</Text>
-
-        {/* Appearance Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Appearance</Text>
-          <View style={styles.setting}>
-            <Text style={styles.settingLabel}>Dark Mode</Text>
-            <Switch value={false} onValueChange={() => {}} />
-          </View>
-          <View style={styles.setting}>
-            <Text style={styles.settingLabel}>Reduce Motion</Text>
-            <Switch value={false} onValueChange={() => {}} />
-          </View>
-        </View>
-
-        {/* Preferences Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Preferences</Text>
-          <View style={styles.setting}>
-            <Text style={styles.settingLabel}>Haptic Feedback</Text>
-            <Switch value={true} onValueChange={() => {}} />
-          </View>
-          <View style={styles.setting}>
-            <Text style={styles.settingLabel}>Analytics</Text>
-            <Switch value={true} onValueChange={() => {}} />
-          </View>
-        </View>
-
-        {/* About Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>About</Text>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Version</Text>
-            <Text style={styles.infoValue}>1.0.0</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Build</Text>
-            <Text style={styles.infoValue}>2025.01</Text>
-          </View>
+          <Text style={styles.sectionTitle}>Settings</Text>
+          <Text style={styles.sectionSubtitle}>Configure your experience</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -72,46 +36,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollContent: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 24,
+    flexGrow: 1,
   },
   section: {
-    marginBottom: 32,
+    padding: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 16,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
-  setting: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc',
-  },
-  settingLabel: {
+  sectionSubtitle: {
     fontSize: 16,
-    color: '#333',
-  },
-  infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc',
-  },
-  infoLabel: {
-    fontSize: 16,
-    color: '#333',
-  },
-  infoValue: {
-    fontSize: 16,
-    color: '#666',
+    opacity: 0.7,
   },
 });

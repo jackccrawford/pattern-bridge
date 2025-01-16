@@ -3,10 +3,6 @@ import { ScrollView, StyleSheet, View, Platform } from 'react-native';
 import { Text } from '../components/Text';
 import { useTheme } from '../contexts/ThemeContext';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DraggablePatternCard } from '../components/DraggablePatternCard';
-import { FeedbackPatternCard } from '../components/FeedbackPatternCard';
-import { AnimationPatternCard } from '../components/AnimationPatternCard';
-import { ValueCarousel } from '../components/ValueCarousel';
 
 export const HomeScreen = () => {
   const { theme } = useTheme();
@@ -19,36 +15,17 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      {/* Branded Header */}
-      <View style={[styles.header]}>
-        <Text style={[
-          styles.headerTitle,
-          { color: theme.colors.primary }
-        ]}>
-          Pattern Bridge
-        </Text>
-      </View>
-
-      <ScrollView 
+      <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={[
           styles.scrollContent,
           { paddingBottom: bottomPadding }
         ]}
       >
-        {/* Subtitle as first item in scroll */}
-        <Text style={styles.subtitle}>
-          Bridging Human Psychology with AI Capabilities
-        </Text>
-
-        {/* Pattern Cards */}
-        <View style={styles.patterns}>
-          <DraggablePatternCard />
-          <FeedbackPatternCard />
-          <AnimationPatternCard />
+        <View style={styles.content}>
+          <Text style={styles.title}>Pattern Bridge</Text>
+          <Text style={styles.subtitle}>AI-First Development</Text>
         </View>
-
-        {/* Value Carousel at bottom */}
-        <ValueCarousel />
       </ScrollView>
     </SafeAreaView>
   );
@@ -59,33 +36,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    padding: 16,
-    paddingTop: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0,0,0,0.1)',
-    backgroundColor: '#fff',
-  },
-  headerTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 15,
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 12,
-    marginBottom: 20,
-    paddingHorizontal: 20,
+  scrollView: {
+    flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
   },
-  patterns: {
-    padding: 20,
-    paddingTop: 0,
-    flex: 1, // This will push the carousel to the bottom
+  content: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    opacity: 0.7,
   },
 });

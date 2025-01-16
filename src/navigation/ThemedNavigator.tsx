@@ -1,11 +1,9 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '../screens/HomeScreen';
-import { PatternsScreen } from '../screens/PatternsScreen';
-import { AnalyticsScreen } from '../screens/AnalyticsScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { useTheme } from '../contexts/ThemeContext';
-import { Home, Library, BarChart2, Settings } from 'lucide-react-native';
+import { Home, Settings } from 'lucide-react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,8 +17,11 @@ export const ThemedNavigator = () => {
         tabBarInactiveTintColor: theme.colors.text,
         headerShown: false,
         tabBarStyle: {
-          borderTopColor: theme.colors.border,
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(0,0,0,0.1)',
           backgroundColor: '#fff',
+          paddingTop: 8,
+          height: 60,
         },
       }}
     >
@@ -30,24 +31,6 @@ export const ThemedNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <Home size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Patterns"
-        component={PatternsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Library size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Analytics"
-        component={AnalyticsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <BarChart2 size={size} color={color} />
           ),
         }}
       />

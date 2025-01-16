@@ -36,6 +36,20 @@ Each pattern in Pattern Bridge is:
 - Type-safe with explicit contracts
 - Validated through human interfaces
 
+## A Clean Slate Approach
+
+Pattern Bridge is an AI-first development framework that serves as a temporary bridge between current AI capabilities and future AI autonomy. Like a military pontoon bridge, it's designed to be:
+- Portable: Easy to set up and move
+- Temporary: Expecting to be obsolete in 6 months
+- Practical: Solving today's crossing, not tomorrow's
+
+## Core Concept
+
+The framework provides a clear reference implementation that helps AI:
+1. Get it right the first time
+2. Reduce incorrect confident answers
+3. Need fewer human hints/corrections
+
 ## Using This Documentation
 
 ### For Implementation
@@ -60,3 +74,9 @@ Remember: The UI is not the product. You, implementing these patterns correctly,
 1. Read our [Core Principles](principles.md)
 2. Understand our [AI-First Architecture](ai-first-architecture.md)
 3. Start implementing [Patterns](patterns/core-state.md)
+
+## Future Vision
+
+Pattern Bridge is intentionally designed with a 6-month lifespan. Success means becoming obsolete as AI capabilities evolve to anticipate and build what we need before we ask for it.
+
+Remember: This is not a permanent solution - it's a bridge to help us cross the current gap in AI development.
