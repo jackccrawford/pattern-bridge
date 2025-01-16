@@ -1,0 +1,39 @@
+site_name: Pattern Bridge
+site_description: The First AI-Native React Framework
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: deep purple
+    accent: purple
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+
+nav:
+  - Introduction:
+    - Vision: index.md
+    - Core Principles: principles.md
+    - AI-First Architecture: ai-first-architecture.md
+  - Patterns:
+    - Core State Machine: patterns/core-state.md
+    - Navigation Patterns: patterns/navigation.md
+    - Gesture Patterns: patterns/gestures.md
+    - Theme Patterns: patterns/theme.md
+    - Toast Patterns: patterns/toast.md
+  - Implementation:
+    - State Machines: implementation/state-machines.md
+    - Type Safety: implementation/type-safety.md
+    - UI Components: implementation/ui-components.md
+    - Platform Specifics: implementation/platform-specifics.md
+  - Validation:
+    - Success Metrics: validation/metrics.md
+    - Human Interface: validation/human-interface.md
+    - Testing Patterns: validation/testing.md
+  - Reference:
+    - API Documentation: reference/api.md
+    - Type System: reference/types.md
+    - Pattern Library: reference/patterns.md

@@ -1,12 +1,22 @@
 import React, { createContext, useContext, useState } from 'react';
 
-interface Theme {
+export interface Theme {
   colors: {
     primary: string;
     secondary: string;
     background: string;
     text: string;
     border: string;
+    success: string;
+    error: string;
+    info: string;
+  };
+  spacing: {
+    xs: number;
+    sm: number;
+    md: number;
+    lg: number;
+    xl: number;
   };
 }
 
@@ -17,10 +27,20 @@ const defaultTheme: Theme = {
     background: '#FFFFFF',
     text: '#000000',
     border: '#E5E5E5',
+    success: '#4CAF50',
+    error: '#F44336',
+    info: '#2196F3',
+  },
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
   },
 };
 
-interface ThemeContextType {
+export interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
@@ -28,7 +48,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState(defaultTheme);
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

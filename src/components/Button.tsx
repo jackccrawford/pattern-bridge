@@ -4,12 +4,16 @@ import {
   StyleSheet, 
   TouchableOpacityProps,
   Platform,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import { Text } from './Text';
+import { useTheme } from '../contexts/ThemeContext';
 
 export interface ButtonProps extends TouchableOpacityProps {
   label: string;
   variant?: 'primary' | 'secondary';
+  style?: StyleProp<ViewStyle>;
 }
 
 export const Button: React.FC<ButtonProps> = ({ 
@@ -19,12 +23,55 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   ...props 
 }) => {
+  const { theme } = useTheme();
+  
+  const buttonStyles = React.useMemo(() => StyleSheet.create({
+    button: {
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.md,
+      borderRadius: theme.spacing.sm,
+      minWidth: 120,
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...Platform.select({
+        web: {
+          cursor: 'pointer',
+        },
+      }),
+    },
+    primary: {
+      backgroundColor: theme.colors.primary,
+    },
+    secondary: {
+      backgroundColor: 'transparent',
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+    },
+    disabled: {
+      backgroundColor: theme.colors.border,
+      borderColor: theme.colors.border,
+    },
+    label: {
+      fontSize: 16,
+      fontWeight: '600',
+    },
+    primaryLabel: {
+      color: '#FFF',
+    },
+    secondaryLabel: {
+      color: theme.colors.primary,
+    },
+    disabledLabel: {
+      color: theme.colors.text + '80', // 50% opacity
+    },
+  }), [theme]);
+
   return (
     <TouchableOpacity
       style={[
-        styles.button,
-        styles[variant],
-        disabled && styles.disabled,
+        buttonStyles.button,
+        buttonStyles[variant],
+        disabled && buttonStyles.disabled,
         style,
       ]}
       disabled={disabled}
@@ -32,9 +79,9 @@ export const Button: React.FC<ButtonProps> = ({
     >
       <Text
         style={[
-          styles.label,
-          styles[`${variant}Label`],
-          disabled && styles.disabledLabel,
+          buttonStyles.label,
+          buttonStyles[`${variant}Label`],
+          disabled && buttonStyles.disabledLabel,
         ]}
       >
         {label}
@@ -42,44 +89,3 @@ export const Button: React.FC<ButtonProps> = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    minWidth: 120,
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...Platform.select({
-      web: {
-        cursor: 'pointer',
-      },
-    }),
-  },
-  primary: {
-    backgroundColor: '#007AFF',
-  },
-  secondary: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#007AFF',
-  },
-  disabled: {
-    backgroundColor: '#E5E5E5',
-    borderColor: '#E5E5E5',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  primaryLabel: {
-    color: '#FFF',
-  },
-  secondaryLabel: {
-    color: '#007AFF',
-  },
-  disabledLabel: {
-    color: '#999',
-  },
-});
