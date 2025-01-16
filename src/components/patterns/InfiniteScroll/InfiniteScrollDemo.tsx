@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
+import React, { useCallback, useState, useEffect } from 'react';
+import { RefreshControl, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
@@ -31,7 +31,7 @@ export const InfiniteScrollDemo = () => {
     if (refresh) {
       setItems(newItems);
     } else {
-      setItems([...items, ...newItems]);
+      setItems(prevItems => [...prevItems, ...newItems]);
     }
   }, [items]);
 
@@ -52,45 +52,58 @@ export const InfiniteScrollDemo = () => {
   }, [loading, fetchItems]);
 
   // Initial load
-  React.useEffect(() => {
+  useEffect(() => {
     fetchItems();
   }, []);
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.primary}
+          colors={[theme.colors.primary]}
         />
       }
-      onScroll={({ nativeEvent }) => {
+      onMomentumScrollEnd={({ nativeEvent }) => {
         const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-        const paddingToBottom = 20;
-        if (layoutMeasurement.height + contentOffset.y >=
-            contentSize.height - paddingToBottom) {
+        const paddingToBottom = 50; // Increased threshold
+        const isCloseToBottom = 
+          layoutMeasurement.height + contentOffset.y >= 
+          contentSize.height - paddingToBottom;
+            
+        if (isCloseToBottom && !loading) {
           onEndReached();
         }
       }}
-      scrollEventThrottle={400}
+      scrollEventThrottle={16}
     >
       {items.map(item => (
         <View
           key={item.id}
           style={[
             styles.item,
-            { borderBottomColor: theme.colors.border }
+            { backgroundColor: theme.colors.background, borderColor: theme.colors.border }
           ]}
+          accessible={true}
+          accessibilityLabel={`${item.title}: ${item.subtitle}`}
         >
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.subtitle}>{item.subtitle}</Text>
+          <Text style={[styles.title, { color: theme.colors.text }]}>
+            {item.title}
+          </Text>
+          <Text style={[styles.subtitle, { color: theme.colors.secondary }]}>
+            {item.subtitle}
+          </Text>
         </View>
       ))}
       {loading && (
-        <View style={styles.loading}>
-          <Text>Loading more items...</Text>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator color={theme.colors.primary} />
+          <Text style={[styles.loadingText, { color: theme.colors.secondary }]}>
+            Loading more items...
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -103,7 +116,10 @@ const styles = StyleSheet.create({
   },
   item: {
     padding: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginHorizontal: 16,
+    marginVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
   },
   title: {
     fontSize: 16,
@@ -112,10 +128,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 14,
-    opacity: 0.7,
   },
-  loading: {
-    padding: 16,
+  loadingContainer: {
+    padding: 20,
     alignItems: 'center',
   },
+  loadingText: {
+    marginTop: 8,
+    fontSize: 14,
+  }
 });

@@ -88,6 +88,17 @@ Note: Make sure `react-native-svg` is installed before using any Lucide icons, a
 ## Development Environment Setup
 
 ### iOS Development (Mac only)
+
+> ⚠️ **CRITICAL: CocoaPods UTF-8 Requirement**
+> 
+> Before running ANY CocoaPods commands, you MUST use this exact command:
+> ```bash
+> env LANG=en_US.UTF-8 pod install
+> ```
+> Failure to do this will result in encoding errors and pod installation will fail.
+
+#### First-Time Setup
+
 1. Install Xcode from the Mac App Store
 2. Install Xcode Command Line Tools:
    ```bash
@@ -97,6 +108,41 @@ Note: Make sure `react-native-svg` is installed before using any Lucide icons, a
    ```bash
    sudo gem install cocoapods
    ```
+4. Install pods (IMPORTANT: use the UTF-8 environment setting):
+   ```bash
+   cd ios
+   env LANG=en_US.UTF-8 pod install
+   cd ..
+   ```
+5. Open the workspace in Xcode:
+   ```bash
+   open ios/PatternBridge.xcworkspace
+   ```
+6. In Xcode:
+   - Select your development team
+   - Build and run the project (▶️ button)
+   - This initial build in Xcode is required for proper setup
+
+#### Subsequent Development
+
+After the initial Xcode setup:
+- Use `expo start` and press `i` in the Metro bundler
+- Or use `npm run ios` if you prefer npm scripts
+- For Expo Go, follow the Expo CLI instructions for running on iOS
+
+Common iOS Setup Issues:
+- If you see Unicode/encoding errors during pod install, make sure you used the `env LANG=en_US.UTF-8` prefix
+- If pods fail to install, try cleaning:
+  ```bash
+  cd ios
+  env LANG=en_US.UTF-8 pod deintegrate
+  env LANG=en_US.UTF-8 pod install
+  cd ..
+  ```
+- If build fails in Xcode:
+  1. Clean the build folder (Cmd + Shift + K)
+  2. Clean the build cache (Cmd + Option + Shift + K)
+  3. Try building again
 
 ### Android Development
 1. Install Android Studio
