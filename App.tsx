@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ToastProvider } from './src/components/Toast/ToastProvider';
 import { ThemeProvider } from './src/contexts/ThemeContext';
+import { PatternProvider } from './src/contexts/PatternContext';
 import { ThemedNavigator } from './src/navigation/ThemedNavigator';
 
 export default function App() {
@@ -11,11 +12,13 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <NavigationContainer>
-            <ToastProvider>
-              <ThemedNavigator />
-            </ToastProvider>
-          </NavigationContainer>
+          <PatternProvider>
+            <NavigationContainer>
+              <ToastProvider>
+                <ThemedNavigator />
+              </ToastProvider>
+            </NavigationContainer>
+          </PatternProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

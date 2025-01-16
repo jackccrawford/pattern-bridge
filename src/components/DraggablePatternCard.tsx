@@ -108,16 +108,15 @@ export const DraggablePatternCard = () => {
         </Text>
         
         {/* Star trail effect */}
-        {stars.map((star) => (
+        {stars.map((star, index) => (
           <StarShape
-            key={star.id}
+            key={index}
             style={[
-              styles.star,
-              {
-                left: star.x - 10,
-                top: star.y - 10,
-              }
+              { position: 'absolute', width: 40, height: 40 },
+              { left: star.x - 10, top: star.y - 10 }
             ]}
+            size={40}
+            color="#ffffff"
           />
         ))}
       </Animated.View>
