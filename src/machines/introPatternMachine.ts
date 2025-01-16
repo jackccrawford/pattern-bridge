@@ -1,4 +1,4 @@
-import { createMachine, assign, MachineConfig } from 'xstate';
+import { createMachine, assign } from 'xstate';
 
 /**
  * Introduction Pattern State Machine
@@ -27,6 +27,8 @@ import { createMachine, assign, MachineConfig } from 'xstate';
  */
 
 // Types that describe the shape of our context and events
+type Status = 'idle' | 'active' | 'completed' | 'skipped';
+
 export interface IntroContext {
   id: string;                    // Unique identifier for this introduction
   name: string;                  // Name of feature/content being introduced
@@ -55,28 +57,47 @@ export interface IntroContext {
     showSocialProof: boolean;
     autoAdvance: boolean;
   };
-  status: 'idle' | 'active' | 'completed' | 'skipped';
+  status: Status;
 }
 
-type IntroEvent =
-  | { type: 'VIEW' }
-  | { type: 'START' }
-  | { type: 'PROGRESS'; value: number }
-  | { type: 'COMPLETE_STEP'; step: string }
-  | { type: 'DISMISS' }
-  | { type: 'SKIP' }
-  | { type: 'RESET' }
-  | { type: 'UPDATE_PREFERENCES'; preferences: Partial<IntroContext['preferences']> }
-  | { type: 'SHOW_SOCIAL_PROOF' }
-  | { type: 'ERROR'; message: string };
+// Event type definitions
+type ViewEvent = { type: 'VIEW' }
+type StartEvent = { type: 'START' }
+type ProgressEvent = { type: 'PROGRESS'; value: number }
+type CompleteStepEvent = { type: 'COMPLETE_STEP'; step: string }
+type DismissEvent = { type: 'DISMISS' }
+type SkipEvent = { type: 'SKIP' }
+type ResetEvent = { type: 'RESET' }
+type UpdatePreferencesEvent = { 
+  type: 'UPDATE_PREFERENCES';
+  preferences: Partial<IntroContext['preferences']>
+}
+type ShowSocialProofEvent = { type: 'SHOW_SOCIAL_PROOF' }
+type ErrorEvent = { type: 'ERROR'; message: string }
+
+export type IntroEvent =
+  | ViewEvent
+  | StartEvent
+  | ProgressEvent
+  | CompleteStepEvent
+  | DismissEvent
+  | SkipEvent
+  | ResetEvent
+  | UpdatePreferencesEvent
+  | ShowSocialProofEvent
+  | ErrorEvent;
 
 export const createIntroPatternMachine = (config: {
   id: string;
   name: string;
   milestones?: number[];
 }) => {
-  const machineConfig: MachineConfig<IntroContext, any, IntroEvent> = {
-    id: 'introPattern',
+  return createMachine({
+    types: {} as {
+      context: IntroContext;
+      events: IntroEvent;
+    },
+    id: config.id,
     initial: 'idle',
     context: {
       id: config.id,
@@ -109,42 +130,50 @@ export const createIntroPatternMachine = (config: {
         on: {
           VIEW: {
             target: 'active',
-            actions: assign<IntroContext, Extract<IntroEvent, { type: 'VIEW' }>>((context) => ({
-              engagement: {
-                ...context.engagement,
-                viewCount: context.engagement.viewCount + 1,
-                lastEngaged: new Date(),
-              }
-            }))
+            actions: [
+              assign(({ context }) => ({
+                engagement: {
+                  ...context.engagement,
+                  viewCount: context.engagement.viewCount + 1,
+                  lastEngaged: new Date(),
+                }
+              }))
+            ]
           },
         },
       },
       active: {
         on: {
           PROGRESS: {
-            actions: assign<IntroContext, Extract<IntroEvent, { type: 'PROGRESS' }>>((context, event) => ({
-              status: 'active',
-              progress: {
-                ...context.progress,
-                current: event.value,
-                lastUpdate: new Date(),
-              }
-            }))
+            actions: [
+              assign({
+                status: (_) => 'active' as Status,
+                progress: ({ context, event }) => ({
+                  ...context.progress,
+                  current: event.value,
+                  lastUpdate: new Date(),
+                })
+              })
+            ]
           },
           COMPLETE_STEP: {
-            actions: assign<IntroContext, Extract<IntroEvent, { type: 'COMPLETE_STEP' }>>((context, event) => ({
-              engagement: {
-                ...context.engagement,
-                completedSteps: [...context.engagement.completedSteps, event.step],
-                lastEngaged: new Date(),
-              }
-            }))
+            actions: [
+              assign({
+                engagement: ({ context, event }) => ({
+                  ...context.engagement,
+                  completedSteps: [...context.engagement.completedSteps, event.step],
+                  lastEngaged: new Date(),
+                })
+              })
+            ]
           },
           SKIP: {
             target: 'skipped',
-            actions: assign<IntroContext>(() => ({
-              status: 'skipped'
-            }))
+            actions: [
+              assign({
+                status: (_) => 'skipped' as Status
+              })
+            ]
           },
         },
       },
@@ -152,22 +181,19 @@ export const createIntroPatternMachine = (config: {
         on: {
           RESET: {
             target: 'idle',
-            actions: assign<IntroContext>((context) => ({
-              progress: {
-                current: 0,
-                lastUpdate: new Date(),
-                milestones: context.progress.milestones,
-              },
-              status: 'idle'
-            }))
+            actions: [
+              assign({
+                progress: ({ context }) => ({
+                  ...context.progress,
+                  current: 0,
+                  lastUpdate: new Date(),
+                }),
+                status: (_) => 'idle' as Status
+              })
+            ]
           },
         },
       },
-      completed: {
-        type: 'final',
-      },
     },
-  };
-
-  return createMachine(machineConfig);
+  });
 };

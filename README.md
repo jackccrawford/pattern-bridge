@@ -12,14 +12,23 @@ A laboratory for AI-first development, demonstrating how AI can understand and t
 
 ## Quick Start
 
+1. Configure npm for legacy peer dependencies (required for Expo/React Native):
 ```bash
-# Install dependencies
+npm config set legacy-peer-deps true
+```
+
+2. Install dependencies:
+```bash
 npm install
+```
 
-# Start development
+3. Start development:
+```bash
 npm start
+```
 
-# Run on platforms
+4. Run on platforms:
+```bash
 npm run web
 npm run android
 npm run ios
