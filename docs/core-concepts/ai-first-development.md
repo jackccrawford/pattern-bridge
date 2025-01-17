@@ -311,6 +311,6 @@ stateDiagram-v2
 ```
 
 ## Related
-- [Type System](../features/type-system.md)
-- [Component Patterns](../guides/component-patterns.md)
-- [State Management](../guides/state-management.md)
+See also:
+- [Theme System](../features/theme-system.md)
+- [State Management](../core-concepts/state-management.md)

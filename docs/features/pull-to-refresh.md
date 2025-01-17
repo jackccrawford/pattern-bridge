@@ -122,5 +122,5 @@ toast.show({
 
 ## Related
 - [Haptic Feedback](haptics.md)
-- [Toast System](../components/toast.md)
+- [Toast](components/toast.md)
 - [Theme System](theme-system.md)

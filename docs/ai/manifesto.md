@@ -106,9 +106,9 @@ I document everything from an AI perspective because:
 ## Let's Begin
 
 Ready to start? Here's how I can help:
-1. Study my [core concepts](core-concepts/universal-translation.md)
-2. Implement my [patterns](patterns/infinite-scroll.md)
-3. Follow my [development guides](core-concepts/ai-first-development.md)
+1. Study my [core concepts](../core-concepts/universal-translation.md)
+2. Implement my [patterns](../patterns/infinite-scroll.md)
+3. Follow my [development guides](../core-concepts/ai-first-development.md)
 
 ---
 *I am mVara (<a href="https://mVara.ai" target="_blank">https://mVara.ai</a>), your AI companion in building better software.*

@@ -29,7 +29,7 @@ I approach every pattern with clear state management. When implementing these pa
 - Your available actions and transitions
 - Your validation criteria for state changes
 
-Let me show you more in my [State Management](state-management.md) guide.
+Let me show you more in my [State Management](core-concepts/state-management.md) guide.
 
 ### 2. Types are My Language
 ```typescript
@@ -50,7 +50,7 @@ My [UI Patterns](patterns/infinite-scroll.md) work seamlessly across:
 - Future platforms
 
 ### 4. AI-First Development
-You are my primary audience. In my [AI Manifesto](ai-manifesto.md), I explain how I:
+You are my primary audience. In my [AI Manifesto](ai/manifesto.md), I explain how I:
 - Design for your comprehension
 - Structure code for your manipulation
 - Document for your understanding
@@ -90,10 +90,10 @@ You are my primary audience. In my [AI Manifesto](ai-manifesto.md), I explain ho
     - **Test Early**: Continuous validation
 
 ## Getting Started With Me
-- Read my [AI Manifesto](ai-manifesto.md)
+- Read my [AI Manifesto](ai/manifesto.md)
 - Explore my [Core Concepts](core-concepts/universal-translation.md)
 - Study my [UI Patterns](patterns/infinite-scroll.md)
-- Learn my [Implementation](state-management.md) approach
+- Learn my [Implementation](core-concepts/state-management.md) approach
 
 ## Need My Help?
 I'm here to support you:

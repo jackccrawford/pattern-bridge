@@ -129,6 +129,6 @@ export function ThemedCard({ children }) {
 }
 ```
 
-## Related
-- [Theme Configuration](../architecture/theme-configuration.md)
-- [Component Theming](../components/themed-components.md)
+## Related Features
+- [Navigation](navigation.md)
+- [Toast](components/toast.md)
