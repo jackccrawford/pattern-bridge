@@ -1,102 +1,75 @@
 # Navigation System
 
-The pattern-bridge navigation system provides a type-safe, platform-adaptive navigation solution built on top of React Navigation.
+## Overview
 
-## Features
+- **Core Features**
+    - **Type Safety**: Full TypeScript support for routes
+    - **Platform Adaptation**: Native navigation patterns
+    - **Theme Integration**: Automatic dark mode support
+    - **Deep Linking**: Universal and app links
 
-- **Type Safety**
-    - **Route Definitions**: Strongly typed navigation paths
-    - **Parameter Validation**: Type-checked route params
-    - **Link Checking**: Compile-time route validation
+- **Implementation**
+    - **Stack Navigator**: Primary navigation container
+    - **Tab Navigator**: Bottom tab navigation
+    - **Screen Components**: Type-safe screen routing
+    - **Theme Context**: Styled navigation elements
 
-- **Cross-Platform**
-    - **iOS Navigation**: Native gestures and animations
-    - **Android Support**: Material design patterns
-    - **Web Routing**: URL-based navigation
+## Platform Adaptation
 
-- **User Experience**
-    - **Smooth Transitions**: Fluid animations
-    - **Deep Linking**: Universal link support
-    - **State Preservation**: Route history management
+- **Navigation Patterns**
+    - **iOS Gestures**: Native swipe gestures
+    - **Android Back**: Hardware back button
+    - **Web Routes**: URL-based navigation
+    - **History**: Platform-specific history
 
-## Implementation
+- **Visual Elements**
+    - **iOS Design**: Native iOS components
+    - **Material Design**: Android patterns
+    - **Web Standards**: Browser conventions
+    - **Responsive**: Screen size adaptation
 
-### Type-Safe Navigation
+## Theme Integration
+
+- **Color System**
+    - **Background**: Theme-aware backgrounds
+    - **Text**: Adaptive text colors
+    - **Icons**: Theme-colored icons
+    - **Status Bar**: Platform status bar
+
+- **Mode Support**
+    - **Light Mode**: Bright navigation theme
+    - **Dark Mode**: Dark navigation theme
+    - **System Mode**: OS preference detection
+    - **Runtime Toggle**: Dynamic switching
+
+## Implementation Examples
+
+- **Basic Navigation**
+    - **Screen Props**: Type-safe parameters
+    - **Route Names**: Constant definitions
+    - **Navigation Hook**: Type-checked navigation
 
 ```typescript
-// Navigation types
-type RootStackParamList = {
-  Home: undefined;
-  Settings: undefined;
-  Details: {
-    id: string;
-    title: string;
-  };
-};
-
-// Type-safe navigation hook
-const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-// Type-safe route access
-const route = useRoute<RouteProp<RootStackParamList, 'Details'>>();
-```
-
-### Platform Adaptations
-
-The navigation system automatically adapts to platform conventions:
-
-```tsx
-// ThemedNavigator.tsx
-export function ThemedNavigator() {
-  const { theme, isDark } = useTheme();
-  
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        // iOS-specific back button title
-        headerBackTitleVisible: Platform.OS === 'ios',
-        // Android-specific ripple effect
-        android_ripple: Platform.OS === 'android' ? { color: theme.colors.ripple } : undefined,
-        // Platform-specific tab bar style
-        tabBarStyle: Platform.select({
-          ios: styles.iosTabBar,
-          android: styles.androidTabBar,
-        }),
-      }}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-    </Tab.Navigator>
-  );
-}
-```
-
-## Usage
-
-### Basic Navigation
-
-```tsx
 function HomeScreen() {
   const navigation = useNavigation();
   
   return (
-    <Pressable
-      onPress={() => navigation.navigate('Details', {
-        id: '123',
-        title: 'Example'
-      })}
-    >
-      <Text>Go to Details</Text>
-    </Pressable>
+    <View>
+      <Button
+        title="Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+    </View>
   );
 }
 ```
 
-### Theme Integration
+- **Theme Integration**
+    - **Colors**: Theme-aware colors
+    - **Dark Mode**: Automatic adaptation
+    - **Status Bar**: Platform handling
 
-The navigation system automatically integrates with the theme system:
-
-```tsx
+```typescript
 const navigationTheme = {
   dark: isDark,
   colors: {
@@ -105,55 +78,38 @@ const navigationTheme = {
     card: theme.colors.surface,
     text: theme.colors.text,
     border: theme.colors.border,
-    notification: theme.colors.notification,
-  },
-};
-```
-
-### Deep Linking
-
-Configure deep links with type safety:
-
-```typescript
-const linking = {
-  prefixes: ['pattern-bridge://'],
-  config: {
-    screens: {
-      Home: 'home',
-      Details: {
-        path: 'details/:id',
-        parse: {
-          id: (id: string) => id,
-        },
-      },
-    },
   },
 };
 ```
 
 ## Best Practices
 
-1. **Type Safety**
-   - Always use typed navigation hooks
-   - Define route params interface
-   - Use constants for route names
+- **Type Safety**
+    - **Navigation Hooks**: Always use typed hooks
+    - **Route Parameters**: Define param interfaces
+    - **Route Constants**: Use name constants
+    - **Link Checking**: Validate at compile time
 
-2. **Platform Adaptations**
-   - Use Platform.select for OS-specific styles
-   - Follow platform conventions for navigation patterns
-   - Test on both iOS and Android
+- **Platform Adaptation**
+    - **iOS Design**: Follow iOS patterns
+    - **Android Design**: Follow Material Design
+    - **Web Design**: Follow browser conventions
+    - **Responsive Layout**: Adapt to screen sizes
 
-3. **Theme Integration**
-   - Use theme colors for navigation elements
-   - Ensure proper contrast in both light/dark modes
-   - Test navigation transitions with theme changes
+- **Performance**
+    - **Lazy Loading**: Load screens on demand
+    - **Memory Management**: Clear unused screens
+    - **Animation Control**: Optimize transitions
+    - **Event Handling**: Efficient navigation events
 
-4. **Performance**
-   - Lazy load screens when possible
-   - Optimize navigation options
-   - Use navigation events judiciously
+- **Testing**
+    - **Route Testing**: Verify navigation paths
+    - **State Testing**: Check navigation state
+    - **Deep Link Testing**: Validate external routes
+    - **Platform Testing**: Verify on all platforms
 
 ## Related
-- [Theme System](theme-system.md)
-- [ThemedNavigator Component](../components/themed-navigator.md)
-- [Deep Linking](../guides/deep-linking.md)
+- **Documentation**
+    - **Theme System**: Color and mode handling
+    - **Platform Guide**: OS-specific details
+    - **Type Safety**: TypeScript integration

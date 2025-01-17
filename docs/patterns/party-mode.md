@@ -5,17 +5,24 @@
 The Party Mode pattern demonstrates complex animation sequences and user interaction feedback. Also, it's got more cowbell.
 
 ```mermaid
-sequenceDiagram
-    participant User
-    participant Cowbell
-    participant Fever
-
-    User->>Cowbell: Tap
-    Cowbell->>Cowbell: Ring Animation
-    Cowbell->>Fever: Trigger
-    Fever->>Fever: Rise Up
-    Fever->>Fever: Fade Out
-    Note right of Cowbell: More Cowbell!
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
+graph TD
+    A([User Action]) --> B{Party Mode?}
+    B -->|On| C([Start Animation])
+    B -->|Off| D([Stop Animation])
+    C --> E([Update Colors])
+    D --> F([Reset Colors])
+    E --> G([Next Frame])
+    G --> E
 ```
 
 ## Key Features
@@ -121,7 +128,7 @@ withSequence(
 3. **Theme Testing**
    - Light mode
    - Dark mode
-   - Party mode 🎸
+   - Party mode 
 
 ## Related Patterns
 
@@ -146,4 +153,4 @@ withSequence(
 2. SNL - "More Cowbell" sketch
 3. The fever that only cowbell can cure
 
-Remember: The only prescription... is more cowbell! 🔔
+Remember: The only prescription... is more cowbell! 

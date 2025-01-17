@@ -5,20 +5,24 @@
 The Infinite Scroll pattern provides a seamless way to load and display large lists of data. Combined with Pull-to-Refresh, it creates a natural and intuitive user experience.
 
 ```mermaid
-sequenceDiagram
-    participant User
-    participant List
-    participant Data
-
-    User->>List: Scrolls to bottom
-    List->>Data: Request more items
-    Data-->>List: Return new items
-    List->>User: Display new items
-
-    User->>List: Pull to refresh
-    List->>Data: Request fresh items
-    Data-->>List: Return fresh items
-    List->>User: Display fresh items
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
+graph TD
+    A([Scroll Event]) --> B{Near Bottom?}
+    B -->|Yes| C([Load More])
+    B -->|No| D([Continue])
+    C --> E([Update List])
+    D --> F([Wait])
+    E --> F
+    F --> A
 ```
 
 ## Key Features

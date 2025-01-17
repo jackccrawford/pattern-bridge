@@ -13,12 +13,28 @@
 
 This guide covers common issues encountered in React Native/Expo development and their solutions.
 
+## Quick Checklist
+
+- [x] Node.js and npm installed
+- [x] Expo CLI installed globally
+- [ ] Dependencies installed
+- [ ] iOS/Android development environment set up
+- [ ] Environment variables configured
+
 ## Dependency Installation Issues
 
 ### 1. Peer Dependency Conflicts
 ```bash
 npm ERR! ERESOLVE unable to resolve dependency tree
 ```
+
+!!! warning "Peer Dependency Conflicts"
+    Common when installing new packages or updating existing ones.
+
+    **Quick Fix**:
+    - Remove node_modules: `rm -rf node_modules`
+    - Clear npm cache: `npm cache clean --force`
+    - Reinstall: `npm install`
 
 **Solution:**
 ```bash
@@ -31,15 +47,18 @@ This is required because modern versions of React Native and Expo often have pee
 Invalid hook call. Hooks can only be called inside of the body of a function component
 ```
 
-**Solution:**
-Check for multiple React installations:
-```bash
-npm ls react
-```
-If you see multiple versions:
-1. Remove node_modules and package-lock.json
-2. Clear npm cache: `npm cache clean --force`
-3. Reinstall: `npm install`
+!!! info "Multiple React Versions"
+    If you're seeing multiple React versions:
+
+    **Resolution Steps**:
+    ```bash
+    npm ls react
+    ```
+
+    If you see multiple versions:
+    1. Remove node_modules and package-lock.json
+    2. Clear npm cache: `npm cache clean --force`
+    3. Reinstall: `npm install`
 
 ## Build Issues
 
@@ -49,6 +68,23 @@ If you see multiple versions:
 ```bash
 [!] No podspec found for `React-Core` in `../node_modules/react-native`
 ```
+
+!!! info "CocoaPods Issues"
+    If you're seeing CocoaPods errors:
+
+    1. Clean Pods:
+        ```bash
+        cd ios
+        rm -rf Pods
+        pod install
+        ```
+
+    2. If that doesn't work:
+        ```bash
+        pod deintegrate
+        pod setup
+        pod install
+        ```
 
 **Solution:**
 ```bash
@@ -72,6 +108,17 @@ arch -x86_64 pod install
 Task :app:mergeDexDebug FAILED
 ```
 
+!!! info "Gradle Build Failures"
+    Common after dependency changes or React Native updates.
+
+    **Resolution Steps**:
+    ```bash
+    cd android
+    ./gradlew clean
+    cd ..
+    npm run android
+    ```
+
 **Solution:**
 1. Clean Android build:
 ```bash
@@ -92,6 +139,19 @@ If icons appear as empty boxes:
 ```typescript
 import { Camera } from 'lucide-react-native'; // ❌ Icons not showing
 ```
+
+!!! tip "SVG and Icon Problems"
+    If SVGs aren't rendering:
+
+    1. Check dependencies:
+    ```bash
+    npm install react-native-svg
+    ```
+
+    2. Verify imports:
+    ```typescript
+    import { SvgXml } from 'react-native-svg';
+    ```
 
 **Solution:**
 1. Verify SVG support is installed:
@@ -256,7 +316,10 @@ const styles = StyleSheet.create({
 
 ## Additional Resources
 
-- <a href="https://docs.expo.dev/" target="_blank">Expo Documentation</a>
-- <a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Documentation</a>
-- <a href="https://github.com/react-native-community" target="_blank">React Native Community GitHub</a>
-- <a href="https://github.com/expo/expo/issues" target="_blank">Expo GitHub Issues</a>
+- <a href="https://docs.expo.dev/" target="_blank">:book: Expo Documentation</a>
+- <a href="https://reactnative.dev/docs/getting-started" target="_blank">:rocket: React Native Documentation</a>
+- <a href="https://github.com/react-native-community" target="_blank">:people_holding_hands: React Native Community GitHub</a>
+- <a href="https://github.com/expo/expo/issues" target="_blank">:bug: Expo GitHub Issues</a>
+
+!!! note "Remember"
+    If you're stuck, don't hesitate to check the documentation or open an issue!

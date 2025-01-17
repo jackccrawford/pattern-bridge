@@ -6,7 +6,14 @@ Pattern Bridge evolves from a reference implementation into a complete software 
 
 ```mermaid
 %%{init: {
-  'theme': 'dark'
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
 }}%%
 graph TD
     A([User Requirement Prompt]) --> B([Pattern Bridge Template])
@@ -47,7 +54,14 @@ Unlike typical AI code generation:
 
 ```mermaid
 %%{init: {
-  'theme': 'dark'
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
 }}%%
 graph LR
     A([Input]) --> B([Process]) --> C([Output])
@@ -160,23 +174,23 @@ graph LR
 
 ## Implementation Strategy
 
-1. **Core Template**
-   - Clean navigation
-   - Theme system
-   - Type safety
-   - Base components
+- **Core Template**
+    - **Clean Navigation**: Intuitive user flows
+    - **Theme System**: Consistent styling
+    - **Type Safety**: Strong typing throughout
+    - **Base Components**: Reusable building blocks
 
-2. **Pattern Library**
-   - UI patterns
-   - Navigation patterns
-   - State management
-   - Data flow
+- **Pattern Library**
+    - **UI Patterns**: Common interface elements
+    - **Navigation Patterns**: Standard routing approaches
+    - **State Management**: Data flow patterns
+    - **Data Flow**: Type-safe data handling
 
-3. **AI Integration**
-   - Clear documentation
-   - Type definitions
-   - Pattern examples
-   - Usage guides
+- **AI Integration**
+    - **Clear Documentation**: Easy to understand
+    - **Type Definitions**: Strong interfaces
+    - **Pattern Examples**: Working implementations
+    - **Usage Guides**: Step-by-step tutorials
 
 ## Future Potential
 
@@ -239,7 +253,14 @@ The Software Factory pattern is our systematic approach to software development 
 
 ```mermaid
 %%{init: {
-  'theme': 'dark'
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
 }}%%
 graph TD
     A([Raw Materials]) --> B[Factory Process]

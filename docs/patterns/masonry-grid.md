@@ -5,21 +5,23 @@
 The Masonry Grid pattern provides an efficient way to display items of varying heights in a balanced, visually appealing grid layout.
 
 ```mermaid
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
 graph TD
-    A[Grid Items] --> B[Column Distribution]
-    B --> C[Height Calculation]
-    C --> D[Item Placement]
-    D --> E[Visual Rendering]
-    
-    subgraph "Column Management"
-    B
-    C
-    end
-    
-    subgraph "Rendering Pipeline"
-    D
-    E
-    end
+    A([Grid Items]) --> B{Column Distribution}
+    B -->|Yes| C([Height Calculation])
+    B -->|No| D([Item Placement])
+    C --> E([Visual Rendering])
+    D --> B
+    E --> F([Update Layout])
 ```
 
 ## Key Features

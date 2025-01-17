@@ -14,52 +14,66 @@ This environment variable is REQUIRED for all pod commands due to Ruby's Unicode
 
 ## Build Steps
 
-1. Install JavaScript dependencies:
-```bash
-npm install
-```
+- **Initial Setup**
+    - **Dependencies**: Install JavaScript dependencies
+        ```bash
+        npm install
+        ```
 
-2. Generate native iOS project:
-```bash
-npx expo prebuild -p ios --clean
-```
+    - **Project Generation**: Generate native iOS project
+        ```bash
+        npx expo prebuild --platform ios --clean
+        ```
 
-3. Install CocoaPods dependencies:
-```bash
-cd ios
-LANG=en_US.UTF-8 pod install
-```
+    - **CocoaPods**: Install CocoaPods dependencies
+        ```bash
+        cd ios && LANG=en_US.UTF-8 pod install && cd ..
+        ```
 
-4. Open the workspace:
-```bash
-xed PatternBridge.xcworkspace
-```
-Note: Run this from the ios directory. The command needs the workspace to be in the current directory.
+    - **Workspace**: Open the workspace
+        ```bash
+        open ios/PatternBridge.xcworkspace
+        ```
 
-5. Build and run the project in Xcode using the Play button or `Cmd + R`
+    - **Build & Run**: Use Play button or ++cmd+r++ in Xcode
 
 ## Build System Requirements
 
 ### CocoaPods Environment
 CocoaPods (via Ruby) requires UTF-8 encoding for path processing. This is a fundamental requirement, not a bug or error condition. Always prefix pod commands with `LANG=en_US.UTF-8` to ensure proper operation. This should be done proactively, not as a response to errors.
 
-### Clean Build Process
-If rebuilding is necessary:
-1. Remove Pods directory: `rm -rf ios/Pods`
-2. Clear Xcode derived data: `rm -rf ~/Library/Developer/Xcode/DerivedData/*`
-3. Remove build directory: `rm -rf ios/build`
-4. Remove ios directory entirely: `rm -rf ios`
-5. Start fresh from step 2 in Build Steps
+## Clean Build
 
-### Native Module Integration
-When adding native modules:
-1. Ensure the module is listed in package.json
-2. ALWAYS use prebuild with --clean flag
-3. ALWAYS use LANG=en_US.UTF-8 with pod install
-4. Rebuild in Xcode
+- **Clean Steps**
+    - **Pods**: Remove Pods directory
+        ```bash
+        rm -rf ios/Pods
+        ```
+    - **Derived Data**: Clear Xcode derived data
+        ```bash
+        rm -rf ~/Library/Developer/Xcode/DerivedData/*
+        ```
+    - **Build Directory**: Remove build directory
+        ```bash
+        rm -rf ios/build
+        ```
+    - **iOS Directory**: Remove ios directory entirely
+        ```bash
+        rm -rf ios
+        ```
+    - **Fresh Start**: Start fresh from project generation step
 
-### Xcode Setup Verification
-Before building:
-1. Open Xcode
-2. Go to Xcode > Settings > Locations
-3. Verify Command Line Tools is set to your Xcode version
+## Native Module Integration
+
+- **Module Installation**
+    - **Package Check**: Ensure module is listed in package.json
+    - **Clean Prebuild**: ALWAYS use prebuild with --clean flag
+    - **Pod Install**: ALWAYS use LANG=en_US.UTF-8 with pod install
+    - **Xcode Build**: Rebuild in Xcode
+
+## Xcode Setup Verification
+
+- **Command Line Tools**
+    - **Open Settings**: Open Xcode
+    - **Locations**: Go to Xcode > Settings > Locations
+    - **Version Check**: Verify Command Line Tools matches Xcode version

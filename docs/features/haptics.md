@@ -1,120 +1,114 @@
 # Haptic Feedback
 
-pattern-bridge includes built-in haptic feedback support using Expo's haptics module for enhanced user interaction.
+## Overview
 
-## Features
+- **Core Features**
+    - **Impact Feedback**: Light, medium, heavy impacts
+    - **Notification Types**: Success, warning, error
+    - **Selection Changes**: Subtle selection feedback
+    - **Platform Support**: iOS and Android haptics
 
-- 🎯 Selection feedback
-- 💫 Impact feedback
-- 📱 Notification feedback
-- ⚡ Platform-specific adaptations
+- **Implementation**
+    - **Expo Haptics**: Cross-platform haptics
+    - **Platform Detection**: OS-specific feedback
+    - **Error Handling**: Graceful fallbacks
+    - **Battery Awareness**: Power-efficient feedback
 
-## Implementation
+## Platform Adaptation
 
-### Haptics Integration
+- **iOS Features**
+    - **Taptic Engine**: Native haptic engine
+    - **Impact Styles**: Multiple impact levels
+    - **Notification Types**: Rich notification feel
+    - **Selection Changes**: Subtle selection feedback
+
+- **Android Features**
+    - **Vibration API**: Standard vibration
+    - **Material Design**: Haptic patterns
+    - **Notification Types**: Basic notifications
+    - **Fallback Patterns**: Graceful degradation
+
+## Implementation Examples
+
+- **Basic Usage**
+    - **Impact Feedback**: Simple impact response
+    - **Notification Types**: Status notifications
+    - **Selection Changes**: Selection feedback
 
 ```typescript
-import * as Haptics from 'expo-haptics';
-
-// Selection feedback (light)
-await Haptics.selectionAsync();
-
-// Impact feedback (medium)
-await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-
-// Notification feedback
-await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-```
-
-## Usage Examples
-
-### Button Feedback
-
-```tsx
-function ActionButton({ onPress, children }) {
+function HapticButton() {
   const handlePress = async () => {
-    await Haptics.selectionAsync();
-    onPress();
+    try {
+      await Haptics.impactAsync(
+        Haptics.ImpactFeedbackStyle.Light
+      );
+    } catch (error) {
+      console.warn('Haptics not available');
+    }
   };
 
   return (
-    <Pressable onPress={handlePress}>
-      {children}
-    </Pressable>
+    <Button
+      onPress={handlePress}
+      title="Tap for Feedback"
+    />
   );
 }
 ```
 
-### Toast with Haptics
+- **Advanced Patterns**
+    - **Success Flow**: Multi-step feedback
+    - **Error States**: Warning patterns
+    - **Selection**: Selection feedback
 
-```tsx
-function showToastWithHaptics() {
-  const toast = useToast();
-  
-  const handleAction = async () => {
+```typescript
+const hapticPatterns = {
+  success: async () => {
     await Haptics.notificationAsync(
       Haptics.NotificationFeedbackType.Success
     );
-    toast.show({
-      type: 'success',
-      message: 'Action completed'
-    });
-  };
-}
-```
-
-### Impact Feedback
-
-```tsx
-function SwipeAction() {
-  const handleSwipe = async () => {
-    await Haptics.impactAsync(
-      Haptics.ImpactFeedbackStyle.Heavy
+  },
+  warning: async () => {
+    await Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Warning
     );
-    // Handle swipe action
-  };
-}
+  },
+  error: async () => {
+    await Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Error
+    );
+  }
+};
 ```
 
 ## Best Practices
 
-1. **Appropriate Intensity**
-   - Use selection feedback for button presses
-   - Use impact feedback for gestures
-   - Use notification feedback for important events
+- **User Experience**
+    - **Appropriate Timing**: Right moment for feedback
+    - **Feedback Level**: Correct intensity level
+    - **Context Awareness**: Meaningful feedback
+    - **Battery Impact**: Power consumption care
 
-2. **Platform Considerations**
-   - Test on both iOS and Android
-   - Provide fallbacks for unsupported devices
-   - Consider battery impact
+- **Performance**
+    - **Error Handling**: Graceful fallbacks
+    - **Platform Check**: OS capability check
+    - **Battery State**: Power state awareness
+    - **Throttling**: Prevent feedback spam
 
-3. **User Experience**
-   - Don't overuse haptics
-   - Ensure feedback is meaningful
-   - Keep feedback consistent
+- **Accessibility**
+    - **Optional Feedback**: User preference check
+    - **Alternative Feedback**: Visual alternatives
+    - **Intensity Control**: Adjustable strength
+    - **Clear Purpose**: Meaningful patterns
 
-4. **Performance**
-   - Handle haptics asynchronously
-   - Consider debouncing rapid interactions
-   - Test with slow devices
-
-## Example: HomeScreen Implementation
-
-```tsx
-const demoSection: DemoSection = {
-  title: 'Try It Out',
-  description: 'Tap the button below to see haptics in action',
-  action: {
-    label: 'Show Demo',
-    onPress: async () => {
-      await Haptics.selectionAsync();
-      // Additional action logic
-    },
-  },
-};
-```
+- **Testing**
+    - **Platform Testing**: Cross-device validation
+    - **Battery States**: Different power states
+    - **Error Cases**: Fallback behavior
+    - **User Settings**: Preference handling
 
 ## Related
-- [Toast System](toast-system.md)
-- [Button Components](../components/button.md)
-- [Gesture Handling](../guides/gestures.md)
+- **Documentation**
+    - **Pull to Refresh**: Refresh feedback
+    - **Toast System**: Status notifications
+    - **Button Component**: Interactive elements

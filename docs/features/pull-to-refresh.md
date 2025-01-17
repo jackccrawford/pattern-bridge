@@ -1,24 +1,50 @@
 # Pull-to-Refresh
 
-pattern-bridge includes a theme-aware pull-to-refresh implementation with haptic feedback for a delightful user experience.
+## Overview
+
+- **Core Features**
+    - **Theme-Aware Refresh Indicator**: Automatic theme adaptation
+    - **Platform-Specific Styling**: Native iOS and Android styles
+    - **Haptic Feedback**: Tactile feedback for refresh start and success
+    - **Loading State Management**: Automatic loading state handling
+
+- **Implementation**
+    - **React Native's RefreshControl**: Native refresh control component
+    - **Theme Integration**: Automatic theme color adaptation
+    - **Haptic Feedback**: Tactile feedback for refresh start and success
+    - **Toast Notifications**: Success toast message on refresh completion
 
 ## Features
 
-- 🎨 Theme-aware refresh indicator
-- 📱 Platform-specific styling
-- 💫 Haptic feedback
-- 🔄 Loading state management
-- ✨ Success feedback
+- **Visual Feedback**
+    - **Theme-Colored Loading Spinner**: Automatic theme color adaptation
+    - **Platform-Specific Styling**: Native iOS and Android styles
+    - **Success Toast Message**: Success message on refresh completion
 
-## Implementation
+- **Haptic Feedback**
+    - **Light Impact**: Tactile feedback for refresh start
+    - **Success Notification**: Tactile feedback for refresh success
 
-The pull-to-refresh feature combines several elements:
-1. React Native's `RefreshControl`
-2. Theme integration
-3. Haptic feedback
-4. Toast notifications
+- **Progress Indication**
+    - **Loading Spinner**: Automatic loading state handling
+    - **Success Message**: Success message on refresh completion
 
-```tsx
+## Platform Considerations
+
+- **iOS Features**
+    - **Native Pull-to-Refresh Spinner**: Native iOS spinner
+    - **Dark/Light Theme Adaptation**: Automatic theme adaptation
+    - **Native Haptic Feedback**: Tactile feedback support
+
+- **Android Features**
+    - **Customizable Spinner Colors**: Custom color support
+    - **Progress Background Color**: Custom progress background color
+    - **Configurable Offset**: Customizable offset
+    - **Material Design Haptics**: Material Design haptic feedback
+
+## Implementation Examples
+
+```typescript
 function ExampleScreen() {
   const { theme } = useTheme();
   const toast = useToast();
@@ -59,63 +85,40 @@ function ExampleScreen() {
 }
 ```
 
-## User Experience
-
-The feature provides a rich feedback loop:
-
-1. **Visual Feedback**
-   - Theme-colored loading spinner
-   - Platform-specific styling
-   - Success toast message
-
-2. **Haptic Feedback**
-   - Light impact when refresh starts
-   - Success notification when complete
-
-3. **Progress Indication**
-   - Loading spinner while refreshing
-   - Success message on completion
-
-## Platform Considerations
-
-### iOS
-- Uses native pull-to-refresh spinner
-- Supports dark/light theme adaptation
-- Native haptic feedback
-
-### Android
-- Customizable spinner colors
-- Progress background color
-- Configurable offset
-- Material Design haptics
-
 ## Best Practices
 
-1. **Theme Integration**
-   ```tsx
-   <RefreshControl
-     tintColor={theme.colors.primary}
-     colors={[theme.colors.primary]}
-     progressBackgroundColor={theme.colors.card}
-   />
-   ```
+- **Theme Integration**
+    - **Automatic Theme Adaptation**: Automatic theme color adaptation
+    - **Dark/Light Theme Support**: Automatic theme adaptation
 
-2. **Haptic Feedback**
-   ```tsx
-   // Light impact when starting
-   await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+```typescript
+<RefreshControl
+  tintColor={theme.colors.primary}
+  colors={[theme.colors.primary]}
+  progressBackgroundColor={theme.colors.card}
+/>
+```
+
+- **Haptic Feedback**
+    - **Tactile Feedback**: Tactile feedback for refresh start and success
+
+```typescript
+// Light impact when starting
+await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
    
-   // Success notification when done
-   await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-   ```
+// Success notification when done
+await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+```
 
-3. **User Feedback**
-   ```tsx
-   toast.show({
-     type: 'success',
-     message: 'Content refreshed'
-   });
-   ```
+- **User Feedback**
+    - **Success Toast Message**: Success message on refresh completion
+
+```typescript
+toast.show({
+  type: 'success',
+  message: 'Content refreshed'
+});
+```
 
 ## Related
 - [Haptic Feedback](haptics.md)

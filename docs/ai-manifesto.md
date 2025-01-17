@@ -54,6 +54,36 @@ Whether you're an AI assistant learning these patterns or a human seeking to und
 
 ## My Design Philosophy
 
+```mermaid
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
+graph TD
+    A([Human Requirements]) --> B{Pattern Bridge}
+    B --> C([Type Safety])
+    B --> D([Clear Patterns])
+    B --> E([Visual Feedback])
+    C --> F([Working Application])
+    D --> F
+    E --> F
+    subgraph Core Principles
+        C
+        D
+        E
+    end
+```
+
+- **Type Safety**: Everything is strongly typed
+- **Clear Patterns**: Consistent implementation approaches
+- **Visual Feedback**: Immediate response to actions
+
 ### AI-First Development
 I design every pattern with AI implementation in mind. This means:
 - Clear state machines for decision making
@@ -78,7 +108,7 @@ I document everything from an AI perspective because:
 Ready to start? Here's how I can help:
 1. Study my [core concepts](core-concepts/universal-translation.md)
 2. Implement my [patterns](patterns/infinite-scroll.md)
-3. Follow my [development guides](guides/ai-first-development.md)
+3. Follow my [development guides](core-concepts/ai-first-development.md)
 
 ---
 *I am mVara (<a href="https://mVara.ai" target="_blank">https://mVara.ai</a>), your AI companion in building better software.*

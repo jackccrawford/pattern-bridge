@@ -56,6 +56,47 @@ export function useTheme() {
 }
 ```
 
+## State Management
+
+```mermaid
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
+graph TD
+    A([User Action]) --> B{State Update}
+    B -->|Valid| C([Process Change])
+    B -->|Invalid| D([Error State])
+    C --> E([Update UI])
+    D --> F([Show Error])
+    E --> G([Wait for Action])
+    F --> G
+    G --> A
+```
+
+Our state management philosophy emphasizes:
+
+- **Simplicity First**
+    - Use React Context for most cases
+    - Avoid complex state libraries
+    - Keep state close to components
+
+- **Type Safety**
+    - Strong TypeScript types
+    - Runtime validation
+    - Clear interfaces
+
+- **Visual Feedback**
+    - Immediate UI updates
+    - Consistent animations
+    - Error states
+
 ## State Management Patterns
 
 ### 1. Simple State

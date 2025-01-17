@@ -25,7 +25,7 @@ The pattern-bridge theme system provides a robust, type-safe theming solution th
 
 The theme system is built around a central `ThemeProvider` that makes theme values available throughout your app:
 
-```tsx
+```typescript
 import { ThemeProvider } from './src/theme';
 
 export default function App() {
@@ -41,7 +41,7 @@ export default function App() {
 
 Access theme values using the `useTheme` hook:
 
-```tsx
+```typescript
 import { useTheme } from '../theme';
 
 export function MyComponent() {
@@ -61,7 +61,7 @@ export function MyComponent() {
 
 The theme system provides a simple API for theme switching:
 
-```tsx
+```typescript
 import { useTheme } from '../theme';
 
 export function ThemeToggle() {
@@ -104,7 +104,7 @@ interface Theme {
 
 Here's an example of a fully theme-aware component:
 
-```tsx
+```typescript
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../theme';
 

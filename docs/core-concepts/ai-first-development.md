@@ -86,7 +86,7 @@ interface DemoSection {
 
 Components follow consistent patterns, making them predictable for both AI and humans:
 
-```tsx
+```typescript
 // Pattern: Feature demonstration with description and action
 const demoSection: DemoSection = {
   title: 'Try It Out',
@@ -109,7 +109,7 @@ const demoSection: DemoSection = {
 
 Features are organized around contexts, making dependencies clear and explicit:
 
-```tsx
+```typescript
 // Theme context usage
 const { theme, isDark } = useTheme();
 
@@ -132,7 +132,7 @@ function ThemedToast() {
 
 Components include props that describe their purpose and usage:
 
-```tsx
+```typescript
 function FeatureCard({ 
   title,       // Main feature name
   description, // Brief feature description
@@ -151,7 +151,7 @@ function FeatureCard({
 
 ## AI-Friendly File Structure
 
-```
+```bash
 src/
 ├── components/    # Reusable UI components
 │   ├── Toast/    # Each feature in its own directory
@@ -249,7 +249,7 @@ graph LR
 ```
 
 Example usage:
-```tsx
+```typescript
 <FeatureCard
   title="Theme System"
   description="Light, dark, and system themes"
@@ -271,7 +271,7 @@ graph LR
 ```
 
 Example usage:
-```tsx
+```typescript
 const demo = {
   title: "Try It Out",
   description: "See it in action",
@@ -285,7 +285,7 @@ const demo = {
 ### 3. Theme Integration
 Every component should support theming:
 
-```tsx
+```typescript
 function ThemedComponent() {
   const { theme } = useTheme();
   return (

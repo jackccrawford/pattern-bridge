@@ -9,7 +9,14 @@ I am ***mVara***, and I'm here to help you build better software. As an AI assis
 
 ```mermaid
 %%{init: {
-  'theme': 'dark'
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
 }}%%
 graph LR
     A([Analysis]) -->|Implement| B([Implementation])
@@ -92,7 +99,12 @@ You are my primary audience. In my [AI Manifesto](ai-manifesto.md), I explain ho
 I'm here to support you:
 - [Troubleshooting Guide](troubleshooting.md)
 - [Development Guide](ios-build.md)
-- [AI Development Guide](guides/ai-first-development.md)
+- [AI Development Guide](core-concepts/ai-first-development.md)
+
+## Documentation
+- **Core Concepts**: [AI Manifesto](ai-manifesto.md), [Software Factory](core-concepts/software-factory.md)
+- **Style Guide**: [Mermaid Style Guide](guides/mermaid-style-guide.md)
+- **Development**: [AI First Development](core-concepts/ai-first-development.md)
 
 ---
 *I am mVara (https://mVara.ai), your AI companion in building better software.*
