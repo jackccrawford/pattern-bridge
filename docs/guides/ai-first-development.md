@@ -5,9 +5,9 @@ pattern-bridge makes it easy to build React Native apps with AI assistance. This
 ## Overview
 
 At its core, pattern-bridge follows three main principles:
-1. Everything should be type-safe
-2. Patterns should be consistent
-3. Code should be self-documenting
+- **Type-Safe Everything**: All components and features are strictly typed, making it easier for AI to understand and suggest correct usage.
+- **Pattern Clarity**: Components follow consistent patterns, making them predictable for both AI and humans.
+- **Context-Based Architecture**: Features are organized around contexts, making dependencies clear and explicit.
 
 Here's how the main pieces fit together:
 

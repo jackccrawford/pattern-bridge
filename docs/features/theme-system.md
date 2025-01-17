@@ -4,11 +4,20 @@ The pattern-bridge theme system provides a robust, type-safe theming solution th
 
 ## Features
 
-- 🌓 Light and Dark mode support
-- 🔄 System theme integration
-- 🎨 Runtime theme switching
-- 📝 Type-safe theme definitions
-- 🎯 Component-level theme access
+- **Core Features**
+    - **Dark/Light Modes**: Automatic theme switching
+    - **Custom Colors**: Theme customization
+    - **Consistent Styling**: Global theme application
+
+- **Implementation**
+    - **Context Based**: React Context for theme
+    - **Type Safe**: Strong TypeScript types
+    - **Performant**: Minimal re-renders
+
+- **User Experience**
+    - **System Match**: OS theme detection
+    - **Smooth Transitions**: Theme animations
+    - **Accessibility**: WCAG compliance
 
 ## Usage
 

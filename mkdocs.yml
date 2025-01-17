@@ -2,38 +2,84 @@ site_name: Pattern Bridge
 site_description: The First AI-Native React Framework
 theme:
   name: material
-  palette:
-    scheme: slate
-    primary: deep purple
-    accent: purple
   features:
     - navigation.instant
     - navigation.tracking
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
 
 nav:
   - Introduction:
-    - Vision: index.md
-    - Core Principles: principles.md
-    - AI-First Architecture: ai-first-architecture.md
-  - Patterns:
-    - Core State Machine: patterns/core-state.md
-    - Navigation Patterns: patterns/navigation.md
-    - Gesture Patterns: patterns/gestures.md
-    - Theme Patterns: patterns/theme.md
-    - Toast Patterns: patterns/toast.md
+    - Overview: index.md
+    - AI Manifesto: ai-manifesto.md
+    - Quick Start: expo-setup.md
+  
+  - Core Concepts:
+    - Universal Translation: core-concepts/universal-translation.md
+    - Software Factory: core-concepts/software-factory.md
+    - Pontoon Bridge: core-concepts/pontoon-bridge.md
+    - Lessons Learned: core-concepts/lessons-learned.md
+
+  - UI Patterns:
+    - Infinite Scroll: patterns/infinite-scroll.md
+    - Card Swipe: patterns/card-swipe.md
+    - Masonry Grid: patterns/masonry-grid.md
+    - Party Mode: patterns/party-mode.md
+
   - Implementation:
-    - State Machines: implementation/state-machines.md
-    - Type Safety: implementation/type-safety.md
-    - UI Components: implementation/ui-components.md
-    - Platform Specifics: implementation/platform-specifics.md
-  - Validation:
-    - Success Metrics: validation/metrics.md
-    - Human Interface: validation/human-interface.md
-    - Testing Patterns: validation/testing.md
-  - Reference:
-    - API Documentation: reference/api.md
-    - Type System: reference/types.md
-    - Pattern Library: reference/patterns.md
+    - State Management: state-management.md
+    - Theme System: features/theme-system.md
+    - Navigation: features/navigation.md
+    - Pull to Refresh: features/pull-to-refresh.md
+    - Haptics: features/haptics.md
+    - Toast: components/toast.md
+
+  - AI Development:
+    - Prompt Engineering: ai/prompt-engineering.md
+    - Core State Pattern: ai-patterns/core-state-pattern.md
+    - AI-First Development: guides/ai-first-development.md
+    - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
+
+  - Development:
+    - iOS Build: ios-build.md
+    - Troubleshooting: troubleshooting.md
+    - Mermaid Styling: guides/mermaid-styling.md

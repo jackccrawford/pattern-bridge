@@ -5,14 +5,24 @@
 The Card Swipe pattern provides a Tinder-like card interaction with fluid animations and gesture handling.
 
 ```mermaid
+%%{init: {
+  'theme': 'dark',
+  'themeVariables': {
+    'darkMode': true,
+    'background': '#252b32',
+    'mainBkg': '#252b32',
+    'textColor': '#c9d1d9',
+    'lineColor': '#c9d1d9'
+  }
+}}%%
 graph TD
-    A[User Gesture] --> B{Direction?}
-    B -->|Right| C[Like Action]
-    B -->|Left| D[Skip Action]
-    B -->|Release Early| E[Spring Back]
-    C --> F[Next Card]
+    A([User Gesture]) --> B{Direction?}
+    B -->|Right| C([Like Action])
+    B -->|Left| D([Skip Action])
+    B -->|Release Early| E([Spring Back])
+    C --> F([Next Card])
     D --> F
-    E --> G[Current Card]
+    E --> G([Current Card])
 ```
 
 ## Key Features

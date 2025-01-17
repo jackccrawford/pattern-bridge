@@ -1,0 +1,11 @@
+[data-md-color-scheme="slate"] .mermaid {
+  --mermaid-node-bg: #2d2d2d;
+  --mermaid-node-fg: #ffffff;
+  --mermaid-edge-color: #999999;
+}
+
+[data-md-color-scheme="default"] .mermaid {
+  --mermaid-node-bg: #f3f0ff;
+  --mermaid-node-fg: #000000;
+  --mermaid-edge-color: #666666;
+}

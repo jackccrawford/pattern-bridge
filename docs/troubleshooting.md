@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
 
 ## Additional Resources
 
-- [Expo Documentation](https://docs.expo.dev/)
-- [React Native Documentation](https://reactnative.dev/docs/getting-started)
-- [React Native Community GitHub](https://github.com/react-native-community)
-- [Expo GitHub Issues](https://github.com/expo/expo/issues)
+- <a href="https://docs.expo.dev/" target="_blank">Expo Documentation</a>
+- <a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Documentation</a>
+- <a href="https://github.com/react-native-community" target="_blank">React Native Community GitHub</a>
+- <a href="https://github.com/expo/expo/issues" target="_blank">Expo GitHub Issues</a>

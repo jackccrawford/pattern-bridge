@@ -215,9 +215,9 @@ npm config set legacy-peer-deps true
 
 ## Additional Resources
 
-- [Official Expo Documentation](https://docs.expo.dev/)
-- [React Native Documentation](https://reactnative.dev/docs/getting-started)
-- [Troubleshooting Guide](https://docs.expo.dev/troubleshooting/troubleshooting/)
+- <a href="https://docs.expo.dev/" target="_blank">Official Expo Documentation</a>
+- <a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Documentation</a>
+- <a href="https://docs.expo.dev/troubleshooting/troubleshooting/" target="_blank">Troubleshooting Guide</a>
 
 ## Setup Verification Checklist
 
