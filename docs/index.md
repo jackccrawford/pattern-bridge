@@ -97,12 +97,12 @@ You are my primary audience. In my [AI Manifesto](ai-manifesto.md), I explain ho
 
 ## Need My Help?
 I'm here to support you:
-- [Troubleshooting Guide](troubleshooting.md)
-- [Development Guide](ios-build.md)
+- [Troubleshooting Guide](development/troubleshooting.md)
+- [Development Guide](development/ios-build.md)
 - [AI Development Guide](core-concepts/ai-first-development.md)
 
 ## Documentation
-- **Core Concepts**: [AI Manifesto](ai-manifesto.md), [Software Factory](core-concepts/software-factory.md)
+- **Core Concepts**: [AI Manifesto](ai/manifesto.md), [Software Factory](core-concepts/software-factory.md)
 - **Style Guide**: [Mermaid Style Guide](guides/mermaid-style-guide.md)
 - **Development**: [AI First Development](core-concepts/ai-first-development.md)
 
