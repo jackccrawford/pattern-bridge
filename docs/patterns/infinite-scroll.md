@@ -83,6 +83,92 @@ const onEndReached = async () => {
 }
 ```
 
+## Platform-Specific Implementation Details
+
+### Scroll Handling
+
+Different platforms require different scroll event handling approaches:
+
+```typescript
+// Web uses onScroll
+onScroll={Platform.OS === 'web' ? handleScroll : undefined}
+
+// iOS/Android use onMomentumScrollEnd
+onMomentumScrollEnd={Platform.OS !== 'web' ? handleScroll : undefined}
+```
+
+### Platform-Specific Considerations
+
+1. **Web**
+   - Uses native `onScroll` event for better performance
+   - Requires different scroll position calculations
+   - ScrollView from react-native (not gesture-handler)
+
+2. **iOS**
+   - Uses `onMomentumScrollEnd` for reliable scroll detection
+   - Requires safe area inset handling
+   - Works with both ScrollView implementations
+
+3. **Android**
+   - Uses `onMomentumScrollEnd` like iOS
+   - More forgiving with scroll container heights
+   - Compatible with both ScrollView types
+
+### Safe Area Handling
+
+Bottom navigation requires platform-specific safe area handling:
+
+```typescript
+tabBarStyle: {
+  height: Platform.select({
+    ios: 60 + insets.bottom,
+    android: 60,
+    web: 68,
+  }),
+  paddingBottom: Platform.select({
+    ios: insets.bottom,
+    android: 8,
+    web: 8,
+  }),
+}
+```
+
+## Development Environment
+
+### Windsurf IDE Integration
+
+When developing cross-platform patterns in Windsurf:
+- Use the built-in device previews to test all platforms simultaneously
+- Observe scroll behavior and safe areas in real-time
+- Take advantage of Cascade's AI assistance for platform-specific optimizations
+
+### Testing Workflow
+
+1. Start with iOS simulator (middle preview)
+2. Test on Android emulator (right preview)
+3. Verify web behavior (left preview)
+4. Make platform-specific adjustments as needed
+5. Verify changes across all platforms before committing
+
+This parallel testing approach in Windsurf helps catch platform-specific issues early.
+
+## Common Issues and Solutions
+
+1. **Web Scrolling Not Triggering**
+   - Use native ScrollView instead of gesture-handler
+   - Implement web-specific scroll handler
+   - Adjust scroll threshold calculations
+
+2. **Safe Area Clipping**
+   - Use `useSafeAreaInsets` hook
+   - Apply platform-specific padding
+   - Consider dynamic height adjustments
+
+3. **Scroll Performance**
+   - Use appropriate throttling (16ms recommended)
+   - Platform-specific event handlers
+   - Optimize render cycles
+
 ## Usage
 
 ```typescript

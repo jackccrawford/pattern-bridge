@@ -2,37 +2,19 @@
 
 A laboratory for AI-first development, demonstrating how AI can understand and translate patterns across platforms and frameworks.
 
-## Current State
+## Overview
 
-- **Platform Support**: Web, Android, iOS
-- **Core Navigation**: Bottom tabs (Home, Settings)
-- **Design System**: Material Design "lite" with Lucide icons
-- **Framework**: Expo React Native
-- **Type Safety**: Full TypeScript implementation
+Pattern Bridge demonstrates common UI patterns that work seamlessly across iOS, Android, and Web platforms. Each pattern is carefully implemented to maintain consistency while respecting platform-specific behaviors and expectations.
 
-## Quick Start
+## Setup
 
-1. Configure npm for legacy peer dependencies (required for Expo/React Native):
-```bash
-npm config set legacy-peer-deps true
-```
+⚠️ **Important**: Please follow the setup instructions in our documentation carefully to avoid common issues:
 
-2. Install dependencies:
-```bash
-npm install
-```
+1. Read [`docs/expo-setup.md`](docs/expo-setup.md) for detailed platform setup instructions
+2. Follow the setup verification checklist to ensure everything is working
+3. If you encounter any issues, check [`docs/troubleshooting.md`](docs/troubleshooting.md)
 
-3. Start development:
-```bash
-npm start
-```
-
-4. Run on platforms:
-```bash
-npm run web
-npm run android
-npm run ios
-```
+The order of setup steps matters! Skipping or reordering steps will likely result in errors.
 
 ## Project Structure
 
@@ -71,6 +53,8 @@ src/
 - [Core Concepts](docs/core-concepts/universal-translation.md)
 - [AI Prompts](docs/ai/prompt-engineering.md)
 - [Lessons Learned](docs/core-concepts/lessons-learned.md)
+- [Expo Setup](docs/expo-setup.md)
+- [Troubleshooting](docs/troubleshooting.md)
 
 ## Contributing
 

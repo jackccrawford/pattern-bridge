@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { RefreshControl, StyleSheet, View, ActivityIndicator } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { RefreshControl, StyleSheet, View, ActivityIndicator, ScrollView, Platform } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 
@@ -67,15 +66,30 @@ export const InfiniteScrollDemo = () => {
           colors={[theme.colors.primary]}
         />
       }
+      onScroll={({ nativeEvent }) => {
+        if (Platform.OS === 'web') {
+          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+          const paddingToBottom = 50;
+          const isCloseToBottom = 
+            layoutMeasurement.height + contentOffset.y >= 
+            contentSize.height - paddingToBottom;
+              
+          if (isCloseToBottom && !loading) {
+            onEndReached();
+          }
+        }
+      }}
       onMomentumScrollEnd={({ nativeEvent }) => {
-        const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-        const paddingToBottom = 50; // Increased threshold
-        const isCloseToBottom = 
-          layoutMeasurement.height + contentOffset.y >= 
-          contentSize.height - paddingToBottom;
-            
-        if (isCloseToBottom && !loading) {
-          onEndReached();
+        if (Platform.OS !== 'web') {
+          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+          const paddingToBottom = 50;
+          const isCloseToBottom = 
+            layoutMeasurement.height + contentOffset.y >= 
+            contentSize.height - paddingToBottom;
+              
+          if (isCloseToBottom && !loading) {
+            onEndReached();
+          }
         }
       }}
       scrollEventThrottle={16}
