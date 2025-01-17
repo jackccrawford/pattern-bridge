@@ -35,6 +35,8 @@ extra_css:
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences:
@@ -46,17 +48,37 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tabbed:
       alternate_style: true
+  - tables
+  - def_list
+  - attr_list
+  - md_in_html
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.keys
+  - abbr
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
 
 nav:
   - Introduction:
     - Overview: index.md
-    - AI Manifesto: ai-manifesto.md
-    - Quick Start: expo-setup.md
+    - AI Manifesto: ai/manifesto.md
+    - Quick Start: development/expo-setup.md
   
   - Core Concepts:
     - Universal Translation: core-concepts/universal-translation.md
     - Software Factory: core-concepts/software-factory.md
+    - State Management: core-concepts/state-management.md
     - Pontoon Bridge: core-concepts/pontoon-bridge.md
+    - AI-First Development: core-concepts/ai-first-development.md
     - Lessons Learned: core-concepts/lessons-learned.md
 
   - UI Patterns:
@@ -65,21 +87,23 @@ nav:
     - Masonry Grid: patterns/masonry-grid.md
     - Party Mode: patterns/party-mode.md
 
-  - Implementation:
-    - State Management: state-management.md
+  - Features:
     - Theme System: features/theme-system.md
     - Navigation: features/navigation.md
     - Pull to Refresh: features/pull-to-refresh.md
     - Haptics: features/haptics.md
-    - Toast: components/toast.md
+    - Components:
+      - Toast: features/components/toast.md
 
   - AI Development:
     - Prompt Engineering: ai/prompt-engineering.md
-    - Core State Pattern: ai-patterns/core-state-pattern.md
-    - AI-First Development: guides/ai-first-development.md
+    - Core State Pattern: ai/patterns/core-state-pattern.md
     - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
 
+  - Style Guides:
+    - Markdown Style: guides/markdown-style-guide.md
+    - Mermaid Style: guides/mermaid-style-guide.md
+
   - Development:
-    - iOS Build: ios-build.md
-    - Troubleshooting: troubleshooting.md
-    - Mermaid Styling: guides/mermaid-styling.md
+    - iOS Build: development/ios-build.md
+    - Troubleshooting: development/troubleshooting.md

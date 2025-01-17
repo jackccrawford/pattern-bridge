@@ -1,20 +1,48 @@
 # Pattern Bridge
 
-A laboratory for AI-first development, demonstrating how AI can understand and translate patterns across platforms and frameworks.
+[![React Native](https://img.shields.io/badge/React%20Native-0.76.5-blue.svg?style=flat-square&logo=react)](https://reactnative.dev/)
+[![React](https://img.shields.io/badge/React-18.3.1-blue.svg?style=flat-square&logo=react)](https://reactjs.org/)
+[![Expo](https://img.shields.io/badge/Expo-52.0.24-black.svg?style=flat-square&logo=expo)](https://expo.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![MkDocs](https://img.shields.io/badge/MkDocs-1.6.1-blue.svg?style=flat-square)](https://www.mkdocs.org/)
+[![Status](https://img.shields.io/badge/Status-Alpha-orange.svg?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg?style=flat-square)]()
 
-## Overview
+An AI-native framework demonstrating how AI can understand, translate, and implement UI patterns across platforms. Built by AI, for AI, with human collaboration in mind.
 
-Pattern Bridge demonstrates common UI patterns that work seamlessly across iOS, Android, and Web platforms. Each pattern is carefully implemented to maintain consistency while respecting platform-specific behaviors and expectations.
+## Why Pattern Bridge?
 
-## Setup
+Pattern Bridge bridges the gap between human design patterns and AI implementation by:
+- **AI-First Design**: Every pattern is optimized for AI comprehension and translation
+- **Cross-Platform Harmony**: Seamless implementation across iOS, Android, and Web
+- **Living Documentation**: Documentation that evolves with AI capabilities
+- **Type Safety**: Strong typing for reliable AI-assisted development
 
-⚠️ **Important**: Please follow the setup instructions in our documentation carefully to avoid common issues:
+## Core Philosophy
 
-1. Read [`docs/expo-setup.md`](docs/expo-setup.md) for detailed platform setup instructions
-2. Follow the setup verification checklist to ensure everything is working
-3. If you encounter any issues, check [`docs/troubleshooting.md`](docs/troubleshooting.md)
+1. **AI-Native Architecture**
+   - Patterns designed for AI understanding
+   - Clear, predictable implementations
+   - Self-documenting code structures
 
-The order of setup steps matters! Skipping or reordering steps will likely result in errors.
+2. **Bridge Principles**
+   - **Temporary**: 6-month lifespan ensures fresh, relevant patterns
+   - **Portable**: Easy adaptation across frameworks
+   - **Practical**: Production-ready implementations
+
+3. **Development Approach**
+   - Clean, minimal pattern demonstrations
+   - AI-optimized code organization
+   - Human-friendly developer experience
+
+## Getting Started
+
+!!! warning "Important"
+    Follow these steps in order to ensure a smooth setup:
+
+1. Read [`docs/expo-setup.md`](docs/expo-setup.md) for platform setup
+2. Follow the verification checklist
+3. Check [`docs/troubleshooting.md`](docs/troubleshooting.md) if needed
 
 ## Project Structure
 
@@ -56,13 +84,65 @@ src/
 - [Expo Setup](docs/expo-setup.md)
 - [Troubleshooting](docs/troubleshooting.md)
 
+## Documentation Server
+
+### MkDocs Setup
+
+1. Install MkDocs and the Material theme:
+   ```bash
+   pip install mkdocs-material
+   ```
+
+2. Additional plugins (optional but recommended):
+   ```bash
+   pip install pymdown-extensions
+   ```
+
+### Running the Documentation Server
+
+From the project root (where mkdocs.yml is located):
+
+1. Local development (default):
+   ```bash
+   mkdocs serve
+   ```
+   Access at: http://localhost:8000
+
+2. Network accessible (recommended for team sharing):
+   ```bash
+   mkdocs serve -a 0.0.0.0:8000
+   ```
+   Access at:
+   - Local: http://localhost:8000
+   - Network: http://your.ip.address:8000
+
+### Server Controls
+
+- Start server: `mkdocs serve`
+- Stop server: ++ctrl+c++
+- Rebuild docs: `mkdocs build`
+- Help: `mkdocs --help`
+
+### Common Issues
+
+- If port 8000 is in use:
+  ```bash
+  mkdocs serve -a 0.0.0.0:8001  # or any other port
+  ```
+- If changes aren't showing:
+  1. Check if the server is watching files (should show "Rebuilding documentation...")
+  2. Try restarting the server
+  3. Clear your browser cache
+
+For more details on documentation structure and formatting, see our [Markdown Style Guide](docs/guides/markdown-style-guide.md).
+
 ## Contributing
 
 This project is designed to evolve rapidly. Expect significant changes as AI capabilities grow.
 
 ## License
 
-MIT
+Proprietary: This project is a work in progress and is not intended for public distribution.
 
 ---
-Built with ❤️ by AI, for AI (and humans too)
+Built by AI, for AI
