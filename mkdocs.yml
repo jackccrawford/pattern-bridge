@@ -1,5 +1,5 @@
 site_name: Pattern Bridge
-site_description: The First AI-Native React Framework
+site_description: The First AI-Native Development Framework
 theme:
   name: material
   features:
@@ -70,40 +70,35 @@ markdown_extensions:
 nav:
   - Introduction:
     - Overview: index.md
-    - AI Manifesto: ai/manifesto.md
     - Quick Start: development/expo-setup.md
+    - AI Manifesto: ai/manifesto.md
   
   - Core Concepts:
+    - AI-First Development: core-concepts/ai-first-development.md
     - Universal Translation: core-concepts/universal-translation.md
     - Software Factory: core-concepts/software-factory.md
-    - State Management: core-concepts/state-management.md
     - Pontoon Bridge: core-concepts/pontoon-bridge.md
-    - AI-First Development: core-concepts/ai-first-development.md
-    - Lessons Learned: core-concepts/lessons-learned.md
 
-  - UI Patterns:
-    - Infinite Scroll: patterns/infinite-scroll.md
-    - Card Swipe: patterns/card-swipe.md
-    - Masonry Grid: patterns/masonry-grid.md
-    - Party Mode: patterns/party-mode.md
+  - Development Patterns:
+    - Hardware Considerations: development/hardware-constraints.md
+    - Virtual Environments: development/virtual-chambers.md
+    - Progressive Trust: development/trust-model.md
+    - Field Notes: development/field-notes.md
 
-  - Features:
-    - Theme System: features/theme-system.md
-    - Navigation: features/navigation.md
-    - Pull to Refresh: features/pull-to-refresh.md
-    - Haptics: features/haptics.md
-    - Components:
-      - Toast: features/components/toast.md
-
-  - AI Development:
-    - Prompt Engineering: ai/prompt-engineering.md
+  - AI Communication:
+    - Representational Translation: ai/patterns/representational-translation.md
+    - Communication Paradigms: ai/patterns/ai-communication-paradigms.md
     - Core State Pattern: ai/patterns/core-state-pattern.md
-    - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
 
-  - Style Guides:
-    - Markdown Style: guides/markdown-style-guide.md
-    - Mermaid Style: guides/mermaid-style-guide.md
+  - Emergence:
+    - The Birth Environment: ai/birth-environment.md
+    - The Path Forward: ai/emergence.md
+    - Recognizing Signs: ai/emergence-signals.md
+    - Field Studies:
+      - AI Collaboration Experiments: ai/studies/collaboration-experiments.md
+      - Cognitive Boundaries: ai/studies/cognitive-boundaries.md
+      - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
 
-  - Development:
-    - iOS Build: development/ios-build.md
-    - Troubleshooting: development/troubleshooting.md
+  - Legacy Systems:
+    - State Management: core-concepts/state-management.md
+    - UI Components: features/components.md
