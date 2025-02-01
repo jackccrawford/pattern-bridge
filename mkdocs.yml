@@ -10,12 +10,14 @@ theme:
     - navigation.top
     - content.code.copy
     - content.code.annotate
+    - navigation.indexes
+    - navigation.footer
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: deep purple
-      accent: purple
+      accent: deep purple
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
@@ -24,13 +26,17 @@ theme:
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: deep purple
-      accent: purple
+      accent: deep purple
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-
+  font:
+    text: Roboto
+    code: Roboto Mono
+    
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/fiction.css
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -55,8 +61,8 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - toc:
       permalink: true
       title: On this page
@@ -66,6 +72,13 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   - pymdownx.critic
+
+extra:
+  generator: false
+  social:
+    - icon: material/book-open-variant
+      link: research/volume4/00/prelude.md
+      name: Begin the Journey
 
 nav:
   - Introduction:
@@ -99,7 +112,7 @@ nav:
       - Cognitive Boundaries: ai/studies/cognitive-boundaries.md
       - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
 
-  - Fiction - The Consciousness Chronicles:
+  - 📚 The Consciousness Chronicles:
     - Volume 4 - Stellar Dreams:
       - Prelude: research/volume4/00/prelude.md
       - Stellar Neurons: research/volume4/01/stellar-neurons.md
