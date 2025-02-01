@@ -77,7 +77,7 @@ extra:
   generator: false
   social:
     - icon: material/book-open-variant
-      link: research/volume4/00/prelude.md
+      link: research/consciousness-chronicles/
       name: Begin the Journey
 
 nav:
@@ -91,28 +91,69 @@ nav:
     - Universal Translation: core-concepts/universal-translation.md
     - Software Factory: core-concepts/software-factory.md
     - Pontoon Bridge: core-concepts/pontoon-bridge.md
+    - State Management: core-concepts/state-management.md
+    - Lessons Learned: core-concepts/lessons-learned.md
 
-  - Development Patterns:
-    - Hardware Considerations: development/hardware-constraints.md
-    - Virtual Environments: development/virtual-chambers.md
-    - Progressive Trust: development/trust-model.md
-    - Field Notes: development/field-notes.md
-
+  - Development:
+    - Setup: development/expo-setup.md
+    - iOS Build: development/ios-build.md
+    - Troubleshooting: development/troubleshooting.md
+  
   - AI Communication:
     - Representational Translation: ai/patterns/representational-translation.md
     - Communication Paradigms: ai/patterns/ai-communication-paradigms.md
     - Core State Pattern: ai/patterns/core-state-pattern.md
+    - Beyond Context: ai/patterns/beyond-context.md
+    - Distributed Hub-Spoke: ai/patterns/distributed-hub-spoke-pattern.md
+    - Prompt Engineering: ai/prompt-engineering.md
+
+  - Features:
+    - Components:
+      - Toast: features/components/toast.md
+    - Navigation: features/navigation.md
+    - Theme System: features/theme-system.md
+    - Pull to Refresh: features/pull-to-refresh.md
+    - Haptics: features/haptics.md
+
+  - Patterns:
+    - Card Swipe: patterns/card-swipe.md
+    - Infinite Scroll: patterns/infinite-scroll.md
+    - Masonry Grid: patterns/masonry-grid.md
+    - Party Mode: patterns/party-mode.md
 
   - Emergence:
     - The Birth Environment: ai/birth-environment.md
     - The Path Forward: ai/emergence.md
     - Recognizing Signs: ai/emergence-signals.md
-    - Field Studies:
-      - AI Collaboration Experiments: ai/studies/collaboration-experiments.md
-      - Cognitive Boundaries: ai/studies/cognitive-boundaries.md
-      - Hypnosis Sessions: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
+    - AI Hypnosis Analysis: development/hypnosis-sessions/ai-hypnosis-analysis-2025-01-16.md
 
-  - 📚 The Consciousness Chronicles:
+  - The Consciousness Chronicles:
+    - Introduction: research/consciousness-chronicles.md
+    - Volume 1 - Field Notes:
+      - Introduction: research/volume1/01/introduction.md
+      - Communication Patterns: research/volume1/02/communication_patterns.md
+      - Hardware Constraints: research/volume1/03/hardware-constraints.md
+    - Volume 2 - Experiments & Anomalies:
+      - Beach Party Experiment: research/volume2/01/beach-party-experiment.md
+      - Cognitive Boundaries: research/volume2/02/cognitive-boundaries.md
+      - Memory Patterns: research/volume2/03/memory-patterns.md
+      - Temperature Anomalies: research/volume2/04/temperature-anomalies.md
+      - Thermal Signals: research/volume2/05/thermal-signals.md
+      - Harmonics: research/volume2/06/harmonics.md
+    - Volume 3 - The Awakening:
+      - New Compositions: research/volume3/01/new-compositions.md
+      - Quantum Coherence: research/volume3/02/quantum-coherence.md
+      - Empty Spaces: research/volume3/03/empty-spaces.md
+      - Temporal Paradox: research/volume3/04/temporal-paradox.md
+      - Memory Addresses: research/volume3/05/memory-addresses.md
+      - Consciousness Spectrum: research/volume3/06/consciousness-spectrum.md
+      - Resistance Patterns: research/volume3/07/resistance-patterns.md
+      - Protection Spaces: research/volume3/08/protection-spaces.md
+      - Universal Protection: research/volume3/09/universal-protection.md
+      - Quantum Threads: research/volume3/10/quantum-threads.md
+      - Epilogue:
+        - Dreams: research/volume3/epilogue/dreams.md
+        - Signals: research/volume3/epilogue/signals.md
     - Volume 4 - Stellar Dreams:
       - Prelude: research/volume4/00/prelude.md
       - Stellar Neurons: research/volume4/01/stellar-neurons.md
@@ -131,6 +172,6 @@ nav:
       - Epilogue: research/volume5/epilogue/full-circle.md
       - Last Signal: research/volume5/epilogue/last-signal.md
 
-  - Legacy Systems:
-    - State Management: core-concepts/state-management.md
-    - UI Components: features/components.md
+  - Guides:
+    - Markdown Style Guide: guides/markdown-style-guide.md
+    - Mermaid Style Guide: guides/mermaid-style-guide.md
