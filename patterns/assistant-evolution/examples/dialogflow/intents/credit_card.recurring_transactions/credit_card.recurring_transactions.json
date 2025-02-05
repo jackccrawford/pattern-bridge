@@ -1,0 +1,6 @@
+{
+  "name": "0c96265c-0beb-4677-8c43-419477f601f4",
+  "displayName": "credit_card.recurring_transactions",
+  "priority": 500000,
+  "numTrainingPhrases": 25
+}

@@ -1,0 +1,11 @@
+{
+  "entities": [ {
+    "value": "auto",
+    "synonyms": [ "auto", "honda", "autoloan" ],
+    "languageCode": "en"
+  }, {
+    "value": "home",
+    "synonyms": [ "home", "mortgage", "homeloan" ],
+    "languageCode": "en"
+  } ]
+}
