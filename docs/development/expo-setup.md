@@ -189,6 +189,7 @@ npm run web
 - <a href="https://docs.expo.dev/" target="_blank">Official Expo Documentation</a>
 - <a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Documentation</a>
 - <a href="https://docs.expo.dev/troubleshooting/troubleshooting/" target="_blank">Troubleshooting Guide</a>
+- [React Native 0.77 Upgrade Guide](./react-native-0.77-upgrade.md)
 
 ## Setup Verification Checklist
 
