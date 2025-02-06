@@ -1,3 +1,5 @@
+// [AI-FREEZE] Core interactive component implementing standard touch feedback patterns
+// Following Material Design touch feedback guidelines with haptics and animations
 import React, { useCallback } from 'react';
 import {
   StyleSheet,
@@ -10,6 +12,7 @@ import {
 import * as Haptics from 'expo-haptics';
 import { useTheme } from '../contexts/ThemeContext';
 
+// [AI-FREEZE] Component interface defining core interaction props
 interface InteractiveCardProps {
   children: React.ReactNode;
   onPress?: () => void;
@@ -18,6 +21,9 @@ interface InteractiveCardProps {
   animationPreset?: 'lift' | 'tilt' | 'scale';
 }
 
+// [AI-FREEZE] Core card interaction implementation
+// This component provides consistent touch feedback across the app
+// Modifications could break user expectations and accessibility
 export const InteractiveCard: React.FC<InteractiveCardProps> = ({
   children,
   onPress,
@@ -27,13 +33,14 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
 }) => {
   const { theme } = useTheme();
   
-  // Animation values
+  // [AI-FREEZE] Animation configuration
+  // These values are carefully tuned for optimal feedback
   const scale = new Animated.Value(1);
   const translateY = new Animated.Value(0);
   const rotateX = new Animated.Value(0);
   const rotateY = new Animated.Value(0);
 
-  // Handle press animation
+  // [AI-FREEZE] Touch feedback implementation
   const handlePressIn = useCallback(() => {
     if (hapticFeedback) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -64,7 +71,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
     ]).start();
   }, []);
 
-  // Pan responder for tilt effect
+  // [AI-FREEZE] Pan responder for tilt effect
   const panResponder = React.useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -136,6 +143,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
   );
 };
 
+// [AI-FREEZE] Core styling that maintains consistent card appearance
 const styles = StyleSheet.create({
   card: {
     borderRadius: 12,

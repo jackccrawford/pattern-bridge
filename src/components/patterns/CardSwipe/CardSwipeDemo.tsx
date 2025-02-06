@@ -1,3 +1,5 @@
+// [AI-FREEZE] Card swipe interaction pattern implementation
+// Following standard swipe gesture patterns with proper animation timing
 import React, { useRef } from 'react';
 import { StyleSheet, View, Dimensions, Platform, GestureResponderEvent } from 'react-native';
 import { Text } from '../../Text';
@@ -13,6 +15,7 @@ import Animated, {
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+// [AI-FREEZE] Core layout constant
 const CARD_ASPECT_RATIO = 1.5;
 
 interface Card {
@@ -21,6 +24,7 @@ interface Card {
   color: string;
 }
 
+// [AI-MUTABLE] Demo content - can be modified for testing
 const DEMO_CARDS: Card[] = [
   { id: 1, title: 'Swipe Right to Like', color: '#FF6B6B' },
   { id: 2, title: 'Swipe Left to Skip', color: '#4ECDC4' },
@@ -29,6 +33,8 @@ const DEMO_CARDS: Card[] = [
   { id: 5, title: 'Last One!', color: '#FFEEAD' },
 ];
 
+// [AI-FREEZE] Core swipe interaction implementation
+// Carefully tuned animation and interaction parameters
 export const CardSwipeDemo = () => {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
@@ -38,6 +44,7 @@ export const CardSwipeDemo = () => {
   const cardRef = useRef<View>(null);
   const [cardPosition, setCardPosition] = React.useState({ x: 0, y: 0 });
   
+  // [AI-FREEZE] Responsive layout calculations
   const [dimensions, setDimensions] = React.useState(() => {
     const window = Dimensions.get('window');
     const cardWidth = Math.min(window.width * 0.8, 400);
@@ -243,6 +250,7 @@ export const CardSwipeDemo = () => {
   );
 };
 
+// [AI-FREEZE] Core styling maintaining consistent card appearance and animation
 const styles = StyleSheet.create({
   container: {
     flex: 1,
