@@ -1,66 +1,26 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Platform, Pressable } from 'react-native';
-import { Text } from '../components/Text';
+import { StyleSheet, View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../contexts/ThemeContext';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { usePattern } from '../contexts/PatternContext';
-
-type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
 
 export const SettingsScreen = () => {
   const { theme } = useTheme();
-  const insets = useSafeAreaInsets();
-  const { currentPattern, setPattern } = usePattern();
-
-  const bottomPadding = Platform.select({
-    ios: insets.bottom,
-    android: 80, // Account for tab bar height on Android
-  });
-
-  const patterns: { id: Pattern; name: string }[] = [
-    { id: 'masonry', name: 'Masonry Grid' },
-    { id: 'cowbell', name: 'Party Mode ' },
-    { id: 'cardswipe', name: 'Card Swipe' },
-    { id: 'infinitescroll', name: 'Infinite Scroll' },
-  ];
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <ScrollView 
-        contentContainerStyle={[
-          styles.scrollContent,
-          { paddingBottom: bottomPadding }
-        ]}
-      >
-        <View style={[styles.section, { borderBottomColor: theme.colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Settings</Text>
-          <Text style={[styles.sectionSubtitle, { color: theme.colors.secondary }]}>Configure your experience</Text>
+      <View style={styles.content}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>Profile</Text>
+        <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
+          <Text style={[styles.label, { color: theme.colors.text }]}>Name</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>Pattern Bridge User</Text>
+          
+          <Text style={[styles.label, { color: theme.colors.text, marginTop: 16 }]}>Theme</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>{theme.dark ? 'Dark' : 'Light'}</Text>
+          
+          <Text style={[styles.label, { color: theme.colors.text, marginTop: 16 }]}>Version</Text>
+          <Text style={[styles.value, { color: theme.colors.text }]}>1.0.0</Text>
         </View>
-
-        <View style={[styles.section, { borderBottomColor: theme.colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Active Pattern</Text>
-          {patterns.map((pattern) => (
-            <Pressable
-              key={pattern.id}
-              style={[
-                styles.patternButton,
-                currentPattern === pattern.id && { backgroundColor: theme.colors.primary + '20' },
-              ]}
-              onPress={() => setPattern(pattern.id)}
-            >
-              <Text
-                style={[
-                  styles.patternText,
-                  { color: theme.colors.text },
-                  currentPattern === pattern.id && { color: theme.colors.primary },
-                ]}
-              >
-                {pattern.name}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -69,28 +29,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollContent: {
-    flexGrow: 1,
+  content: {
+    flex: 1,
+    padding: 16,
   },
-  section: {
-    padding: 20,
-    borderBottomWidth: 1,
-  },
-  sectionTitle: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  sectionSubtitle: {
-    fontSize: 16,
     marginBottom: 16,
   },
-  patternButton: {
+  card: {
     padding: 16,
     borderRadius: 8,
-    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  patternText: {
+  label: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 4,
+    opacity: 0.7,
+  },
+  value: {
     fontSize: 16,
   },
 });

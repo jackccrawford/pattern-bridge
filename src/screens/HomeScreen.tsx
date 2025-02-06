@@ -1,41 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
-import { Text } from '../components/Text';
+import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../contexts/ThemeContext';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MasonryGridDemo } from '../components/patterns/MasonryGrid/MasonryGridDemo';
-import { CowbellDemo } from '../components/patterns/PartyMode/CowbellDemo';
 import { CardSwipeDemo } from '../components/patterns/CardSwipe/CardSwipeDemo';
+import { MasonryGridDemo } from '../components/patterns/MasonryGrid/MasonryGridDemo';
 import { InfiniteScrollDemo } from '../components/patterns/InfiniteScroll/InfiniteScrollDemo';
-import { usePattern } from '../contexts/PatternContext';
+import { CowbellDemo } from '../components/patterns/PartyMode/CowbellDemo';
+import { Header } from '../components/Header';
+
+type Pattern = 'masonry' | 'partyMode' | 'cardSwipe' | 'infiniteScroll';
 
 export const HomeScreen = () => {
   const { theme } = useTheme();
-  const insets = useSafeAreaInsets();
-  const { currentPattern } = usePattern();
-
-  const bottomPadding = Platform.select({
-    ios: insets.bottom,
-    android: 80, // Account for tab bar height on Android
-  });
-
-  const patternTitles = {
-    masonry: 'Masonry Grid Pattern',
-    cowbell: 'Party Mode 🔔',
-    cardswipe: 'Card Swipe Pattern',
-    infinitescroll: 'Infinite Scroll Pattern',
-  };
+  const [selectedPattern, setSelectedPattern] = React.useState<Pattern>('masonry');
 
   const renderPattern = () => {
-    switch (currentPattern) {
+    switch (selectedPattern) {
       case 'masonry':
         return <MasonryGridDemo />;
-      case 'cowbell':
-        return <CowbellDemo />;
-      case 'cardswipe':
+      case 'cardSwipe':
         return <CardSwipeDemo />;
-      case 'infinitescroll':
+      case 'infiniteScroll':
         return <InfiniteScrollDemo />;
+      case 'partyMode':
+        return <CowbellDemo />;
       default:
         return <MasonryGridDemo />;
     }
@@ -43,11 +31,8 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
-      <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Pattern Bridge</Text>
-        <Text style={[styles.subtitle, { color: theme.colors.text }]}>{patternTitles[currentPattern]}</Text>
-      </View>
-      <View style={[styles.content, { paddingBottom: bottomPadding }]}>
+      <Header selectedPattern={selectedPattern} onPatternChange={setSelectedPattern} />
+      <View style={styles.content}>
         {renderPattern()}
       </View>
     </SafeAreaView>
@@ -57,19 +42,6 @@ export const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    padding: 16,
-    borderBottomWidth: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 16,
-    opacity: 0.8,
   },
   content: {
     flex: 1,
