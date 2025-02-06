@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { PatternContainer } from '../../PatternContainer';
 
 // [AI-FREEZE] Core layout constant
 const CARD_ASPECT_RATIO = 1.5;
@@ -43,7 +44,7 @@ export const CardSwipeDemo = () => {
   const translateY = useSharedValue(0);
   const cardRef = useRef<View>(null);
   const [cardPosition, setCardPosition] = React.useState({ x: 0, y: 0 });
-  
+
   // [AI-FREEZE] Responsive layout calculations
   const [dimensions, setDimensions] = React.useState(() => {
     const window = Dimensions.get('window');
@@ -135,7 +136,7 @@ export const CardSwipeDemo = () => {
       const touch = webEvent.touches[0];
       const touchX = touch.clientX - cardPosition.x;
       const touchY = touch.clientY - cardPosition.y;
-      
+
       const handleTouchMove = (e: TouchEvent) => {
         if (e.touches.length === 1) {
           const touch = e.touches[0];
@@ -196,66 +197,70 @@ export const CardSwipeDemo = () => {
 
   if (cards.length === 0) {
     return (
-      <View style={[styles.container, { paddingTop: insets.top }]}>
-        <Text style={[styles.noMoreCards, { color: theme.colors.text }]}>
-          No more cards!
-        </Text>
-      </View>
+      <PatternContainer>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
+          <Text style={[styles.noMoreCards, { color: theme.colors.text }]}>
+            No more cards!
+          </Text>
+        </View>
+      </PatternContainer>
     );
   }
 
   const CardWrapper = Platform.OS === 'web' ? View : PanGestureHandler;
-  const cardWrapperProps = Platform.OS === 'web' 
-    ? { 
-        onTouchStart: handleTouchStart as (e: GestureResponderEvent) => void,
-        ref: cardRef,
-      }
-    : { 
-        onGestureEvent: gestureHandler,
-      };
+  const cardWrapperProps = Platform.OS === 'web'
+    ? {
+      onTouchStart: handleTouchStart as (e: GestureResponderEvent) => void,
+      ref: cardRef,
+    }
+    : {
+      onGestureEvent: gestureHandler,
+    };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      <View style={[styles.cardContainer, { height: dimensions.cardWidth * CARD_ASPECT_RATIO }]}>
-        {cards.length > 1 && (
-          <Animated.View
-            style={[
-              styles.card,
-              rSecondCardStyle,
-              { 
-                backgroundColor: cards[1].color,
-                width: dimensions.cardWidth,
-                height: dimensions.cardWidth * CARD_ASPECT_RATIO,
-              },
-            ]}
-          >
-            <Text style={styles.cardText}>{cards[1].title}</Text>
-          </Animated.View>
-        )}
-        
-        <CardWrapper {...cardWrapperProps}>
-          <Animated.View
-            style={[
-              styles.card,
-              rTopCardStyle,
-              { 
-                backgroundColor: cards[0].color,
-                width: dimensions.cardWidth,
-                height: dimensions.cardWidth * CARD_ASPECT_RATIO,
-              },
-            ]}
-          >
-            <Text style={styles.cardText}>{cards[0].title}</Text>
-          </Animated.View>
-        </CardWrapper>
-      </View>
+    <PatternContainer>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={[styles.cardContainer, { height: dimensions.cardWidth * CARD_ASPECT_RATIO }]}>
+          {cards.length > 1 && (
+            <Animated.View
+              style={[
+                styles.card,
+                rSecondCardStyle,
+                {
+                  backgroundColor: cards[1].color,
+                  width: dimensions.cardWidth,
+                  height: dimensions.cardWidth * CARD_ASPECT_RATIO,
+                },
+              ]}
+            >
+              <Text style={styles.cardText}>{cards[1].title}</Text>
+            </Animated.View>
+          )}
 
-      <View style={[styles.footer, { paddingBottom: insets.bottom || 20 }]}>
-        <Text style={[styles.instructions, { color: theme.colors.text }]}>
-          ← Swipe cards left or right →
-        </Text>
+          <CardWrapper {...cardWrapperProps}>
+            <Animated.View
+              style={[
+                styles.card,
+                rTopCardStyle,
+                {
+                  backgroundColor: cards[0].color,
+                  width: dimensions.cardWidth,
+                  height: dimensions.cardWidth * CARD_ASPECT_RATIO,
+                },
+              ]}
+            >
+              <Text style={styles.cardText}>{cards[0].title}</Text>
+            </Animated.View>
+          </CardWrapper>
+        </View>
+
+        <View style={[styles.footer, { paddingBottom: insets.bottom || 20 }]}>
+          <Text style={[styles.instructions, { color: theme.colors.text }]}>
+            ← Swipe cards left or right →
+          </Text>
+        </View>
       </View>
-    </View>
+    </PatternContainer>
   );
 };
 

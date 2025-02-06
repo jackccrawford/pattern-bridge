@@ -3,6 +3,7 @@ import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { PatternContainer } from '../../PatternContainer';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const COLUMN_COUNT = 2;
@@ -35,19 +36,19 @@ export const MasonryGridDemo = () => {
   const columns = React.useMemo(() => {
     const cols: GridItem[][] = Array.from({ length: COLUMN_COUNT }, () => []);
     let colHeights = Array(COLUMN_COUNT).fill(0);
-    
+
     items.forEach(item => {
       // Find shortest column
       const shortestCol = colHeights.indexOf(Math.min(...colHeights));
       cols[shortestCol].push(item);
       colHeights[shortestCol] += item.height;
     });
-    
+
     return cols;
   }, [items]);
 
   const renderItem = React.useCallback((item: GridItem, index: number) => (
-    <Animated.View 
+    <Animated.View
       key={item.id}
       entering={FadeIn.delay(index * 100)}
       style={[
@@ -65,24 +66,26 @@ export const MasonryGridDemo = () => {
   ), []);
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.content}
-    >
-      <View style={styles.grid}>
-        {columns.map((column, colIndex) => (
-          <View 
-            key={colIndex}
-            style={[
-              styles.column,
-              colIndex < COLUMN_COUNT - 1 && { marginRight: ITEM_MARGIN }
-            ]}
-          >
-            {column.map((item, index) => renderItem(item, index))}
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+    <PatternContainer>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+      >
+        <View style={styles.grid}>
+          {columns.map((column, colIndex) => (
+            <View
+              key={colIndex}
+              style={[
+                styles.column,
+                colIndex < COLUMN_COUNT - 1 && { marginRight: ITEM_MARGIN }
+              ]}
+            >
+              {column.map((item, index) => renderItem(item, index))}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </PatternContainer>
   );
 };
 

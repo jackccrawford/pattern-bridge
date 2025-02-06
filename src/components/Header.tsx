@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, Animated, Pressable } from 'react-native';
-import { Menu } from 'lucide-react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, Animated, Pressable, Dimensions, LayoutChangeEvent } from 'react-native';
+import { Menu, ChevronLeft } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
-import { BlurView } from 'expo-blur';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // [AI-FREEZE]
 type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
@@ -24,13 +24,25 @@ const stateLayer = {
   dragged: 0.16,
 };
 
-export const Header: React.FC<{
+interface HeaderProps {
   selectedPattern: Pattern;
   onPatternChange: (pattern: Pattern) => void;
-}> = ({ selectedPattern, onPatternChange }) => {
+  onHeaderLayout?: (height: number) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  selectedPattern,
+  onPatternChange,
+  onHeaderLayout
+}) => {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerAnimation = React.useRef(new Animated.Value(0)).current;
+  const headerHeight = Platform.select({ ios: 44, android: 56 }) ?? 56;
+
+  const screenWidth = Dimensions.get('window').width;
+  const DRAWER_WIDTH = Math.min(screenWidth * 0.5, 280);
 
   const toggleDrawer = () => {
     const toValue = isDrawerOpen ? 0 : 1;
@@ -46,20 +58,118 @@ export const Header: React.FC<{
 
   const drawerTranslateX = drawerAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [-360, 0], // Changed from [300, 0] to match left side and drawer width
+    outputRange: [-DRAWER_WIDTH, 0],
   });
 
   const overlayOpacity = drawerAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 0.5], // MD3 scrim opacity
+    outputRange: [0, 0.5],
   });
+
+  const handleHeaderLayout = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    onHeaderLayout?.(height);
+  };
 
   return (
     <>
-      {/* Top App Bar */}
-      <View style={[styles.headerContainer, { backgroundColor: theme.colors.surface }]}>
-        <View style={styles.headerContent}>
-          {/* Hamburger Menu Button - MD3 spec */}
+      {isDrawerOpen && (
+        <>
+          <Animated.View
+            style={[
+              styles.drawerOverlay,
+              {
+                opacity: overlayOpacity,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                zIndex: 200,
+                top: insets.top + headerHeight,
+              },
+            ]}
+            pointerEvents={isDrawerOpen ? 'auto' : 'none'}
+          >
+            <Pressable style={StyleSheet.absoluteFill} onPress={toggleDrawer} />
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.drawer,
+              {
+                transform: [{ translateX: drawerTranslateX }],
+                backgroundColor: theme.colors.surface,
+                width: DRAWER_WIDTH,
+                top: insets.top + headerHeight,
+              },
+            ]}
+            pointerEvents={isDrawerOpen ? 'auto' : 'none'}
+          >
+            <View style={[styles.drawerHeader, { borderBottomColor: 'rgba(0, 0, 0, 0.12)' }]}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={toggleDrawer}
+                accessibilityLabel="Close menu"
+                accessibilityRole="button"
+              >
+                <ChevronLeft size={24} color={theme.colors.onSurface} />
+              </TouchableOpacity>
+              <Text style={[styles.drawerTitle, { color: theme.colors.onSurface }]}>
+                Patterns
+              </Text>
+            </View>
+
+            {patterns.map((pattern) => {
+              const isSelected = pattern.value === selectedPattern;
+              return (
+                <TouchableOpacity
+                  key={pattern.value}
+                  disabled={isSelected}
+                  style={[
+                    styles.drawerItem,
+                    isSelected && {
+                      backgroundColor: `rgba(0, 0, 0, ${stateLayer.selected})`,
+                    },
+                  ]}
+                  onPress={() => {
+                    onPatternChange(pattern.value);
+                    toggleDrawer();
+                  }}
+                  accessibilityRole="menuitem"
+                  accessibilityState={{ selected: isSelected }}
+                >
+                  <Text
+                    style={[
+                      styles.drawerItemText,
+                      {
+                        color: theme.colors.onSurface,
+                        opacity: isSelected ? 0.38 : 1,
+                      },
+                    ]}
+                  >
+                    {pattern.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </Animated.View>
+        </>
+      )}
+
+      <View
+        style={[
+          styles.headerContainer,
+          {
+            top: insets.top,
+          }
+        ]}
+        onLayout={handleHeaderLayout}
+      >
+        <View
+          style={[
+            styles.headerContent,
+            {
+              backgroundColor: theme.colors.surface,
+            }
+          ]}
+        >
           <TouchableOpacity
             style={styles.menuButton}
             onPress={toggleDrawer}
@@ -67,8 +177,8 @@ export const Header: React.FC<{
             accessibilityRole="button"
             accessibilityState={{ expanded: isDrawerOpen }}
           >
-            <Menu 
-              size={24} 
+            <Menu
+              size={24}
               color={theme.colors.onSurface}
               style={styles.menuIcon}
             />
@@ -78,143 +188,87 @@ export const Header: React.FC<{
           </Text>
         </View>
       </View>
-
-      {/* Scrim Overlay */}
-      <Animated.View
-        style={[
-          StyleSheet.absoluteFill,
-          styles.drawerOverlay,
-          {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // MD3 scrim color
-            opacity: overlayOpacity,
-            zIndex: 1000,
-            display: isDrawerOpen ? 'flex' : 'none',
-          },
-        ]}
-        pointerEvents={isDrawerOpen ? 'auto' : 'none'}
-      >
-        <Pressable style={StyleSheet.absoluteFill} onPress={toggleDrawer} />
-      </Animated.View>
-
-      {/* Navigation Drawer */}
-      <Animated.View
-        style={[
-          styles.drawer,
-          {
-            transform: [{ translateX: drawerTranslateX }],
-            backgroundColor: theme.colors.surface,
-            zIndex: 1001,
-          },
-        ]}
-        pointerEvents={isDrawerOpen ? 'auto' : 'none'}
-      >
-        {/* Drawer Header */}
-        <View style={[styles.drawerHeader, { borderBottomColor: 'rgba(0, 0, 0, 0.12)' }]}>
-          <Text style={[styles.drawerTitle, { color: theme.colors.onSurface }]}>
-            Patterns
-          </Text>
-        </View>
-
-        {/* Drawer Items */}
-        {patterns.map((pattern) => {
-          const isSelected = pattern.value === selectedPattern;
-          return (
-            <TouchableOpacity
-              key={pattern.value}
-              disabled={isSelected}
-              style={[
-                styles.drawerItem,
-                isSelected && {
-                  backgroundColor: `rgba(0, 0, 0, ${stateLayer.selected})`,
-                },
-              ]}
-              onPress={() => {
-                onPatternChange(pattern.value);
-                toggleDrawer();
-              }}
-              accessibilityRole="menuitem"
-              accessibilityState={{ selected: isSelected }}
-            >
-              <Text
-                style={[
-                  styles.drawerItemText,
-                  {
-                    color: theme.colors.onSurface,
-                    opacity: isSelected ? 0.38 : 1, // MD3 disabled state
-                  },
-                ]}
-              >
-                {pattern.label}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </Animated.View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   headerContainer: {
-    width: '100%',
-    height: Platform.select({ ios: 44, android: 56 }), // MD3 heights
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.12)', // MD3 border opacity
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    backgroundColor: 'transparent',
   },
   headerContent: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 4, // MD3 spacing
+    height: Platform.select({ ios: 44, android: 56 }),
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.12)',
   },
   title: {
-    fontSize: 22, // MD3 title large
+    fontSize: 22,
     fontWeight: '400',
-    marginLeft: 24, // MD3 spacing
+    marginLeft: 24,
   },
   menuButton: {
-    width: 48, // MD3 touch target
-    height: 48, // MD3 touch target
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 4, // MD3 spacing
+    marginLeft: 4,
   },
   menuIcon: {
-    opacity: 0.87, // MD3 icon opacity
+    opacity: 0.87,
   },
   drawerOverlay: {
-    backgroundColor: '#000',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 200,
   },
   drawer: {
     position: 'absolute',
-    top: Platform.select({ ios: 44, android: 56 }), // Match header height
-    left: 0, // Changed from right: 0
-    width: 360,
-    bottom: 0, // Use bottom: 0 instead of fixed height
+    left: 0,
     elevation: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 2, height: 0 }, // Changed from -2 to 2 for left side
+    shadowOffset: { width: 2, height: 0 },
     shadowOpacity: 0.25,
     shadowRadius: 8,
+    borderTopRightRadius: 16,
+    borderBottomRightRadius: 16,
+    zIndex: 300,
   },
   drawerHeader: {
-    height: Platform.select({ ios: 44, android: 56 }), // MD3 heights
-    justifyContent: 'center',
-    paddingHorizontal: 16, // MD3 spacing
+    height: Platform.select({ ios: 44, android: 56 }),
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
     borderBottomWidth: 1,
   },
+  backButton: {
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+    marginLeft: -12,
+  },
   drawerTitle: {
-    fontSize: 16, // MD3 title medium
+    fontSize: 16,
     fontWeight: '500',
     letterSpacing: 0.15,
   },
   drawerItem: {
-    height: 56, // MD3 list item height
+    height: 56,
     justifyContent: 'center',
-    paddingHorizontal: 24, // MD3 spacing
+    paddingHorizontal: 24,
   },
   drawerItemText: {
-    fontSize: 14, // MD3 body large
+    fontSize: 14,
     fontWeight: '500',
     letterSpacing: 0.1,
   },
