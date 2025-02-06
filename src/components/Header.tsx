@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Platform, Modal, Pressable, TouchableOpacity } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { Text } from './Text';
+import { Menu } from 'lucide-react-native';
 
 // [AI-FREEZE] Pattern type definition - core app pattern types should remain stable
 type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
@@ -34,10 +35,15 @@ export const Header: React.FC<HeaderProps> = ({ selectedPattern, onPatternChange
         <View style={styles.headerContent}>
           <Text style={[styles.title, { color: theme.colors.text }]}>Pattern Bridge</Text>
           <TouchableOpacity
-            style={[styles.selectorButton, { backgroundColor: theme.colors.surface }]}
+            style={[styles.menuButton]}
             onPress={() => setModalVisible(true)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Text style={[styles.selectedText, { color: theme.colors.text }]}>{selectedLabel}</Text>
+            <Menu 
+              size={24} 
+              color={theme.colors.text}
+              style={styles.menuIcon}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -58,14 +64,18 @@ export const Header: React.FC<HeaderProps> = ({ selectedPattern, onPatternChange
             styles.modalContent,
             { backgroundColor: theme.colors.surface }
           ]}>
-            <View style={styles.modalHeader} />
+            <View style={styles.modalHeader}>
+              <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
+                {selectedLabel}
+              </Text>
+            </View>
             {/* [AI-MUTABLE] Pattern option rendering - content may change */}
             {patterns
               .filter(pattern => pattern.value !== selectedPattern)
               .map((pattern) => (
                 <TouchableOpacity
                   key={pattern.value}
-                  style={styles.patternOption}
+                  style={[styles.patternOption, { minHeight: 48 }]}
                   onPress={() => {
                     onPatternChange(pattern.value);
                     setModalVisible(false);
@@ -105,69 +115,51 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    flexShrink: 0,
-  },
-  selectorButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  selectedText: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: '500',
+  },
+  menuButton: {
+    padding: 8,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuIcon: {
+    opacity: 0.8,
   },
   modalContainer: {
     flex: 1,
-    position: 'relative',
+    justifyContent: 'flex-end',
   },
   modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    position: 'absolute',
-    bottom: Platform.select({ ios: 49, android: 56 }), // Height of bottom tab bar
-    left: 0,
-    right: 0,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
-    backgroundColor: '#ffffff',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: -2 },
-        shadowOpacity: 0.15,
-        shadowRadius: 12,
-      },
-      android: {
-        elevation: 3,
-      },
-    }),
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingBottom: Platform.select({ ios: 34, android: 24 }),
   },
   modalHeader: {
-    height: 24,
+    height: 56,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
   },
-  modalFooter: {
-    height: 16,
+  modalTitle: {
+    fontSize: 16,
+    fontWeight: '500',
   },
   patternOption: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    minHeight: 48,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
   },
   patternText: {
     fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '400',
+  },
+  modalFooter: {
+    height: 8,
   },
 });
