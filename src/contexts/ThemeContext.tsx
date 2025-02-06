@@ -10,6 +10,11 @@ export interface Theme {
     success: string;
     error: string;
     info: string;
+    // MD3 colors
+    surface: string;
+    onSurface: string;
+    primaryContainer: string;
+    onPrimaryContainer: string;
   };
   spacing: {
     xs: number;
@@ -18,6 +23,7 @@ export interface Theme {
     lg: number;
     xl: number;
   };
+  dark: boolean;
 }
 
 const defaultTheme: Theme = {
@@ -30,6 +36,11 @@ const defaultTheme: Theme = {
     success: '#4CAF50',
     error: '#F44336',
     info: '#2196F3',
+    // MD3 colors
+    surface: '#FFFFFF',
+    onSurface: '#000000',
+    primaryContainer: '#E3F2FD',
+    onPrimaryContainer: '#000000',
   },
   spacing: {
     xs: 4,
@@ -38,6 +49,7 @@ const defaultTheme: Theme = {
     lg: 24,
     xl: 32,
   },
+  dark: false,
 };
 
 export interface ThemeContextType {

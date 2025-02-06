@@ -118,7 +118,6 @@ export const CardSwipeDemo = () => {
             damping: 15,
             stiffness: 300,
             mass: 0.3,
-            duration: 200
           },
           () => runOnJS(removeTopCard)()
         );

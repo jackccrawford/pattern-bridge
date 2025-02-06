@@ -1,165 +1,221 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Platform, Modal, Pressable, TouchableOpacity } from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
-import { Text } from './Text';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, Animated, Pressable } from 'react-native';
 import { Menu } from 'lucide-react-native';
+import { useTheme } from '../contexts/ThemeContext';
+import { BlurView } from 'expo-blur';
 
-// [AI-FREEZE] Pattern type definition - core app pattern types should remain stable
+// [AI-FREEZE]
 type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
 
-// [AI-FREEZE] Component interface - maintains consistent prop structure
-interface HeaderProps {
-  selectedPattern: Pattern;
-  onPatternChange: (pattern: Pattern) => void;
-}
-
-// [AI-MUTABLE] Pattern options may change as new patterns are added
-const patterns = [
+// [AI-MUTABLE]
+const patterns: { label: string; value: Pattern }[] = [
   { label: 'Masonry Grid', value: 'masonry' },
   { label: 'Party Mode', value: 'cowbell' },
   { label: 'Card Swipe', value: 'cardswipe' },
   { label: 'Infinite Scroll', value: 'infinitescroll' },
 ];
 
-export const Header: React.FC<HeaderProps> = ({ selectedPattern, onPatternChange }) => {
-  const { theme } = useTheme();
-  const [modalVisible, setModalVisible] = useState(false);
+// MD3 state layer opacities
+const stateLayer = {
+  hover: 0.08,
+  focus: 0.12,
+  pressed: 0.12,
+  selected: 0.08,
+  dragged: 0.16,
+};
 
-  // [AI-MUTABLE] Pattern label mapping may change with UI updates
-  const selectedLabel = patterns.find(p => p.value === selectedPattern)?.label || '';
+export const Header: React.FC<{
+  selectedPattern: Pattern;
+  onPatternChange: (pattern: Pattern) => void;
+}> = ({ selectedPattern, onPatternChange }) => {
+  const { theme } = useTheme();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerAnimation = React.useRef(new Animated.Value(0)).current;
+
+  const toggleDrawer = () => {
+    const toValue = isDrawerOpen ? 0 : 1;
+    setIsDrawerOpen(!isDrawerOpen);
+    Animated.spring(drawerAnimation, {
+      toValue,
+      useNativeDriver: true,
+      damping: 20,
+      mass: 0.8,
+      stiffness: 150,
+    }).start();
+  };
+
+  const drawerTranslateX = drawerAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-360, 0], // Changed from [300, 0] to match left side and drawer width
+  });
+
+  const overlayOpacity = drawerAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 0.5], // MD3 scrim opacity
+  });
 
   return (
     <>
-      {/* [AI-FREEZE] Header container structure - follows MD3 header pattern */}
-      <View style={[styles.headerContainer, { backgroundColor: '#eee' }]}>
+      {/* Top App Bar */}
+      <View style={[styles.headerContainer, { backgroundColor: theme.colors.surface }]}>
         <View style={styles.headerContent}>
-          <Text style={[styles.title, { color: theme.colors.text }]}>Pattern Bridge</Text>
+          {/* Hamburger Menu Button - MD3 spec */}
           <TouchableOpacity
-            style={[styles.menuButton]}
-            onPress={() => setModalVisible(true)}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            style={styles.menuButton}
+            onPress={toggleDrawer}
+            accessibilityLabel="Open menu"
+            accessibilityRole="button"
+            accessibilityState={{ expanded: isDrawerOpen }}
           >
             <Menu 
               size={24} 
-              color={theme.colors.text}
+              color={theme.colors.onSurface}
               style={styles.menuIcon}
             />
           </TouchableOpacity>
+          <Text style={[styles.title, { color: theme.colors.onSurface }]}>
+            Pattern Bridge
+          </Text>
         </View>
       </View>
 
-      {/* [AI-FREEZE] Modal implementation - follows MD3 bottom sheet pattern */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+      {/* Scrim Overlay */}
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          styles.drawerOverlay,
+          {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // MD3 scrim color
+            opacity: overlayOpacity,
+            zIndex: 1000,
+            display: isDrawerOpen ? 'flex' : 'none',
+          },
+        ]}
+        pointerEvents={isDrawerOpen ? 'auto' : 'none'}
       >
-        <View style={styles.modalContainer}>
-          <Pressable 
-            style={styles.modalOverlay}
-            onPress={() => setModalVisible(false)}
-          />
-          <View style={[
-            styles.modalContent,
-            { backgroundColor: theme.colors.surface }
-          ]}>
-            <View style={styles.modalHeader}>
-              <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
-                {selectedLabel}
-              </Text>
-            </View>
-            {/* [AI-MUTABLE] Pattern option rendering - content may change */}
-            {patterns
-              .filter(pattern => pattern.value !== selectedPattern)
-              .map((pattern) => (
-                <TouchableOpacity
-                  key={pattern.value}
-                  style={[styles.patternOption, { minHeight: 48 }]}
-                  onPress={() => {
-                    onPatternChange(pattern.value);
-                    setModalVisible(false);
-                  }}
-                >
-                  <Text 
-                    style={[
-                      styles.patternText,
-                      { color: theme.colors.onSurface }
-                    ]}
-                  >
-                    {pattern.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            <View style={styles.modalFooter} />
-          </View>
+        <Pressable style={StyleSheet.absoluteFill} onPress={toggleDrawer} />
+      </Animated.View>
+
+      {/* Navigation Drawer */}
+      <Animated.View
+        style={[
+          styles.drawer,
+          {
+            transform: [{ translateX: drawerTranslateX }],
+            backgroundColor: theme.colors.surface,
+            zIndex: 1001,
+          },
+        ]}
+        pointerEvents={isDrawerOpen ? 'auto' : 'none'}
+      >
+        {/* Drawer Header */}
+        <View style={[styles.drawerHeader, { borderBottomColor: 'rgba(0, 0, 0, 0.12)' }]}>
+          <Text style={[styles.drawerTitle, { color: theme.colors.onSurface }]}>
+            Patterns
+          </Text>
         </View>
-      </Modal>
+
+        {/* Drawer Items */}
+        {patterns.map((pattern) => {
+          const isSelected = pattern.value === selectedPattern;
+          return (
+            <TouchableOpacity
+              key={pattern.value}
+              disabled={isSelected}
+              style={[
+                styles.drawerItem,
+                isSelected && {
+                  backgroundColor: `rgba(0, 0, 0, ${stateLayer.selected})`,
+                },
+              ]}
+              onPress={() => {
+                onPatternChange(pattern.value);
+                toggleDrawer();
+              }}
+              accessibilityRole="menuitem"
+              accessibilityState={{ selected: isSelected }}
+            >
+              <Text
+                style={[
+                  styles.drawerItemText,
+                  {
+                    color: theme.colors.onSurface,
+                    opacity: isSelected ? 0.38 : 1, // MD3 disabled state
+                  },
+                ]}
+              >
+                {pattern.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </Animated.View>
     </>
   );
 };
 
-// [AI-FREEZE] Style definitions - follows MD3 specifications and React Native best practices
 const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
+    height: Platform.select({ ios: 44, android: 56 }), // MD3 heights
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-    height: Platform.select({ ios: 44, android: 56 }),
+    borderBottomColor: 'rgba(0, 0, 0, 0.12)', // MD3 border opacity
   },
   headerContent: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
+    paddingHorizontal: 4, // MD3 spacing
   },
   title: {
-    fontSize: 20,
-    fontWeight: '500',
+    fontSize: 22, // MD3 title large
+    fontWeight: '400',
+    marginLeft: 24, // MD3 spacing
   },
   menuButton: {
-    padding: 8,
-    borderRadius: 20,
+    width: 48, // MD3 touch target
+    height: 48, // MD3 touch target
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 4, // MD3 spacing
   },
   menuIcon: {
-    opacity: 0.8,
+    opacity: 0.87, // MD3 icon opacity
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
+  drawerOverlay: {
+    backgroundColor: '#000',
   },
-  modalOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  drawer: {
+    position: 'absolute',
+    top: Platform.select({ ios: 44, android: 56 }), // Match header height
+    left: 0, // Changed from right: 0
+    width: 360,
+    bottom: 0, // Use bottom: 0 instead of fixed height
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 0 }, // Changed from -2 to 2 for left side
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
   },
-  modalContent: {
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingBottom: Platform.select({ ios: 34, android: 24 }),
-  },
-  modalHeader: {
-    height: 56,
+  drawerHeader: {
+    height: Platform.select({ ios: 44, android: 56 }), // MD3 heights
+    justifyContent: 'center',
+    paddingHorizontal: 16, // MD3 spacing
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
   },
-  modalTitle: {
-    fontSize: 16,
+  drawerTitle: {
+    fontSize: 16, // MD3 title medium
     fontWeight: '500',
+    letterSpacing: 0.15,
   },
-  patternOption: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  drawerItem: {
+    height: 56, // MD3 list item height
     justifyContent: 'center',
+    paddingHorizontal: 24, // MD3 spacing
   },
-  patternText: {
-    fontSize: 16,
-  },
-  modalFooter: {
-    height: 8,
+  drawerItemText: {
+    fontSize: 14, // MD3 body large
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
 });
