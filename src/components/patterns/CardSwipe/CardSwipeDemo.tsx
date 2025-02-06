@@ -90,10 +90,21 @@ export const CardSwipeDemo = () => {
     }
   }, [dimensions]);
 
+  // [AI-MUTABLE] Card transition handling
   const removeTopCard = React.useCallback(() => {
+    // Remove card immediately to start next card's focus
     setCards(currentCards => currentCards.slice(1));
-    translateX.value = 0;
-    translateY.value = 0;
+    // Reset position with a very short spring for smooth transition
+    translateX.value = withSpring(0, { 
+      damping: 20,
+      stiffness: 400,
+      mass: 0.5
+    });
+    translateY.value = withSpring(0, {
+      damping: 20,
+      stiffness: 400,
+      mass: 0.5
+    });
   }, [translateX, translateY]);
 
   const gestureHandler = useAnimatedGestureHandler({
@@ -107,10 +118,15 @@ export const CardSwipeDemo = () => {
     },
     onEnd: (event) => {
       if (Math.abs(translateX.value) > dimensions.swipeThreshold) {
+        // Start transition earlier with faster animation
+        runOnJS(removeTopCard)();
         translateX.value = withSpring(
           Math.sign(translateX.value) * dimensions.screenWidth * 1.5,
-          {},
-          () => runOnJS(removeTopCard)()
+          {
+            damping: 15,
+            stiffness: 300,
+            mass: 0.3
+          }
         );
       } else {
         translateX.value = withSpring(0);
