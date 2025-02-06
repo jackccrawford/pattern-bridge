@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Pressable, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, Pressable, View, ActivityIndicator, Platform } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { Audio } from 'expo-av';
@@ -44,11 +44,16 @@ export const CowbellDemo = () => {
 
   // Cleanup sound on unmount
   useEffect(() => {
-    return sound
-      ? () => {
+    return () => {
+      if (sound) {
+        // Stop playing first
+        sound.stopAsync().then(() => {
           sound.unloadAsync();
-        }
-      : undefined;
+        }).catch(error => {
+          console.error('Error cleaning up sound:', error);
+        });
+      }
+    };
   }, [sound]);
 
   const playSound = async () => {
@@ -62,10 +67,13 @@ export const CowbellDemo = () => {
           { 
             volume: 1.0,
             isLooping: true,
-            shouldPlay: true
+            shouldPlay: Platform.OS === 'ios' // Only auto-play on iOS
           }
         );
         setSound(newSound);
+        if (Platform.OS === 'android') {
+          await newSound.playAsync(); // Explicitly play on Android
+        }
         setIsPlaying(true);
       } else {
         await sound.playAsync();
