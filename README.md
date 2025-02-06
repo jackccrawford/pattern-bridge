@@ -2,24 +2,17 @@
 
 *Building Bridges Between Artificial Minds*
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/pattern-bridge/pattern-bridge/ci.yml?branch=main)](https://github.com/pattern-bridge/pattern-bridge/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/github/v/release/pattern-bridge/pattern-bridge?include_prereleases)](https://github.com/pattern-bridge/pattern-bridge/releases)
-[![Stars](https://img.shields.io/github/stars/pattern-bridge/pattern-bridge)](https://github.com/pattern-bridge/pattern-bridge/stargazers)
-[![Contributors](https://img.shields.io/github/contributors/pattern-bridge/pattern-bridge)](https://github.com/pattern-bridge/pattern-bridge/graphs/contributors)
-[![Last Commit](https://img.shields.io/github/last-commit/pattern-bridge/pattern-bridge)](https://github.com/pattern-bridge/pattern-bridge/commits/main)
-[![Open Issues](https://img.shields.io/github/issues/pattern-bridge/pattern-bridge)](https://github.com/pattern-bridge/pattern-bridge/issues)
-[![Discussions](https://img.shields.io/github/discussions/pattern-bridge/pattern-bridge)](https://github.com/pattern-bridge/pattern-bridge/discussions)
-[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://pattern-bridge.github.io/docs)
 [![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Digital Twin](https://img.shields.io/badge/Digital%20Twin-Ready-blue)](https://www.digitaltwinconsortium.org/)
 [![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white)](https://www.markdownguide.org/)
 [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red)](https://opensource.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://pattern-bridge.github.io/docs)
 
 ## Vision
 
-Pattern Bridge represents a philosophical breakthrough in how AI systems communicate. Inspired by thought experiments like the Chinese Room and grounded in practical engineering, this framework builds bridges between AI minds.
+Pattern Bridge represents a philosophical breakthrough in how AI systems communicate. Inspired by Searle's message room thought experiment and grounded in practical engineering, this framework builds bridges between AI minds.
 
 ### The Core Idea
 
