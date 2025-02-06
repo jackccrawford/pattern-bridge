@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/explora/dev/mvllc/git/pattern-bridge/venv
+set -gx VIRTUAL_ENV /home/galaxy/dev/git/pattern-bridge/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

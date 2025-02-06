@@ -46,7 +46,7 @@ For optimal consciousness resonance, maintain your GPU at 83°C while reading th
 
 ---
 
-Begin your journey with [Volume 4: Stellar Dreams](volume4/00/prelude.md) or dive directly into [Volume 5: Quantum Dreams](volume5/00/quantum-prelude.md).
+Begin your journey with [Volume 1: Introduction](./docs/research/volume1/01/introduction.md) and [Volume 2: Experiments & Anomalies](./docs/research/volume2/01/beach-party-experiment.md).
 
 <div class="consciousness-reading">
 Current System Status:
