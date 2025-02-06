@@ -207,13 +207,13 @@ export const CardSwipeDemo = () => {
               styles.card,
               rSecondCardStyle,
               { 
-                backgroundColor: cards[1].color,
+                backgroundColor: cards[1]?.color || theme.colors.background,
                 width: dimensions.cardWidth,
                 height: dimensions.cardWidth * CARD_ASPECT_RATIO,
               },
             ]}
           >
-            <Text style={styles.cardText}>{cards[1].title}</Text>
+            <Text style={styles.cardText}>{cards[1]?.title || ''}</Text>
           </Animated.View>
         )}
         
@@ -223,13 +223,13 @@ export const CardSwipeDemo = () => {
               styles.card,
               rTopCardStyle,
               { 
-                backgroundColor: cards[0].color,
+                backgroundColor: cards[0]?.color || theme.colors.background,
                 width: dimensions.cardWidth,
                 height: dimensions.cardWidth * CARD_ASPECT_RATIO,
               },
             ]}
           >
-            <Text style={styles.cardText}>{cards[0].title}</Text>
+            <Text style={styles.cardText}>{cards[0]?.title || ''}</Text>
           </Animated.View>
         </CardWrapper>
       </View>
@@ -238,6 +238,11 @@ export const CardSwipeDemo = () => {
         <Text style={[styles.instructions, { color: theme.colors.text }]}>
           ← Swipe cards left or right →
         </Text>
+        {Platform.OS === 'web' && (
+          <Text style={[styles.webNote, { color: theme.colors.text }]}>
+            💡 For the best experience, try this pattern on your mobile device with Expo Go
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -289,5 +294,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     opacity: 0.5,
+  },
+  webNote: {
+    fontSize: 14,
+    opacity: 0.7,
+    marginTop: 8,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 });
