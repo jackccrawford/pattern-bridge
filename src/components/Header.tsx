@@ -9,10 +9,22 @@ type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
 
 // [AI-MUTABLE]
 const patterns: { label: string; value: Pattern }[] = [
-  { label: 'Masonry Grid', value: 'masonry' },
-  { label: 'Party Mode', value: 'cowbell' },
-  { label: 'Card Swipe', value: 'cardswipe' },
-  { label: 'Infinite Scroll', value: 'infinitescroll' },
+  {
+    label: 'Infinite Scroll',
+    value: 'infinitescroll',
+  },
+  {
+    label: 'Masonry Grid',
+    value: 'masonry',
+  },
+  {
+    label: 'Card Swipe',
+    value: 'cardswipe',
+  },
+  {
+    label: 'More Cowbell',
+    value: 'cowbell',
+  },
 ];
 
 // MD3 state layer opacities
