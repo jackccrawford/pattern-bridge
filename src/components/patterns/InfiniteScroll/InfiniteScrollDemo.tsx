@@ -28,6 +28,7 @@ const BLEND_CONFIGS = [
   { mode: 'soft-light' as const, color: '#96CEB4' },
 ];
 
+// [AI-FREEZE] Color blend configurations and core types
 const COLOR_PAIRS = [
   ['#FF6B6B', '#4ECDC4'],
   ['#45B7D1', '#FFEEAD'],
@@ -36,6 +37,7 @@ const COLOR_PAIRS = [
   ['#FFC75F', '#F9F871'],
 ];
 
+// [AI-MUTABLE] Item generation and rendering
 const generateItems = (start: number, count: number): ScrollItem[] => {
   return Array.from({ length: count }, (_, i) => {
     const isColorItem = i % 2 === 0;
@@ -164,6 +166,7 @@ export const InfiniteScrollDemo = () => {
   );
 };
 
+// [AI-FREEZE] Core styling for blend effects
 const styles = StyleSheet.create({
   container: {
     flex: 1,

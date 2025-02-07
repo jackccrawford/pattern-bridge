@@ -1,3 +1,4 @@
+// [AI-FREEZE] Core cowbell interaction pattern
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Pressable, View, ActivityIndicator, Platform } from 'react-native';
 import { Text } from '../../Text';
@@ -16,6 +17,10 @@ import Animated, {
 import { Bell, Pause, Play } from 'lucide-react-native';
 import { PatternContainer } from '../../PatternContainer';
 
+// [AI-FREEZE] Core audio configuration
+const COWBELL_SOUND = require('./assets/cowbell.mp3');
+
+// [AI-MUTABLE] Interactive state management
 export const CowbellDemo = () => {
   const { theme } = useTheme();
   const rotation = useSharedValue(0);
@@ -64,7 +69,7 @@ export const CowbellDemo = () => {
 
       if (!sound) {
         const { sound: newSound } = await Audio.Sound.createAsync(
-          require('./assets/cowbell.mp3'),
+          COWBELL_SOUND,
           { 
             volume: 1.0,
             isLooping: true,
@@ -208,6 +213,7 @@ export const CowbellDemo = () => {
   );
 };
 
+// [AI-FREEZE] Core styling for cowbell interaction
 const styles = StyleSheet.create({
   container: {
     flex: 1,

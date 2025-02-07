@@ -5,30 +5,23 @@ import { Text } from '../../../components/Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { PatternContainer } from '../../PatternContainer';
 
-// [AI-FREEZE] Grid configuration
+// [AI-FREEZE] Grid configuration and core types
 const COLUMN_COUNT = 2;
 const GRID_PADDING = 16;
 const ITEM_MARGIN = 8;
 const ITEMS_PER_PAGE = 10;
 
-// [AI-FREEZE] Type safety for blend modes
-type ColorBlendMode = 'multiply' | 'screen' | 'overlay' | 'color-burn' | 'color-dodge';
-type ImageBlendMode = 'luminosity' | 'hue' | 'saturation' | 'soft-light';
-type ItemType = 'color' | 'image';
-
 interface GridItem {
   id: number;
   height: number;
   title: string;
-  type: ItemType;
-  imageUrl?: string;
-  imageBlendMode?: ImageBlendMode;
-  colorBlendMode?: ColorBlendMode;
+  type: 'image' | 'color';
   colors?: string[];
+  imageUrl?: string;
   overlayColor?: string;
 }
 
-// [AI-FREEZE] Blend mode configurations
+// [AI-FREEZE] Color blend configurations
 const COLOR_BLEND_CONFIGS: Array<{ colors: string[] }> = [
   {
     colors: ['#FF6B6B', '#4ECDC4'],
@@ -47,27 +40,18 @@ const COLOR_BLEND_CONFIGS: Array<{ colors: string[] }> = [
   },
 ];
 
-const IMAGE_BLEND_CONFIGS: Array<{ mode: ImageBlendMode; color: string }> = [
-  { mode: 'luminosity', color: '#FF6B6B' },
-  { mode: 'hue', color: '#4ECDC4' },
-  { mode: 'saturation', color: '#45B7D1' },
-  { mode: 'soft-light', color: '#96CEB4' },
-];
-
 const generateItems = (start: number, count: number): GridItem[] => {
   return Array.from({ length: count }, (_, i) => {
     const isImage = i % 2 === 0; // Alternate between image and color items
     
     if (isImage) {
-      const blend = IMAGE_BLEND_CONFIGS[i % IMAGE_BLEND_CONFIGS.length];
       return {
         id: start + i,
         height: Math.random() * 100 + 200, // Slightly taller for images
         title: `${start + i + 1} Image`,
         type: 'image',
         imageUrl: `https://picsum.photos/500/300?random=${start + i}`,
-        imageBlendMode: blend.mode,
-        overlayColor: blend.color,
+        overlayColor: '#FF6B6B',
       };
     } else {
       const blend = COLOR_BLEND_CONFIGS[i % COLOR_BLEND_CONFIGS.length];
@@ -223,6 +207,7 @@ export const MasonryGridDemo = () => {
   );
 };
 
+// [AI-FREEZE] Core styling for blend effects
 const styles = StyleSheet.create({
   container: {
     flex: 1,
