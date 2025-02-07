@@ -65,11 +65,11 @@ const renderItem = ({ item }: { item: ScrollItem }) => {
       <View style={styles.itemContainer}>
         <View style={styles.colorContainer}>
           {/* Base color layer */}
-          <View style={[styles.colorLayer, { backgroundColor: item.colors[0] }]} />
+          <View style={[styles.colorLayer, { backgroundColor: item.colors?.[0] ?? '#ffffff' }]} />
           {/* Diagonal overlay layers */}
-          <View style={[styles.diagonalLayer1, { backgroundColor: item.colors[1], opacity: 0.7 }]} />
-          <View style={[styles.diagonalLayer2, { backgroundColor: item.colors[1], opacity: 0.5 }]} />
-          <View style={[styles.diagonalLayer3, { backgroundColor: item.colors[1], opacity: 0.3 }]} />
+          <View style={[styles.diagonalLayer1, { backgroundColor: item.colors?.[1] ?? '#ffffff', opacity: 0.7 }]} />
+          <View style={[styles.diagonalLayer2, { backgroundColor: item.colors?.[1] ?? '#ffffff', opacity: 0.5 }]} />
+          <View style={[styles.diagonalLayer3, { backgroundColor: item.colors?.[1] ?? '#ffffff', opacity: 0.3 }]} />
         </View>
         <Text style={styles.itemText}>{`${item.id + 1} Color Blend`}</Text>
       </View>
