@@ -198,7 +198,7 @@ export const CardSwipeDemo = () => {
   if (cards.length === 0) {
     return (
       <PatternContainer>
-        <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.container}>
           <Text style={[styles.noMoreCards, { color: theme.colors.text }]}>
             No more cards!
           </Text>
@@ -207,19 +207,9 @@ export const CardSwipeDemo = () => {
     );
   }
 
-  const CardWrapper = Platform.OS === 'web' ? View : PanGestureHandler;
-  const cardWrapperProps = Platform.OS === 'web'
-    ? {
-      onTouchStart: handleTouchStart as (e: GestureResponderEvent) => void,
-      ref: cardRef,
-    }
-    : {
-      onGestureEvent: gestureHandler,
-    };
-
   return (
     <PatternContainer>
-      <View style={[styles.container, { paddingTop: insets.top }]}>
+      <View style={styles.container}>
         <View style={[styles.cardContainer, { height: dimensions.cardWidth * CARD_ASPECT_RATIO }]}>
           {cards.length > 1 && (
             <Animated.View
@@ -237,7 +227,7 @@ export const CardSwipeDemo = () => {
             </Animated.View>
           )}
 
-          <CardWrapper {...cardWrapperProps}>
+          <PanGestureHandler onGestureEvent={gestureHandler}>
             <Animated.View
               style={[
                 styles.card,
@@ -251,7 +241,7 @@ export const CardSwipeDemo = () => {
             >
               <Text style={styles.cardText}>{cards[0].title}</Text>
             </Animated.View>
-          </CardWrapper>
+          </PanGestureHandler>
         </View>
 
         <View style={[styles.footer, { paddingBottom: insets.bottom || 20 }]}>

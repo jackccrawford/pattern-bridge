@@ -14,13 +14,10 @@ export const PatternContainer: React.FC<{
   // [AI-FREEZE] Critical header height values that must match Header component
   const headerHeight = Platform.select({ ios: 44, android: 56 }) ?? 56;
   
-  // [AI-FREEZE] Content padding calculation
-  const topPadding = headerHeight;
-  
   console.log('PatternContainer padding:', {
     headerHeight,
     insetTop: insets.top,
-    totalPadding: topPadding
+    totalPadding: headerHeight
   });
   
   return (
@@ -29,10 +26,9 @@ export const PatternContainer: React.FC<{
         styles.container,
         {
           // [AI-FREEZE] Essential spacing to work with floating header
-          paddingTop: topPadding,
+          paddingTop: headerHeight,
           paddingLeft: insets.left,
           paddingRight: insets.right,
-          paddingBottom: insets.bottom,
         }
       ]}
     >

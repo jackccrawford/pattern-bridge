@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Pressable } from 'react-native';
+import { StyleSheet, View, Dimensions, Pressable, ScrollView } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 import Animated, {
@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+import { PatternContainer } from '../../PatternContainer';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -44,62 +45,64 @@ export const BlendModeGalleryDemo = () => {
   const [selectedMode, setSelectedMode] = React.useState<string>('multiply');
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Blend Mode Gallery</Text>
-      
-      {/* Blend Mode Examples */}
-      <View style={styles.gallery}>
-        {BLEND_EXAMPLES.map((example) => (
-          <Animated.View
-            key={example.id}
-            entering={FadeIn.duration(300)}
-            layout={Layout.springify()}
-            style={[
-              styles.exampleContainer,
-              { backgroundColor: theme.colors.background },
-            ]}
-          >
-            <Pressable
-              onPress={() => setSelectedMode(example.mode)}
+    <PatternContainer>
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>Blend Mode Gallery</Text>
+        
+        {/* Blend Mode Examples */}
+        <View style={styles.gallery}>
+          {BLEND_EXAMPLES.map((example) => (
+            <Animated.View
+              key={example.id}
+              entering={FadeIn.duration(300)}
+              layout={Layout.springify()}
               style={[
-                styles.blendContainer,
-                { borderColor: selectedMode === example.mode ? theme.colors.primary : 'transparent' },
+                styles.exampleContainer,
+                { backgroundColor: theme.colors.background },
               ]}
             >
-              {/* First Color Layer */}
-              <View
+              <Pressable
+                onPress={() => setSelectedMode(example.mode)}
                 style={[
-                  styles.colorLayer,
-                  { backgroundColor: example.colors[0] },
+                  styles.blendContainer,
+                  { borderColor: selectedMode === example.mode ? theme.colors.primary : 'transparent' },
                 ]}
-              />
+              >
+                {/* First Color Layer */}
+                <View
+                  style={[
+                    styles.colorLayer,
+                    { backgroundColor: example.colors[0] },
+                  ]}
+                />
+                
+                {/* Second Color Layer with Blend Mode */}
+                <View
+                  style={[
+                    styles.colorLayer,
+                    {
+                      backgroundColor: example.colors[1],
+                      mixBlendMode: example.mode as any,
+                    },
+                  ]}
+                />
+              </Pressable>
               
-              {/* Second Color Layer with Blend Mode */}
-              <View
-                style={[
-                  styles.colorLayer,
-                  {
-                    backgroundColor: example.colors[1],
-                    mixBlendMode: example.mode as any,
-                  },
-                ]}
-              />
-            </Pressable>
-            
-            <Text style={styles.modeName}>{example.mode}</Text>
-            <Text style={styles.description}>{example.description}</Text>
-          </Animated.View>
-        ))}
-      </View>
-      
-      {/* Interactive Demo Area */}
-      <View style={styles.demoArea}>
-        <Text style={styles.demoTitle}>Try It Yourself</Text>
-        <View style={styles.interactiveDemo}>
-          {/* Add interactive controls here */}
+              <Text style={styles.modeName}>{example.mode}</Text>
+              <Text style={styles.description}>{example.description}</Text>
+            </Animated.View>
+          ))}
         </View>
-      </View>
-    </View>
+        
+        {/* Interactive Demo Area */}
+        <View style={styles.demoArea}>
+          <Text style={styles.demoTitle}>Try It Yourself</Text>
+          <View style={styles.interactiveDemo}>
+            {/* Add interactive controls here */}
+          </View>
+        </View>
+      </ScrollView>
+    </PatternContainer>
   );
 };
 
