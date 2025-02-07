@@ -1,8 +1,8 @@
-# Card Swipe Pattern
+# 🃏 Card Swipe Pattern
 
-## Overview
+## Core Principle
 
-The Card Swipe pattern provides a Tinder-like card interaction with fluid animations and gesture handling.
+The Card Swipe pattern creates engaging decision interfaces through natural gesture interactions. Its power lies in combining physics-based animations with intuitive user actions to create fluid, game-like experiences.
 
 ```mermaid
 %%{init: {
@@ -16,162 +16,178 @@ The Card Swipe pattern provides a Tinder-like card interaction with fluid animat
   }
 }}%%
 graph TD
-    A([User Gesture]) --> B{Direction?}
-    B -->|Right| C([Like Action])
-    B -->|Left| D([Skip Action])
-    B -->|Release Early| E([Spring Back])
-    C --> F([Next Card])
-    D --> F
-    E --> G([Current Card])
+    A[Touch Start] --> B[Track Gesture]
+    B --> C{Direction?}
+    C -->|Left| D[Decline Action]
+    C -->|Right| E[Accept Action]
+    C -->|Release| F[Reset Position]
+    D --> G[Next Card]
+    E --> G
+    F --> B
 ```
 
-## Key Features
+## Creative Opportunities
 
-1. **Gesture Handling**
-   - Pan gesture recognition
+1. **Gesture Physics**
+   - Natural momentum
    - Direction detection
    - Velocity tracking
+   - Release behavior
 
-2. **Fluid Animations**
-   - Spring animations
-   - Rotation interpolation
-   - Scale transitions
+2. **Visual Feedback**
+   - Position-based rotation
+   - Scale transformations
+   - Opacity transitions
+   - Direction indicators
 
-3. **Visual Feedback**
-   - Card stacking
-   - Shadow effects
-   - Smooth transitions
+3. **Interaction Boundaries**
+   - Decision thresholds
+   - Gesture limits
+   - Animation timing
+   - Stack management
 
-## Implementation Details
+## Pattern Implementation
 
-### Core Dependencies
-```json
-{
-  "react-native-reanimated": "~3.16.1",
-  "react-native-gesture-handler": "~2.14.0"
+### Core Building Blocks
+```typescript
+// [AI-FREEZE] Swipe configuration
+interface SwipeConfig {
+  threshold: number;
+  rotationFactor: number;
+  velocityThreshold: number;
+  animationConfig: {
+    duration: number;
+    easing: Animated.EasingFunction;
+  };
 }
-```
 
-### Animation Values
-```typescript
-const translateX = useSharedValue(0);
-const translateY = useSharedValue(0);
-```
+// [AI-MUTABLE] Gesture handling
+const handleGesture = (event: GestureEvent, config: SwipeConfig) => {
+  const direction = determineDirection(event, config);
+  return createAnimations(direction, config);
+};
 
-### Gesture Handler
-```typescript
-const gestureHandler = useAnimatedGestureHandler({
-  onStart: (_, context) => {
-    // Store initial position
-  },
-  onActive: (event, context) => {
-    // Update position
-  },
-  onEnd: (event) => {
-    // Handle swipe or spring back
-  },
-});
-```
-
-### Animation Styles
-```typescript
-const rStyle = useAnimatedStyle(() => {
-  const rotate = interpolate(
-    translateX.value,
-    [-SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2],
-    [8, 0, -8]
-  );
-
+// [AI-MUTABLE] Animation creation
+const createAnimations = (direction: Direction, config: SwipeConfig) => {
   return {
     transform: [
-      { translateX: translateX.value },
-      { rotate: `${rotate}deg` },
+      { translateX: calculateTranslation(direction) },
+      { rotate: calculateRotation(direction) },
+      { scale: calculateScale(direction) }
     ],
+    opacity: calculateOpacity(direction)
   };
-});
+};
 ```
 
-## Best Practices
+## Pattern Evolution
 
-1. **Performance**
-   - Use native driver
-   - Optimize re-renders
-   - Handle cleanup
+1. **Base Implementation**
+   ```typescript
+   // Simple swipe mechanics
+   const SwipeCard = () => {
+     const gesture = useGestureHandler();
+     return <Animated.View {...gesture} />;
+   };
+   ```
 
-2. **User Experience**
-   - Smooth animations
-   - Clear feedback
-   - Intuitive gestures
+2. **Enhanced Implementation**
+   ```typescript
+   // With physics and feedback
+   const PhysicsCard = () => {
+     const physics = usePhysicsAnimation();
+     const feedback = useFeedbackSystem();
+     return <PhysicsView {...physics} feedback={feedback} />;
+   };
+   ```
 
-3. **Memory Management**
-   - Clean up animations
-   - Handle unmounting
-   - Manage card stack
+3. **Advanced Implementation**
+   ```typescript
+   // With game mechanics
+   const GameCard = () => {
+     const mechanics = useGameMechanics();
+     const effects = useVisualEffects();
+     return <GameView {...mechanics} effects={effects} />;
+   };
+   ```
 
-## Common Pitfalls
+## Creative Applications
 
-1. **Gesture Handling**
-   - Competing gestures
-   - Direction conflicts
-   - Threshold tuning
+1. **Decision Interfaces**
+   - Dating apps
+   - Content curation
+   - Game mechanics
+   - Learning systems
 
-2. **Animation Performance**
-   - JS thread blocking
-   - Frame drops
-   - Memory leaks
+2. **Card Games**
+   - Deck management
+   - Card dealing
+   - Hand sorting
+   - Game actions
 
-3. **State Management**
-   - Card synchronization
-   - Animation cleanup
-   - Race conditions
+3. **Content Navigation**
+   - Story progression
+   - Tutorial flows
+   - Product showcases
+   - Image galleries
 
-## Pattern Variations
+## Implementation Insights
 
-1. **Multi-direction Swipe**
-   - Up/down actions
-   - Diagonal swipes
-   - Custom directions
+### Physics System
+```typescript
+// [AI-MUTABLE] Physics calculations
+const createPhysicsSystem = (config: SwipeConfig) => {
+  return {
+    velocity: withSpring(targetVelocity, {
+      damping: 15,
+      stiffness: 150
+    }),
+    rotation: withDecay({
+      velocity: rotationVelocity,
+      clamp: [-30, 30]
+    })
+  };
+};
+```
 
-2. **Card Stacks**
-   - Multiple visible cards
-   - Staggered animations
-   - Depth effects
+### Feedback System
+```typescript
+// [AI-MUTABLE] Visual feedback
+const createFeedbackSystem = (direction: Direction) => {
+  return {
+    scale: interpolate(direction, {
+      inputRange: [-1, 0, 1],
+      outputRange: [0.9, 1, 0.9]
+    }),
+    opacity: interpolate(direction, {
+      inputRange: [-1, 0, 1],
+      outputRange: [0.5, 1, 0.5]
+    })
+  };
+};
+```
 
-3. **Interaction Modes**
-   - Button controls
-   - Drag limits
-   - Custom triggers
+## Pattern Extensions
 
-## Testing Strategy
+1. **Interaction Models**
+   - Multi-touch gestures
+   - 3D rotations
+   - Stack reordering
+   - Undo actions
 
-1. **Gesture Testing**
-   - Swipe directions
-   - Velocity handling
-   - Threshold behavior
+2. **Game Mechanics**
+   - Scoring systems
+   - Combo actions
+   - Special cards
+   - Power-ups
 
-2. **Animation Testing**
-   - Smoothness
-   - Timing
-   - Interpolation
+3. **Visual Effects**
+   - Card trails
+   - Particle effects
+   - Glow effects
+   - Impact animations
 
-3. **State Testing**
-   - Card progression
-   - Edge cases
-   - Error states
-
-## Related Patterns
-
-1. **Gesture Patterns**
-   - Pull to refresh
-   - Drag and drop
-   - Pinch to zoom
-
-2. **Animation Patterns**
-   - Spring animations
-   - Shared transitions
-   - Layout animations
-
-3. **Stack Patterns**
-   - Card stacks
-   - Modal stacks
-   - View hierarchies
+## See Also
+- [Gesture Systems](./gesture-systems.md)
+- [Game Mechanics](./game-mechanics.md)
+- [Physics Animation](./physics-animation.md)
