@@ -67,8 +67,13 @@ export const Header: React.FC<HeaderProps> = ({
   });
 
   const handleHeaderLayout = (event: LayoutChangeEvent) => {
-    const { height } = event.nativeEvent.layout;
-    onHeaderLayout?.(height);
+    console.log('Header layout:', {
+      height: event.nativeEvent.layout.height,
+      headerHeight,
+      insetTop: insets.top,
+      totalExpected: headerHeight + insets.top
+    });
+    onHeaderLayout?.(event.nativeEvent.layout.height);
   };
 
   return (
@@ -158,7 +163,8 @@ export const Header: React.FC<HeaderProps> = ({
           styles.headerContainer,
           {
             top: insets.top,
-          }
+            backgroundColor: theme.colors.surface,
+          },
         ]}
         onLayout={handleHeaderLayout}
       >
@@ -167,7 +173,8 @@ export const Header: React.FC<HeaderProps> = ({
             styles.headerContent,
             {
               backgroundColor: theme.colors.surface,
-            }
+              borderBottomColor: theme.colors.border,
+            },
           ]}
         >
           <TouchableOpacity
@@ -198,7 +205,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 100,
-    backgroundColor: 'transparent',
   },
   headerContent: {
     flexDirection: 'row',
@@ -206,7 +212,6 @@ const styles = StyleSheet.create({
     height: Platform.select({ ios: 44, android: 56 }),
     paddingHorizontal: 4,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.12)',
   },
   title: {
     fontSize: 22,
