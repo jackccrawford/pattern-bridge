@@ -1,31 +1,61 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
-import { Text } from '../../Text';
-import { useTheme } from '../../../contexts/ThemeContext';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
+import { Text } from '../../../components/Text';
+import { useTheme } from '../../../contexts/ThemeContext';
 import { PatternContainer } from '../../PatternContainer';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+// [AI-FREEZE] Grid configuration
 const COLUMN_COUNT = 2;
-const GRID_PADDING = 8;
+const GRID_PADDING = 16;
 const ITEM_MARGIN = 8;
-const COLUMN_WIDTH = (SCREEN_WIDTH - (GRID_PADDING * 2) - (ITEM_MARGIN * (COLUMN_COUNT - 1))) / COLUMN_COUNT;
+
+// [AI-FREEZE] Type safety for blend modes
+type BlendMode = 'multiply' | 'screen' | 'overlay' | 'color-burn' | 'color-dodge';
 
 interface GridItem {
   id: number;
   height: number;
-  color: string;
   title: string;
+  blendMode: BlendMode;
+  colors: string[];
 }
 
+// [AI-FREEZE] Blend mode configurations
+const BLEND_MODES: Array<{ mode: BlendMode; colors: string[] }> = [
+  {
+    mode: 'multiply',
+    colors: ['#FF6B6B', '#4ECDC4'],
+  },
+  {
+    mode: 'screen',
+    colors: ['#45B7D1', '#FFEEAD'],
+  },
+  {
+    mode: 'overlay',
+    colors: ['#96CEB4', '#FF6B6B'],
+  },
+  {
+    mode: 'color-burn',
+    colors: ['#845EC2', '#FF9671'],
+  },
+  {
+    mode: 'color-dodge',
+    colors: ['#FFC75F', '#F9F871'],
+  },
+];
+
 const generateItems = (count: number): GridItem[] => {
-  const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD'];
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    height: Math.floor(Math.random() * 100 + 100), // Random height between 100-200
-    color: colors[i % colors.length],
-    title: `Item ${i + 1}`
-  }));
+  return Array.from({ length: count }, (_, i) => {
+    const blend = BLEND_MODES[i % BLEND_MODES.length];
+    return {
+      id: i,
+      height: Math.random() * 100 + 100, // Random height between 100-200
+      title: `Item ${i + 1}`,
+      blendMode: blend.mode,
+      colors: blend.colors,
+    };
+  });
 };
 
 export const MasonryGridDemo = () => {
@@ -55,31 +85,47 @@ export const MasonryGridDemo = () => {
         styles.item,
         {
           height: item.height,
-          backgroundColor: item.color,
           marginBottom: ITEM_MARGIN,
-          width: COLUMN_WIDTH,
-        }
+          backgroundColor: theme.colors.surface,
+        },
       ]}
     >
-      <Text style={styles.itemText}>{item.title}</Text>
+      {/* Create an isolated stacking context for blend modes */}
+      <View style={[styles.blendContainer, { height: item.height, isolation: 'isolate' }]}>
+        {/* Base color layer */}
+        <View
+          style={[
+            styles.blendLayer,
+            {
+              backgroundColor: item.colors[0],
+              transform: [{ rotate: '-45deg' }],
+            },
+          ]}
+        />
+        {/* Blended color layer */}
+        <View
+          style={[
+            styles.blendLayer,
+            {
+              backgroundColor: item.colors[1],
+              transform: [{ rotate: '45deg' }],
+              mixBlendMode: item.blendMode,
+            },
+          ]}
+        />
+      </View>
+      <Text style={[styles.itemTitle, { color: theme.colors.onSurface }]}>
+        {item.title}
+      </Text>
     </Animated.View>
-  ), []);
+  ), [theme]);
 
   return (
     <PatternContainer>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.content}
-      >
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.grid}>
-          {columns.map((column, colIndex) => (
-            <View
-              key={colIndex}
-              style={[
-                styles.column,
-                colIndex < COLUMN_COUNT - 1 && { marginRight: ITEM_MARGIN }
-              ]}
-            >
+          {columns.map((column, columnIndex) => (
+            <View key={columnIndex} style={styles.column}>
               {column.map((item, index) => renderItem(item, index))}
             </View>
           ))}
@@ -93,31 +139,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  content: {
-    padding: GRID_PADDING,
-  },
   grid: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    padding: GRID_PADDING,
+    gap: ITEM_MARGIN,
   },
   column: {
     flex: 1,
   },
   item: {
     borderRadius: 12,
-    padding: 16,
-    justifyContent: 'flex-end',
+    overflow: 'hidden',
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowRadius: 4,
   },
-  itemText: {
-    color: 'white',
+  blendContainer: {
+    position: 'absolute',
+    width: '100%',
+    overflow: 'hidden',
+  },
+  blendLayer: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+  },
+  itemTitle: {
+    position: 'absolute',
+    bottom: 12,
+    left: 12,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
