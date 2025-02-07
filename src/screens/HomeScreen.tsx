@@ -5,7 +5,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { CardSwipeDemo } from '../components/patterns/CardSwipe/CardSwipeDemo';
 import { MasonryGridDemo } from '../components/patterns/MasonryGrid/MasonryGridDemo';
 import { InfiniteScrollDemo } from '../components/patterns/InfiniteScroll/InfiniteScrollDemo';
-import { CowbellDemo } from '../components/patterns/PartyMode/CowbellDemo';
+import { CowbellDemo } from '../components/patterns/MoreCowbell/CowbellDemo';
 import { Header } from '../components/Header';
 
 type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
