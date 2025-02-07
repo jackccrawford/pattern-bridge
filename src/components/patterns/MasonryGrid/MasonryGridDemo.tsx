@@ -29,25 +29,20 @@ interface GridItem {
 }
 
 // [AI-FREEZE] Blend mode configurations
-const COLOR_BLEND_CONFIGS: Array<{ mode: ColorBlendMode; colors: string[] }> = [
+const COLOR_BLEND_CONFIGS: Array<{ colors: string[] }> = [
   {
-    mode: 'multiply' as const,
     colors: ['#FF6B6B', '#4ECDC4'],
   },
   {
-    mode: 'screen' as const,
     colors: ['#45B7D1', '#FFEEAD'],
   },
   {
-    mode: 'overlay' as const,
     colors: ['#96CEB4', '#FF6B6B'],
   },
   {
-    mode: 'color-burn' as const,
     colors: ['#845EC2', '#FF9671'],
   },
   {
-    mode: 'color-dodge' as const,
     colors: ['#FFC75F', '#F9F871'],
   },
 ];
@@ -81,7 +76,6 @@ const generateItems = (start: number, count: number): GridItem[] => {
         height: Math.random() * 100 + 100,
         title: `${start + i + 1} Color`,
         type: 'color',
-        colorBlendMode: blend.mode,
         colors: blend.colors,
       };
     }
@@ -157,26 +151,14 @@ export const MasonryGridDemo = () => {
   }, [onEndReached]);
 
   const renderColorItem = (item: GridItem) => (
-    <View style={[styles.blendContainer, { height: item.height, isolation: 'isolate' }]}>
-      {/* Base color layer - covers entire container */}
-      <View
-        style={[
-          styles.blendLayer,
-          {
-            backgroundColor: item.colors![0],
-          },
-        ]}
-      />
-      {/* Blended color layer - overlaps completely */}
-      <View
-        style={[
-          styles.blendLayer,
-          {
-            backgroundColor: item.colors![1],
-            mixBlendMode: item.colorBlendMode,
-          },
-        ]}
-      />
+    <View style={[styles.blendContainer, { height: item.height }]}>
+      {/* Base color layer */}
+      <View style={[styles.colorLayer, { backgroundColor: item.colors![0] }]} />
+      {/* Diagonal overlay layers */}
+      <View style={[styles.diagonalLayer1, { backgroundColor: item.colors![1], opacity: 0.7 }]} />
+      <View style={[styles.diagonalLayer2, { backgroundColor: item.colors![1], opacity: 0.5 }]} />
+      <View style={[styles.diagonalLayer3, { backgroundColor: item.colors![1], opacity: 0.3 }]} />
+      <Text style={styles.itemTitle}>{item.title}</Text>
     </View>
   );
 
@@ -188,13 +170,12 @@ export const MasonryGridDemo = () => {
         style={styles.image}
         resizeMode="cover"
       />
-      {/* Blend mode overlay */}
+      {/* Overlay */}
       <View
         style={[
           styles.overlay,
           {
             backgroundColor: item.overlayColor,
-            mixBlendMode: item.imageBlendMode,
           },
         ]}
       />
@@ -229,9 +210,6 @@ export const MasonryGridDemo = () => {
                   ]}
                 >
                   {item.type === 'color' ? renderColorItem(item) : renderImageItem(item)}
-                  <Text style={[styles.itemTitle, { color: theme.colors.onSurface }]}>
-                    {item.title}
-                  </Text>
                 </Animated.View>
               ))}
             </View>
@@ -274,12 +252,34 @@ const styles = StyleSheet.create({
     width: '100%',
     overflow: 'hidden',
   },
-  blendLayer: {
+  colorLayer: {
     position: 'absolute',
     width: '100%',
     height: '100%',
-    top: 0,
-    left: 0,
+  },
+  diagonalLayer1: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '45deg' }],
+  },
+  diagonalLayer2: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '30deg' }],
+  },
+  diagonalLayer3: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '15deg' }],
   },
   image: {
     position: 'absolute',

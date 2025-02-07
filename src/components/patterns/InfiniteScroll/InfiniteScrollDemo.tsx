@@ -1,9 +1,15 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { RefreshControl, StyleSheet, View, ActivityIndicator, ScrollView, Platform, Image } from 'react-native';
-import { Text } from '../../Text';
+import { View, Text, ScrollView, RefreshControl, ActivityIndicator, Image, StyleSheet } from 'react-native';
 import { useTheme } from '../../../contexts/ThemeContext';
 import { PatternContainer } from '../../PatternContainer';
 import Animated, { FadeIn } from 'react-native-reanimated';
+
+interface ScrollItem {
+  id: number;
+  type: 'color' | 'image';
+  colors?: string[];
+  imageUrl?: string;
+}
 
 interface Item {
   id: number;
@@ -22,26 +28,74 @@ const BLEND_CONFIGS = [
   { mode: 'soft-light' as const, color: '#96CEB4' },
 ];
 
+const COLOR_PAIRS = [
+  ['#FF6B6B', '#4ECDC4'],
+  ['#45B7D1', '#FFEEAD'],
+  ['#96CEB4', '#FF6B6B'],
+  ['#845EC2', '#FF9671'],
+  ['#FFC75F', '#F9F871'],
+];
+
+const generateItems = (start: number, count: number): ScrollItem[] => {
+  return Array.from({ length: count }, (_, i) => {
+    const isColorItem = i % 2 === 0;
+    const colors = COLOR_PAIRS[i % COLOR_PAIRS.length];
+    
+    if (isColorItem) {
+      return {
+        id: start + i,
+        type: 'color',
+        colors: colors,
+      };
+    } else {
+      return {
+        id: start + i,
+        type: 'image',
+        imageUrl: `https://picsum.photos/800/400?random=${start + i}`,
+      };
+    }
+  });
+};
+
+const renderItem = ({ item }: { item: ScrollItem }) => {
+  if (item.type === 'color') {
+    return (
+      <View style={styles.itemContainer}>
+        <View style={styles.colorContainer}>
+          {/* Base color layer */}
+          <View style={[styles.colorLayer, { backgroundColor: item.colors[0] }]} />
+          {/* Diagonal overlay layers */}
+          <View style={[styles.diagonalLayer1, { backgroundColor: item.colors[1], opacity: 0.7 }]} />
+          <View style={[styles.diagonalLayer2, { backgroundColor: item.colors[1], opacity: 0.5 }]} />
+          <View style={[styles.diagonalLayer3, { backgroundColor: item.colors[1], opacity: 0.3 }]} />
+        </View>
+        <Text style={styles.itemText}>{`${item.id + 1} Color Blend`}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.itemContainer}>
+        <Image
+          source={{ uri: item.imageUrl }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+        <Text style={styles.itemText}>{`${item.id + 1} Image`}</Text>
+      </View>
+    );
+  }
+};
+
 export const InfiniteScrollDemo = () => {
   const { theme } = useTheme();
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<ScrollItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   // Simulate fetching data with images
   const fetchItems = useCallback(async (refresh = false) => {
     const start = refresh ? 0 : items.length;
-    const newItems: Item[] = Array.from({ length: 10 }, (_, i) => {
-      const config = BLEND_CONFIGS[i % BLEND_CONFIGS.length];
-      return {
-        id: start + i,
-        title: `Item ${start + i + 1}`,
-        subtitle: `Blend mode: ${config.mode}`,
-        imageUrl: `https://picsum.photos/500/300?random=${start + i}`,
-        blendMode: config.mode,
-        overlayColor: config.color,
-      };
-    });
+    const newItems = generateItems(start, 10);
     
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -89,53 +143,19 @@ export const InfiniteScrollDemo = () => {
       <ScrollView
         style={styles.container}
         onScroll={handleScroll}
-        scrollEventThrottle={400}
+        scrollEventThrottle={16}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        <View style={styles.list}>
-          {items.map((item, index) => (
-            <Animated.View
-              key={item.id}
-              entering={FadeIn.delay(index * 100)}
-              style={[
-                styles.item,
-                {
-                  backgroundColor: theme.colors.surface,
-                  marginBottom: index === items.length - 1 ? 20 : 12,
-                },
-              ]}
-            >
-              <View style={styles.imageContainer}>
-                {/* Base image */}
-                <Image
-                  source={{ uri: item.imageUrl }}
-                  style={styles.image}
-                  resizeMode="cover"
-                />
-                {/* Blend mode overlay */}
-                <View
-                  style={[
-                    styles.overlay,
-                    {
-                      backgroundColor: item.overlayColor,
-                      mixBlendMode: item.blendMode,
-                    },
-                  ]}
-                />
-              </View>
-              <View style={styles.content}>
-                <Text style={[styles.title, { color: theme.colors.onSurface }]}>
-                  {item.title}
-                </Text>
-                <Text style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}>
-                  {item.subtitle}
-                </Text>
-              </View>
-            </Animated.View>
-          ))}
-        </View>
+        {items.map(item => (
+          <Animated.View 
+            key={item.id}
+            entering={FadeIn.delay(item.id * 100)}
+          >
+            {renderItem({ item })}
+          </Animated.View>
+        ))}
         {loading && (
           <ActivityIndicator style={styles.loader} size="large" />
         )}
@@ -148,45 +168,56 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  list: {
-    padding: 16,
-  },
-  item: {
-    borderRadius: 12,
+  itemContainer: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 8,
     overflow: 'hidden',
+    backgroundColor: '#fff',
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
   },
-  imageContainer: {
-    height: 200,
+  colorContainer: {
+    height: 400,
     width: '100%',
     position: 'relative',
-    isolation: 'isolate', // Create stacking context for blend modes
   },
-  image: {
+  colorLayer: {
+    position: 'absolute',
     width: '100%',
     height: '100%',
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    opacity: 0.7,
+  diagonalLayer1: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '45deg' }],
   },
-  content: {
+  diagonalLayer2: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '30deg' }],
+  },
+  diagonalLayer3: {
+    position: 'absolute',
+    width: '150%',
+    height: '150%',
+    top: '-25%',
+    left: '-25%',
+    transform: [{ rotate: '15deg' }],
+  },
+  image: {
+    width: '100%',
+    height: 400,
+  },
+  itemText: {
     padding: 16,
-  },
-  title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 14,
   },
   loader: {
     marginVertical: 20,
