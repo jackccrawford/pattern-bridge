@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { RefreshControl, StyleSheet, View, ActivityIndicator, ScrollView, Platform } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
+import { PatternContainer } from '../../PatternContainer';
 
 interface Item {
   id: number;
@@ -56,71 +57,73 @@ export const InfiniteScrollDemo = () => {
   }, []);
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={onRefresh}
-          tintColor={theme.colors.primary}
-          colors={[theme.colors.primary]}
-        />
-      }
-      onScroll={({ nativeEvent }) => {
-        if (Platform.OS === 'web') {
-          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-          const paddingToBottom = 50;
-          const isCloseToBottom = 
-            layoutMeasurement.height + contentOffset.y >= 
-            contentSize.height - paddingToBottom;
-              
-          if (isCloseToBottom && !loading) {
-            onEndReached();
-          }
+    <PatternContainer>
+      <ScrollView
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.primary}
+            colors={[theme.colors.primary]}
+          />
         }
-      }}
-      onMomentumScrollEnd={({ nativeEvent }) => {
-        if (Platform.OS !== 'web') {
-          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-          const paddingToBottom = 50;
-          const isCloseToBottom = 
-            layoutMeasurement.height + contentOffset.y >= 
-            contentSize.height - paddingToBottom;
+        onScroll={({ nativeEvent }) => {
+          if (Platform.OS === 'web') {
+            const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+            const paddingToBottom = 50;
+            const isCloseToBottom = 
+              layoutMeasurement.height + contentOffset.y >= 
+              contentSize.height - paddingToBottom;
               
-          if (isCloseToBottom && !loading) {
-            onEndReached();
+            if (isCloseToBottom && !loading) {
+              onEndReached();
+            }
           }
-        }
-      }}
-      scrollEventThrottle={16}
-    >
-      {items.map(item => (
-        <View
-          key={item.id}
-          style={[
-            styles.item,
-            { backgroundColor: theme.colors.background, borderColor: theme.colors.border }
-          ]}
-          accessible={true}
-          accessibilityLabel={`${item.title}: ${item.subtitle}`}
-        >
-          <Text style={[styles.title, { color: theme.colors.text }]}>
-            {item.title}
-          </Text>
-          <Text style={[styles.subtitle, { color: theme.colors.secondary }]}>
-            {item.subtitle}
-          </Text>
-        </View>
-      ))}
-      {loading && (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator color={theme.colors.primary} />
-          <Text style={[styles.loadingText, { color: theme.colors.secondary }]}>
-            Loading more items...
-          </Text>
-        </View>
-      )}
-    </ScrollView>
+        }}
+        onMomentumScrollEnd={({ nativeEvent }) => {
+          if (Platform.OS !== 'web') {
+            const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+            const paddingToBottom = 50;
+            const isCloseToBottom = 
+              layoutMeasurement.height + contentOffset.y >= 
+              contentSize.height - paddingToBottom;
+              
+            if (isCloseToBottom && !loading) {
+              onEndReached();
+            }
+          }
+        }}
+        scrollEventThrottle={16}
+      >
+        {items.map(item => (
+          <View
+            key={item.id}
+            style={[
+              styles.item,
+              { backgroundColor: theme.colors.background, borderColor: theme.colors.border }
+            ]}
+            accessible={true}
+            accessibilityLabel={`${item.title}: ${item.subtitle}`}
+          >
+            <Text style={[styles.title, { color: theme.colors.text }]}>
+              {item.title}
+            </Text>
+            <Text style={[styles.subtitle, { color: theme.colors.secondary }]}>
+              {item.subtitle}
+            </Text>
+          </View>
+        ))}
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator color={theme.colors.primary} />
+            <Text style={[styles.loadingText, { color: theme.colors.secondary }]}>
+              Loading more items...
+            </Text>
+          </View>
+        )}
+      </ScrollView>
+    </PatternContainer>
   );
 };
 
