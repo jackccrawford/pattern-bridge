@@ -68,7 +68,7 @@ const generateItems = (start: number, count: number): GridItem[] => {
       return {
         id: start + i,
         height: Math.random() * 100 + 200, // Slightly taller for images
-        title: `Image ${start + i + 1}`,
+        title: `${start + i + 1} Image`,
         type: 'image',
         imageUrl: `https://picsum.photos/500/300?random=${start + i}`,
         imageBlendMode: blend.mode,
@@ -79,7 +79,7 @@ const generateItems = (start: number, count: number): GridItem[] => {
       return {
         id: start + i,
         height: Math.random() * 100 + 100,
-        title: `Color ${start + i + 1}`,
+        title: `${start + i + 1} Color`,
         type: 'color',
         colorBlendMode: blend.mode,
         colors: blend.colors,
@@ -158,23 +158,21 @@ export const MasonryGridDemo = () => {
 
   const renderColorItem = (item: GridItem) => (
     <View style={[styles.blendContainer, { height: item.height, isolation: 'isolate' }]}>
-      {/* Base color layer */}
+      {/* Base color layer - covers entire container */}
       <View
         style={[
           styles.blendLayer,
           {
             backgroundColor: item.colors![0],
-            transform: [{ rotate: '-45deg' }],
           },
         ]}
       />
-      {/* Blended color layer */}
+      {/* Blended color layer - overlaps completely */}
       <View
         style={[
           styles.blendLayer,
           {
             backgroundColor: item.colors![1],
-            transform: [{ rotate: '45deg' }],
             mixBlendMode: item.colorBlendMode,
           },
         ]}
@@ -278,10 +276,10 @@ const styles = StyleSheet.create({
   },
   blendLayer: {
     position: 'absolute',
-    width: '150%',
-    height: '150%',
-    top: '-25%',
-    left: '-25%',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
   },
   image: {
     position: 'absolute',
@@ -298,9 +296,6 @@ const styles = StyleSheet.create({
     left: 12,
     fontSize: 16,
     fontWeight: 'bold',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
   loader: {
     marginVertical: 20,
