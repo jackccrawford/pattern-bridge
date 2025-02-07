@@ -158,6 +158,7 @@ export const Header: React.FC<HeaderProps> = ({
         </>
       )}
 
+      {/* [AI-FREEZE] Header positioning and layout structure */}
       <View
         style={[
           styles.headerContainer,
@@ -200,6 +201,7 @@ export const Header: React.FC<HeaderProps> = ({
 };
 
 const styles = StyleSheet.create({
+  // [AI-FREEZE] Critical positioning styles for header
   headerContainer: {
     position: 'absolute',
     left: 0,
