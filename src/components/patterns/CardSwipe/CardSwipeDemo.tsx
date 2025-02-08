@@ -1,6 +1,6 @@
 // [AI-FREEZE] Card swipe interaction pattern implementation
 // Following standard swipe gesture patterns with proper animation timing
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { StyleSheet, View, Dimensions, Platform, GestureResponderEvent } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
@@ -12,7 +12,7 @@ import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
 } from 'react-native-reanimated';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PatternContainer } from '../../PatternContainer';
 
@@ -93,16 +93,21 @@ export const CardSwipeDemo = () => {
 
   // [AI-MUTABLE] Card transition handling
   const removeTopCard = React.useCallback(() => {
-    // Wait for the exit animation to complete before removing the card
-    setTimeout(() => {
-      setCards(currentCards => currentCards.slice(1));
-      translateX.value = 0;
-      translateY.value = 0;
-    }, 200); // Match animation duration
+    setCards(currentCards => currentCards.slice(1));
+    translateX.value = 0;
+    translateY.value = 0;
   }, [translateX, translateY]);
 
-  const gestureHandler = useAnimatedGestureHandler({
-    onStart: (_, context: any) => {
+  interface GestureContext {
+    startX: number;
+    startY: number;
+  }
+
+  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, {
+    startX: number;
+    startY: number;
+  }>({
+    onStart: (_, context) => {
       context.startX = translateX.value;
       context.startY = translateY.value;
     },
@@ -120,7 +125,11 @@ export const CardSwipeDemo = () => {
             stiffness: 300,
             mass: 0.3,
           },
-          () => runOnJS(removeTopCard)()
+          (finished) => {
+            if (finished) {
+              runOnJS(removeTopCard)();
+            }
+          }
         );
       } else {
         translateX.value = withSpring(0);
@@ -162,10 +171,37 @@ export const CardSwipeDemo = () => {
         document.removeEventListener('touchend', handleTouchEnd);
       };
 
+      // Clean up previous listeners if they exist
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+
+      // Add new listeners
       document.addEventListener('touchmove', handleTouchMove);
       document.addEventListener('touchend', handleTouchEnd);
+
+      // Clean up on component unmount or when dependencies change
+      return () => {
+        document.removeEventListener('touchmove', handleTouchMove);
+        document.removeEventListener('touchend', handleTouchEnd);
+      };
     }
   }, [cardPosition, dimensions.screenWidth, dimensions.swipeThreshold, removeTopCard, translateX, translateY]);
+
+  // Add cleanup effect
+  React.useEffect(() => {
+    const cleanup = () => {
+      // Note: We can't actually get all listeners from the document
+      // So we'll just ensure our specific handlers are removed
+      if (Platform.OS === 'web') {
+        const element = cardRef.current as unknown as HTMLElement;
+        if (element) {
+          element.removeEventListener('touchstart', handleTouchStart as unknown as EventListener);
+        }
+      }
+    };
+
+    return cleanup;
+  }, [handleTouchStart]);
 
   const rTopCardStyle = useAnimatedStyle(() => {
     const rotate = interpolate(

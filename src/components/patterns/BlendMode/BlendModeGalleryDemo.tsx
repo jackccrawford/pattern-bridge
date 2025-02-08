@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, View, Dimensions, Pressable, ScrollView, Platform, ViewStyle } from 'react-native';
 import { Text } from '../../Text';
 import { useTheme } from '../../../contexts/ThemeContext';
 import Animated, {
@@ -11,6 +11,10 @@ import Animated, {
 import { PatternContainer } from '../../PatternContainer';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+interface WebViewStyle extends ViewStyle {
+  mixBlendMode?: string;
+}
 
 interface BlendModeExample {
   id: string;
@@ -82,7 +86,8 @@ export const BlendModeGalleryDemo = () => {
                     styles.colorLayer,
                     {
                       backgroundColor: example.colors[1],
-                      mixBlendMode: example.mode as any,
+                      ...(Platform.OS === 'web' ? { mixBlendMode: example.mode } as WebViewStyle : {}),
+                      opacity: Platform.OS === 'web' ? 1 : 0.7, // Fallback for native
                     },
                   ]}
                 />

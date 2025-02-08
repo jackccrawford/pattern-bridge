@@ -14,12 +14,6 @@ export const PatternContainer: React.FC<{
   // [AI-FREEZE] Critical header height values that must match Header component
   const headerHeight = Platform.select({ ios: 44, android: 56 }) ?? 56;
   
-  console.log('PatternContainer padding:', {
-    headerHeight,
-    insetTop: insets.top,
-    totalPadding: headerHeight
-  });
-  
   return (
     <View 
       style={[
