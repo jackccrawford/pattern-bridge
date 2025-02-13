@@ -1,26 +1,19 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../contexts/ThemeContext';
 import { CardSwipeDemo } from '../components/patterns/CardSwipe/CardSwipeDemo';
 import { MasonryGridDemo } from '../components/patterns/MasonryGrid/MasonryGridDemo';
 import { InfiniteScrollDemo } from '../components/patterns/InfiniteScroll/InfiniteScrollDemo';
 import { CowbellDemo } from '../components/patterns/MoreCowbell/CowbellDemo';
-import { useRoute } from '@react-navigation/native';
+import { Header } from '../components/Header';
 
 type Pattern = 'masonry' | 'cowbell' | 'cardswipe' | 'infinitescroll';
 
 export const HomeScreen = () => {
   const { theme } = useTheme();
-  const route = useRoute();
   const [selectedPattern, setSelectedPattern] = useState<Pattern>('masonry');
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  useEffect(() => {
-    const pattern = (route.params as any)?.pattern;
-    if (pattern && pattern !== selectedPattern) {
-      handlePatternChange(pattern as Pattern);
-    }
-  }, [route.params]);
 
   const handlePatternChange = useCallback((newPattern: Pattern) => {
     if (isTransitioning) return; // Prevent multiple rapid switches
@@ -53,11 +46,12 @@ export const HomeScreen = () => {
   }, [selectedPattern, isTransitioning]);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top']}>
+      <Header selectedPattern={selectedPattern} onPatternChange={handlePatternChange} />
       <View style={styles.content}>
         {renderPattern()}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

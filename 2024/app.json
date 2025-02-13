@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Pattern Bridge",
+    "name": "PatternBridge",
     "slug": "pattern-bridge",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,14 +17,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jackccrawford.mobilebase"
+      "bundleIdentifier": "com.jackccrawford.patternbridge"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jackccrawford.mobilebase"
+      "package": "com.jackccrawford.patternbridge"
     },
     "web": {
       "favicon": "./assets/favicon.png"
