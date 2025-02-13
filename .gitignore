@@ -103,3 +103,7 @@ env/
 venv/
 ENV/
 .python-version
+
+# Native build directories (Expo prebuild)
+ios/
+android/
