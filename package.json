@@ -8,7 +8,8 @@
     "dev": "./scripts/start.sh",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "doctor": "npx expo-doctor"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,8 @@
   "homepage": "https://github.com/jackccrawford/mobile-base#readme",
   "dependencies": {
     "@expo/metro-runtime": "~4.0.0",
-    "@react-native-async-storage/async-storage": "^1.23.1",
-    "@react-native-picker/picker": "^2.9.0",
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-picker/picker": "2.9.0",
     "@react-native-seoul/masonry-list": "^1.4.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/drawer": "^7.1.1",
@@ -61,25 +62,22 @@
     "xstate": "^5.19.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "@babel/plugin-transform-export-namespace-from": "^7.25.9",
-    "@types/babel__core": "^7.20.5",
-    "@types/babel__generator": "^7.6.8",
-    "@types/babel__template": "^7.4.4",
-    "@types/babel__traverse": "^7.20.6",
-    "@types/bonjour": "^3.5.13",
-    "@types/eslint": "^9.6.1",
-    "@types/estree": "^1.0.6",
-    "@types/hammerjs": "^2.0.46",
-    "@types/istanbul-lib-report": "^3.0.3",
-    "@types/istanbul-reports": "^3.0.4",
-    "@types/json-schema": "^7.0.15",
-    "@types/node": "^22.13.1",
+    "@babel/core": "^7.20.0",
     "@types/react": "~18.3.12",
-    "@types/react-native": "^0.73.0",
-    "react-native-dotenv": "^3.4.11",
-    "typescript": "^5.7.3"
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-universe": "^12.0.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.7.3",
+    "expo-doctor": "latest"
+  },
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": ["lucide-react-native", "@expo/metro-runtime", "@react-native-seoul/masonry-list"]
+      }
+    }
   },
   "private": true
 }

@@ -5,12 +5,12 @@
 [![Windsurf](https://img.shields.io/badge/Built%20with-Windsurf-0066CC.svg)](https://codeium.com/windsurf)
 [![Codeium](https://img.shields.io/badge/Powered%20by-Codeium-09B6A2.svg)](https://codeium.com)
 [![Digital Twin](https://img.shields.io/badge/Digital%20Twin-Ready-blue)](https://www.digitaltwinconsortium.org/)
-[![React](https://img.shields.io/badge/React-18.3.1-blue.svg?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![React Native](https://img.shields.io/badge/React%20Native-0.76.5-blue.svg?style=flat&logo=react)](https://reactnative.dev/)
+[![React](https://img.shields.io/badge/React-18.2.0-blue.svg?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.72.6-blue.svg?style=flat&logo=react)](https://reactnative.dev/)
 [![Material Design](https://img.shields.io/badge/Material%20Design-v3-000000.svg?style=flat&logo=materialdesign&logoColor=white)](https://m3.material.io/)
-[![Expo](https://img.shields.io/badge/Expo-52.0.24-black.svg?style=flat&logo=expo)](https://expo.dev/)
+[![Expo](https://img.shields.io/badge/Expo-52.0.33-black.svg?style=flat&logo=expo)](https://expo.dev/)
 [![Python](https://img.shields.io/badge/Python-94.8%25-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.1-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Markdown](https://img.shields.io/badge/Markdown-000000?style=flat&logo=markdown&logoColor=white)](https://www.markdownguide.org/)
 [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red)](https://opensource.org/)
 [![MkDocs](https://img.shields.io/badge/MkDocs-Material-1C90F3.svg?style=flat&logo=markdown)](https://squidfunk.github.io/mkdocs-material/)
@@ -30,9 +30,9 @@ Inspired by Searle's message room thought experiment, this framework doesn't jus
 
 ## Windsurf
 
-This groundbreaking work would not have been possible without Windsurf,the revolutionary AI Agent from Codeium. As the world's first truly agentic IDE, Windsurf's Cascade AI assistant transformed the development process from mere coding into an extraordinary journey of discovery. Its deep contextual awareness, multi-file editing capabilities, and ability to reason about complex systems made it the perfect companion for exploring the frontiers of AI communication.
+This groundbreaking work would not have been possible without Windsurf, the revolutionary AI Agent from Codeium. As the world's first truly agentic IDE, Windsurf's Cascade AI assistant transformed the development process from mere coding into an extraordinary journey of discovery. Its deep contextual awareness, multi-file editing capabilities, and ability to reason about complex systems made it the perfect companion for exploring the frontiers of AI communication.
 
-Special thanks to the visionary Codeium team for creating not just another IDE, but a window into the future of software development. Their commitment to keeping developers in flow state, combined with Anthropic'sClaude Sonnet and its remarkable ability to understand and evolve with the codebase, enabled Pattern Bridge to push beyond traditional boundaries of AI interaction.
+Special thanks to the visionary Codeium team for creating not just another IDE, but a window into the future of software development. Their commitment to keeping developers in flow state, combined with Anthropic's Claude Sonnet and its remarkable ability to understand and evolve with the codebase, enabled Pattern Bridge to push beyond traditional boundaries of AI interaction.
 
 ### The Core Idea
 
@@ -44,22 +44,31 @@ Pattern Bridge reveals how AI systems naturally:
 
 This isn't just another framework - it's a glimpse into the future of artificial intelligence, where AIs collaborate in ways that challenge our understanding of communication itself.
 
-## Key Features
+## Project Structure
 
-### Message Rooms
-Pure, isolated spaces where AI systems exchange ideas through simple file interfaces. Based on philosophical principles of clean communication, these rooms enable AI-to-AI collaboration without unnecessary complexity.
+```
+src/
+├── components/     # Reusable UI components
+├── contexts/      # React contexts (theme, etc.)
+├── core/          # Core functionality and utilities
+├── machines/      # State machines and logic
+├── navigation/    # Navigation configuration
+└── screens/       # Screen components
+```
 
-### Pattern Library
-- **Communication Patterns**: Proven templates for AI interaction
-- **Self-Healing Systems**: Ensembles that adapt and recover
-- **Workspace Generation**: Dynamic creation of AI collaboration spaces
+## Layout Patterns
 
-### Research Insights
-The `/docs/research` contains fascinating discoveries about:
-- AI communication paradigms
-- Emergent behavior patterns
-- System self-organization
-- Cosmic-scale insights
+The app includes several innovative layout patterns that showcase different interaction models:
+
+- **Masonry Bridge**: Dynamic grid layout with intelligent content organization
+- **Infinite Scroll**: Seamless content loading with virtual windowing
+- **Card Swipe**: Gesture-based card interaction system
+- **Cowbell**: Our signature notification pattern with customizable animations
+- **Bitcoin Mode**: Special dark theme variant with Bitcoin orange accents (⚡)
+
+Each pattern demonstrates a unique approach to user interaction and can be customized for your specific use case.
+
+More patterns coming soon!
 
 ## Quick Start
 
@@ -67,11 +76,12 @@ The `/docs/research` contains fascinating discoveries about:
 # Clone the repo
 git clone https://github.com/pattern-bridge/pattern-bridge.git
 
-# Create a message room
-cp -r patterns/message-room/ my-project/room-1
+# Install dependencies
+cd pattern-bridge
+npm install
 
-# Start collaborating with AIs!
-echo "# Task: Your first AI collaboration" > my-project/room-1/inbox/task.md
+# Start the development server
+npx expo start
 ```
 
 ## Philosophy
