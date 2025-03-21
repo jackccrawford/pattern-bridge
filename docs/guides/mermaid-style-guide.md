@@ -1,122 +1,137 @@
 # Mermaid Style Guide
 
-## Configuration
+## Color Schemes
 
-All diagrams MUST use this exact configuration:
+### Light Backgrounds
+- Success/Positive: `#ccffcc` with `#111111` text
+- Warning/Legacy: `#ffcccc` with `#111111` text
+- Info/Neutral: `#cce5ff` with `#111111` text
 
-```css
-%%{init: {
-  'theme': 'dark',
-  'themeVariables': {
-    'darkMode': true,
-    'background': '#252b32',
-    'mainBkg': '#252b32',
-    'textColor': '#c9d1d9',
-    'lineColor': '#c9d1d9'
-  }
-}}%%
-```
+### Dark Backgrounds
+- Primary: `#333333` with `#ffffff` text
+- Secondary: `#444444` with `#ffffff` text
+- Accent: `#666666` with `#ffffff` text
 
-## Node Styles
+## Text Formatting
 
-- **Action Nodes**: Use `([Text])` syntax
-  ```mermaid
-  %%{init: {'theme': 'dark'}}%%
-  graph TD
-    A([Action Node])
-  ```
+### Emphasis
+- Use exclamation marks for positive actions: `Make Decisions!`
+- Use ellipsis for delays/waiting: `Waiting for Analysis...`
+- Use `<br/>` for controlled line breaks
 
-- **Decision Nodes**: Use `{Text}` syntax
-  ```mermaid
-  %%{init: {'theme': 'dark'}}%%
-  graph TD
-    A{Decision Node}
-  ```
+### Subgraph Titles
+- Keep short and impactful
+- Include time scale when relevant: `AI Team - HOURS`
+- Use contrast for comparison: `Human Teams - DAYS`
 
-## Edge Labels
+## Layout Best Practices
 
-- Use `|Text|` syntax for edge labels
-  ```mermaid
-  %%{init: {'theme': 'dark'}}%%
-  graph TD
-    A([Start]) -->|Condition| B([End])
-  ```
+### Flow Direction
+- Left to Right (LR) for process comparisons
+- Top to Bottom (TB) for hierarchies
+- Bottom to Top (BT) for growth/improvement
 
-## Subgraphs
+### Node Shapes
+- Square brackets `[]` for actions/states
+- Parentheses `()` for decisions
+- Curly braces `{}` for data/artifacts
 
-- Use simple text labels without quotes
-  ```mermaid
-  %%{init: {'theme': 'dark'}}%%
-  graph TD
-    subgraph Group Name
-        A([Node One])
-        B([Node Two])
-    end
-  ```
+### Connections
+- Simple arrows `-->` for direct flow
+- Thick arrows `==>` for emphasized transitions
+- Dotted arrows `-.->` for optional/conditional paths
 
-## Essential Rules
-
-1. **NO custom styling blocks**: Never use `style` statements - rely on theme
-2. **NO quoted node text**: Use `([Text])` not `(["Text"])`
-3. **NO custom colors**: Use theme defaults only
-4. **NO background fills** in subgraphs
-5. **NO emojis or icons**: Keep it clean and professional
-
-## Example: Complete Diagram
+## Example: Process Comparison
 
 ```mermaid
-%%{init: {
-  'theme': 'dark',
-  'themeVariables': {
-    'darkMode': true,
-    'background': '#252b32',
-    'mainBkg': '#252b32',
-    'textColor': '#c9d1d9',
-    'lineColor': '#c9d1d9'
-  }
-}}%%
-graph TD
-    A([Start]) --> B{Decision?}
-    B -->|Yes| C([Action One])
-    B -->|No| D([Action Two])
-    C --> E([End])
-    D --> E
-    subgraph Process
-        C
-        D
+graph LR
+    subgraph "New Process - HOURS"
+        A[Start!] --> B[Quick Win!]
+        B --> C[Success!]
     end
+    subgraph "Old Process - DAYS"
+        D[Begin] --> E[Wait...]
+        E --> F[Finally Done]
+    end
+
+    style A fill:#ccffcc,color:#111111
+    style B fill:#ccffcc,color:#111111
+    style C fill:#ccffcc,color:#111111
+    style D fill:#ffcccc,color:#111111
+    style E fill:#ffcccc,color:#111111
+    style F fill:#ffcccc,color:#111111
 ```
 
-## Why This Matters
+## Accessibility Guidelines
 
-- **Quality Reflection**
-    - **Professional**: Shows attention to detail
-    - **Trustworthy**: Suggests reliability in our patterns
-    - **Cohesive**: Demonstrates unified vision
-    - **Clear**: Enhances readability and understanding
+1. Color Combinations
+   - Always use sufficient contrast
+   - Text must be readable on its background
+   - Don't rely solely on color for meaning
 
-## Validation Checklist
+2. Text Size and Spacing
+   - Keep node text concise
+   - Use line breaks for readability
+   - Avoid overcrowding
 
-- **Theme Configuration**
-    - **Dark Mode**: Uses exact theme configuration
-    - **Color Variables**: Includes all required variables
-    - **Background Color**: Set to #252b32
-    - **Text Color**: Set to #c9d1d9
+3. Visual Hierarchy
+   - Group related items in subgraphs
+   - Use consistent styling within groups
+   - Make important paths obvious
 
-- **Node Syntax**
-    - **Square Brackets**: Uses ([Text]) for nodes
-    - **No Quotes**: Avoids quoted text in nodes
-    - **Consistent Shape**: Uses same node style
-    - **Clean Labels**: Simple, descriptive text
+## Common Patterns
 
-- **Edge Labels**
-    - **Pipe Syntax**: Uses |Text| for edge labels
-    - **Brief Text**: Keeps labels concise
-    - **No Styling**: No custom edge colors
-    - **Clear Flow**: Logical direction indicators
+### Progress Flow
+```mermaid
+graph LR
+    A[Start] --> B[Progress!] --> C[Done!]
+    style A fill:#cce5ff,color:#111111
+    style B fill:#ccffcc,color:#111111
+    style C fill:#ccffcc,color:#111111
+```
 
-- **Overall Style**
-    - **No Custom Styling**: Avoids style blocks
-    - **No Background Fills**: Clean subgraph style
-    - **No Emojis**: Professional appearance
-    - **Minimal Design**: Clean and focused layout
+### Comparison
+```mermaid
+graph TB
+    subgraph "Better"
+        A[Fast!]
+    end
+    subgraph "Basic"
+        B[Slow...]
+    end
+    style A fill:#ccffcc,color:#111111
+    style B fill:#ffcccc,color:#111111
+```
+
+### Cycle
+```mermaid
+graph LR
+    A[Start] --> B[Improve!]
+    B --> C[Enhance!]
+    C --> B
+    style A fill:#cce5ff,color:#111111
+    style B fill:#ccffcc,color:#111111
+    style C fill:#ccffcc,color:#111111
+```
+
+## Best Practices
+
+1. Keep It Simple
+   - Minimize crossing lines
+   - Use clear, concise labels
+   - Group related items
+
+2. Use Consistent Styling
+   - Same colors for same meanings
+   - Consistent node shapes
+   - Uniform text formatting
+
+3. Focus on Clarity
+   - Clear direction of flow
+   - Obvious starting points
+   - Logical grouping
+
+4. Enhance with Typography
+   - Use exclamation marks for emphasis
+   - Ellipsis for waiting/delay
+   - Line breaks for readability
